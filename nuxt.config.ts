@@ -58,16 +58,21 @@ export default defineNuxtConfig({
       isTokenAutoRefreshEnabled: true,
     },
 
+
     config: {
-      apiKey: 'AIzaSyBsdR5gT1fFBF5c8YDUw_4Qcg2E_C9Pwn8',
-      authDomain: 'nuxt-vuefire-example-blaze.firebaseapp.com',
-      databaseURL:
-        'https://nuxt-vuefire-example-blaze-default-rtdb.firebaseio.com',
-      projectId: 'nuxt-vuefire-example-blaze',
-      storageBucket: 'nuxt-vuefire-example-blaze.appspot.com',
-      messagingSenderId: '254121855253',
-      appId: '1:254121855253:web:c1e3357402843d829e411c',
-      measurementId: 'G-LL0HQ2E3J2',
+      apiKey: "AIzaSyCVB1PJ3o95pYSlF-1x3YZiE3A90FsWJBk",
+
+      authDomain: "vue-fire-demo-713ba.firebaseapp.com",
+
+      databaseURL: "https://vue-fire-demo-713ba-default-rtdb.firebaseio.com",
+
+      projectId: "vue-fire-demo-713ba",
+
+      storageBucket: "vue-fire-demo-713ba.appspot.com",
+
+      messagingSenderId: "318800048874",
+
+      appId: "1:318800048874:web:ca455e247d45d2dcf6dd93"
     },
   },
 
