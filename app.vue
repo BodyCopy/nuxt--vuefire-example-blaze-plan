@@ -73,31 +73,24 @@ watch(user, async (currentUser, previousUser) => {
 </script>
 
 <template>
-  <div>
+  <!-- <div>
     <a href="https://nuxt.com" target="_blank">
       <img src="@/assets/nuxt.svg" class="logo" alt="Nuxt logo" />
     </a>
     <a href="https://vuefire.vuejs.org" target="_blank">
       <img src="/vuefire.svg" class="logo vuefire" alt="VueFire logo" />
     </a>
-  </div>
-
-  <h1>Nuxt + VueFire</h1>
-
+  </div> -->
   <NavigationLinks />
-
-  <NuxtPage />
-
-  <footer>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+  <!-- <footer>
     <a href="https://github.com/posva/nuxt--vuefire-example-blaze-plan">
-      <img
-        src="@/assets/github-mark.svg"
-        alt="GitHub logo"
-        class="logo github"
-      />
+      <img src="@/assets/github-mark.svg" alt="GitHub logo" class="logo github" />
       Source Code
     </a>
-  </footer>
+  </footer> -->
 </template>
 
 <style scoped>
@@ -108,12 +101,15 @@ watch(user, async (currentUser, previousUser) => {
 
   transition: filter ease-out 0.3s;
 }
+
 .logo.vuefire {
   height: 7.5em;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #00dc82aa);
 }
+
 .logo.vuefire:hover {
   filter: drop-shadow(0 0 2em #f78200aa);
 }
@@ -123,6 +119,7 @@ watch(user, async (currentUser, previousUser) => {
     height: 4em;
     padding: 0.5em;
   }
+
   .logo.vuefire {
     height: 5em;
   }

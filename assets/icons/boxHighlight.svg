@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
+    class="item-highlighter visible [&amp;_line]:stroke-[3px] focus:outline-none group-hover:visible">
+    <line class="topLeft" x1="0" y1="0" x2="100%" y2="0"></line>
+    <line class="topRight" x1="0" y1="0" x2="100%" y2="0"></line>
+    <line class="bottomLeft" x1="0" y1="100%" x2="100%" y2="100%"></line>
+    <line class="bottomRight" x1="0" y1="100%" x2="100%" y2="100%"></line>
+    <line class="leftTop" x1="0" y1="0" x2="0" y2="100%"></line>
+    <line class="rightTop" x1="100%" y1="0" x2="100%" y2="100%"></line>
+    <line class="leftBottom" x1="0" y1="0" x2="0" y2="100%"></line>
+    <line class="rightBottom" x1="100%" y1="0" x2="100%" y2="100%"></line>
+</svg>

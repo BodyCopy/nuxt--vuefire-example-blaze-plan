@@ -1,0 +1,65 @@
+.grid-paper {
+    --grid-line-color: var(--B-50);
+    background-color: var(--background-color);
+    background-image:
+        linear-gradient(to right, var(--grid-line-color) 0.5px, transparent 0.5px),
+        /* Horizontal lines */
+        linear-gradient(to bottom, var(--grid-line-color) 0.5px, transparent 0.5px);
+    /* Define the size of your grid squares (e.g., 20px by 20px) */
+    background-size: 8px 8px;
+}
+
+.x-paper {
+    --grid-line-color: white;
+    background-color: var(--background-color);
+    background-image:
+        linear-gradient(to right, transparent 2px, var(--grid-line-color) 2px, transparent 2px, var(--grid-line-color) 2px),
+        /* Horizontal lines */
+        linear-gradient(to bottom, transparent 6px, var(--grid-line-color) 2px, transparent 6px, var(--grid-line-color) 2px);
+    /* Define the size of your grid squares (e.g., 20px by 20px) */
+    background-size: 8px 8px;
+}
+
+.horizontal-line-paper {
+    --grid-line-color: var(--B-30);
+    background-color: var(--background-color);
+    background-image:
+        linear-gradient(to bottom, var(--grid-line-color) 0.8px, transparent 0.8px);
+    background-size: 0.49rem 0.49rem;
+}
+
+.vertical-line-paper {
+    --grid-line-color: var(--B-30);
+    background-color: var(--background-color);
+    background-image:
+        linear-gradient(to right, var(--grid-line-color) 0.5px, transparent 0.5px);
+    background-size: 8px 8px;
+}
+
+.dot-grid-paper {
+    /* Define the size of the grid squares */
+    --grid-size: 16px;
+
+    /* Define the size of the dots */
+    --dot-size: 1px;
+    --dot-color: var(--B-40);
+    /* Calculate the position of the dot to be in the center of the grid square */
+    --dot-position: calc(var(--grid-size) / 2);
+
+    background-color: transparent;
+    background-image: radial-gradient(circle, var(--dot-color) var(--dot-size), transparent var(--dot-size)),
+        radial-gradient(circle, var(--dot-color) var(--dot-size), transparent var(--dot-size));
+    background-position: var(--dot-position) var(--dot-position), var(--dot-position) var(--dot-position);
+    background-size: var(--grid-size) var(--grid-size);
+}
+
+.arrow-background {
+    --arrow-color: var(--copy-color);
+    background: linear-gradient(to right,
+            transparent 49%,
+            var(--arrow-color) 49%,
+            var(--arrow-color) 51%,
+            transparent 51%);
+    background-size: 10px 100%;
+    /* Adjust the size as needed */
+}

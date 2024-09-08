@@ -1,0 +1,100 @@
+//@import '@/assets/css/01-config/mixins.module.scss'; usage
+
+$mediaPhone: 599px;
+$mediaTabletPortrait: 600px;
+$mediaTabletLandscape: 900px;
+$mediaDesktop1280: 1280px;
+$mediaDesktop1440: 1440px;
+$mediaDesktop1920: 1920px;
+
+@mixin mediaPhone($constraint: "min") {
+  @if $constraint =="max" {
+    @media (max-width: $mediaPhone) {
+      @content;
+    }
+  }
+
+  @if $constraint =="min" {
+    @media (min-width: $mediaPhone) {
+      @content;
+    }
+  }
+}
+
+@mixin mediaTabletPortrait($constraint: "min") {
+  @if $constraint =="max" {
+    @media (max-width: $mediaTabletPortrait) {
+      @content;
+    }
+  }
+
+  @if $constraint =="min" {
+    @media (min-width: $mediaTabletPortrait) {
+      @content;
+    }
+  }
+}
+
+@mixin mediaTabletLandscape($constraint: "min") {
+  @if $constraint =="max" {
+    @media (max-width: $mediaTabletLandscape) {
+      @content;
+    }
+  }
+
+  @if $constraint =="min" {
+    @media (min-width: $mediaTabletLandscape) {
+      @content;
+    }
+  }
+}
+
+@mixin mediaDesktop1280($constraint: "min") {
+  @if $constraint =="max" {
+    @media (max-width: $mediaDesktop1280) {
+      @content;
+    }
+  }
+
+  @if $constraint =="min" {
+    @media (min-width: $mediaDesktop1280) {
+      @content;
+    }
+  }
+}
+
+@mixin mediaDesktop1440($constraint: "min") {
+  @if $constraint =="max" {
+    @media (max-width: $mediaDesktop1440) {
+      @content;
+    }
+  }
+
+  @if $constraint =="min" {
+    @media (min-width: $mediaDesktop1440) {
+      @content;
+    }
+  }
+}
+
+@mixin mediaDesktop1920($constraint: "min") {
+  @if $constraint =="max" {
+    @media (max-width: $mediaDesktop1920) {
+      @content;
+    }
+  }
+
+  @if $constraint =="min" {
+    @media (min-width: $mediaDesktop1920) {
+      @content;
+    }
+  }
+}
+
+@mixin colourTransition {
+  transition: color 180s ease-in;
+}
+
+@media screen and (min-width: 30em) and (orientation: landscape) {
+  /* … */
+}

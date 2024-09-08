@@ -1,0 +1,46 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+button {
+  all: unset;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+ul,
+ol {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+ul:not(.list) {
+  list-style: none;
+}
+
+img {
+  //reset via Harry Roberts
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  font-style: italic;
+  background-repeat: no-repeat;
+  background-size: cover;
+  shape-margin: 1rem;
+  display: block;
+}
+
+// svg {
+//   width: 100%;
+//   height: 100%;
+//   fill: currentColor;
+// }

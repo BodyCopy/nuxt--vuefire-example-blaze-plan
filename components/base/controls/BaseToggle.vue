@@ -1,0 +1,96 @@
+<template>
+    <div class="toggle-control">
+        <span v-if="statusText">{{ props.modelValue ? 'Yes' : 'No' }}</span>
+        <label :class="['toggle-switch', toggleStyle]">
+            <input type="checkbox" @input="(e) => { $emit('update:modelValue', e.target.checked) }" :id="props.name"
+                :name="props.name" :checked="props.modelValue" />
+            <span class="slider round"></span>
+        </label>
+        <div class="helper-content">
+            <span v-if="helperText" class="helper-text">{{ helperText }}</span>
+            <span v-if="!validated && errorText" class="error-text">{{ errorText }}</span>
+        </div>
+
+    </div>
+</template>
+<script setup>
+import { computed } from 'vue';
+const props = defineProps(['readOnly', 'type', 'name', 'label', 'modelValue', 'display', 'width', 'helperText', 'validated', 'errorText', 'statusText']);
+const emits = defineEmits(['update:modelValue']);
+const toggleStyle = computed(() => {
+    return {
+        horizontal: props.display === 'ltr',
+        vertical: props.display === 'ttb',
+        ['fill-content']: props.width === 'fc',
+        error: props.validated === false,
+        'read-only': props.readOnly,
+    };
+})
+</script>
+<style scoped lang="scss">
+@import '@/components/base/controls/control-styles.module.scss';
+
+/* The switch - the box around the slider */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--grey-80);
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: '';
+    height: 30px;
+    width: 30px;
+    left: 0px;
+    bottom: 0px;
+    background-color: var(--copy-color);
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+input:checked+.slider {
+    background-color: var(--primary-color-base);
+    border-color: var(--primary-color-base);
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px var(--current-color);
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+    border: 2px solid var(--grey-80);
+}
+
+.slider.round:before {
+
+    border-radius: 50%;
+}
+</style>

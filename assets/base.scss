@@ -1,0 +1,344 @@
+:root {
+  --O-0: hsl(33, 100%, 77%);
+  --O-5: hsl(30, 100%, 73%);
+  --O-10: hsl(28, 100%, 70%);
+  --O-15: hsl(27, 100%, 67%);
+  --O-20: hsl(26, 100%, 63%);
+  --O-25: hsl(25, 100%, 60%);
+  --O-30: hsl(24, 100%, 57%);
+  --O-35: hsl(23, 100%, 53%);
+  --O-40: hsl(23, 100%, 50%);
+  --O-45: hsl(23, 100%, 45%);
+  --O-50: hsl(23, 100%, 40%);
+  --O-55: hsl(23, 100%, 35%);
+  --O-60: hsl(24, 100%, 30%);
+  --O-65: hsl(24, 100%, 25%);
+  --O-70: hsl(25, 100%, 20%);
+  --O-75: hsl(26, 100%, 15%);
+  --O-80: hsl(29, 100%, 10%);
+  --O-85: hsl(37, 100%, 5%);
+  --O-90: hsl(120, 100%, 1%);
+  --O-95: hsl(0, 0%, 0%);
+
+  --B-00: #a3a8b2;
+  --B-05: #9299a4;
+  --B-10: #818a96;
+  --B-15: #707b88;
+  --B-20: #606c7a;
+  --B-25: #4f5d6c;
+  --B-30: #3e4e5e;
+  --B-35: #2d3f50;
+  --B-40: #1c3042;
+  --B-45: #0b2134;
+  --B-50: #001226;
+  --B-55: #001018;
+  --B-60: #00000a;
+  --B-65: #000000;
+
+  --Y-00: #fffae5;
+  --Y-05: #fff5cc;
+  --Y-10: #ffeba3;
+  --Y-15: #ffe27a;
+  --Y-20: #ffd851;
+  --Y-25: #ffce28;
+  --Y-30: #ffc400;
+  --Y-35: #e6b000;
+  --Y-40: #cc9d00;
+  --Y-45: #b38400;
+  --Y-50: #996b00;
+  --Y-55: #805200;
+  --Y-60: #664000;
+  --Y-65: #4d2e00;
+  --Y-70: #331d00;
+  --Y-75: #1a0c00;
+  --Y-80: #0d0600;
+  --Y-85: #060300;
+  --Y-90: #030100;
+
+  --S-00: #ededed;
+  --S-02: hsl(0, 0%, 88%);
+  --S-05: #d1d1d1;
+  --S-10: #b5b5b5;
+  --S-15: #999999;
+  --S-20: #7d7d7d;
+  --S-25: #616161;
+  --S-30: #454545;
+  --S-35: #292929;
+  --S-40: #0d0d0d;
+  --S-45: #0a0a0a;
+  /* semantic */
+  //orange
+  // --primary-color-0-partial: 33, 100%, 77%;
+  // --primary-color-5-partial: 30, 100%, 73%;
+  // --primary-color-10-partial: 28, 100%, 70%;
+  // --primary-color-15-partial: 27, 100%, 67%;
+  // --primary-color-20-partial: 26, 100%, 63%;
+  // --primary-color-25-partial: 25, 100%, 60%;
+  // --primary-color-30-partial: 24, 100%, 57%;
+  // --primary-color-35-partial: 23, 100%, 53%;
+  // --primary-color-40-partial: 23, 100%, 50%;
+  // --primary-color-45-partial: 23, 100%, 45%;
+  // --primary-color-50-partial: 23, 100%, 40%;
+  // --primary-color-55-partial: 23, 100%, 35%;
+  // --primary-color-60-partial: 24, 100%, 30%;
+  // --primary-color-65-partial: 24, 100%, 25%;
+  // --primary-color-70-partial: 25, 100%, 20%;
+  // --primary-color-75-partial: 26, 100%, 15%;
+  // --primary-color-80-partial: 29, 100%, 10%;
+  // --primary-color-85-partial: 37, 100%, 5%;
+  // --primary-color-90-partial: 120, 100%, 1%;
+  // --primary-color-95-partial: 0, 0%, 0%;
+  //yellow
+  --primary-color-00-partial: 48, 100%, 95%;
+  --primary-color-05-partial: 48, 100%, 90%;
+  --primary-color-10-partial: 47, 100%, 82%;
+  --primary-color-15-partial: 47, 100%, 74%;
+  --primary-color-20-partial: 47, 100%, 66%;
+  --primary-color-25-partial: 46, 100%, 58%;
+  --primary-color-30-partial: 46, 100%, 50%;
+  --primary-color-35-partial: 46, 100%, 45%;
+  --primary-color-40-partial: 46, 100%, 40%;
+  --primary-color-45-partial: 44, 100%, 35%;
+  --primary-color-50-partial: 42, 100%, 30%;
+  --primary-color-55-partial: 38, 100%, 25%;
+  --primary-color-60-partial: 38, 100%, 20%;
+  --primary-color-65-partial: 36, 100%, 15%;
+  --primary-color-70-partial: 34, 100%, 10%;
+  --primary-color-75-partial: 28, 100%, 5%;
+  --primary-color-80-partial: 28, 100%, 3%;
+  --primary-color-85-partial: 30, 100%, 1%;
+  --primary-color-90-partial: 20, 100%, 1%;
+  /* Primary
+  to style our colors we over-ride the primary-color property based on the component class name.
+  if you have a component which needs to say have an accent and the default primary and you cannot apply the classes to separate containers
+  there is a backup of --primary-base-permanent think of this as a const binding */
+
+  /* Use this for components you always want to be the primary color
+  Keep in mind the primary color may not always be the 70 value */
+  --primary-color-base-partial: var(--primary-color-45-partial);
+  --primary-color-darker-1-partial: var(--primary-color-50-partial);
+  --primary-color-darker-2-partial: var(--primary-color-60-partial);
+  --primary-color-lighter-1-partial: var(--primary-color-40-partial);
+  --primary-color-lighter-2-partial: var(--primary-color-30-partial);
+
+  --primary-color-base: var(--primary-color-45);
+  --primary-color-darker-1: var(--primary-color-55);
+  --primary-color-darker-2: var(--primary-color-60);
+  --primary-color-lighter-1: var(--primary-color-45);
+  --primary-color-lighter-2: var(--primary-color-40);
+
+  --primary-color-90: hsla(var(--primary-color-90-partial), 1);
+  --primary-color-80: hsla(var(--primary-color-80-partial), 1);
+  --primary-color-70: hsla(var(--primary-color-70-partial), 1);
+  --primary-color-60: hsla(var(--primary-color-60-partial), 1);
+  --primary-color-55: hsla(var(--primary-color-55-partial), 1);
+  --primary-color-50: hsla(var(--primary-color-50-partial), 1);
+  --primary-color-45: hsla(var(--primary-color-45-partial), 1);
+  --primary-color-40: hsla(var(--primary-color-40-partial), 1);
+  --primary-color-30: hsla(var(--primary-color-30-partial), 1);
+  --primary-color-20: hsla(var(--primary-color-20-partial), 1);
+  --primary-color-10: hsla(var(--primary-color-10-partial), 1);
+  --primary-color-05: hsla(var(--primary-color-05-partial), 1);
+  /* default */
+  --error-color-dark: hsla(349, 100%, 72%, 1);
+  --error-color-base: hsla(352, 75%, 64%, 1);
+  --error-color-border: hsla(348, 69%, 18%, 1);
+  --error-color-light: hsla(347, 64%, 8%, 0.4);
+
+  --success-color-dark: hsla(118, 100%, 16%, 1);
+  --success-color-base: hsla(125, 64%, 56%, 1);
+  --success-color-border: hsla(116, 47%, 18%, 1);
+  --success-color-light: hsla(116, 47%, 3%, 1);
+
+  --warning-color-dark: hsla(26, 94%, 37%, 1);
+  --warning-color-base: hsla(52, 64%, 56%, 1);
+  --warning-color-border: hsla(52, 69%, 18%, 1);
+  --warning-color-light: hsla(52, 64%, 8%, 0.4);
+
+  --info-color-grey-dark: var(--grey-02);
+  --info-color-grey-base: var(--grey-10);
+  --info-color-grey-border: var(--S-35);
+  --info-color-grey-light: var(--grey-90);
+
+  --info-color-blue-dark: hsla(198, 100%, 24%, 1);
+  --info-color-blue-base: hsla(198, 75%, 56%, 1);
+  --info-color-blue-border: hsla(197, 69%, 18%, 1);
+  --info-color-blue-light: hsla(197, 69%, 8%, 0.5);
+
+  --grey-02: rgba(251, 252, 252, 1);
+  --grey-05: rgba(241, 242, 244, 1);
+  --grey-10: rgba(227, 229, 232, 1);
+  --grey-20: rgba(201, 204, 207, 1);
+  --grey-30: rgba(175, 178, 182, 1);
+  --grey-40: rgba(149, 153, 157, 1);
+  --grey-50: rgba(122, 128, 133, 1);
+  --grey-60: rgba(96, 102, 108, 1);
+  --grey-70: rgba(70, 77, 83, 1);
+  --grey-80: rgba(45, 51, 57, 1);
+  --grey-85: rgba(32, 37, 42, 1);
+  --grey-88: hsl(207, 18%, 12%);
+  --grey-90: rgba(21, 26, 30, 1);
+  --grey-91: hsl(207, 18%, 9%);
+  --grey-92: hsl(207, 14%, 8%);
+  --grey-93: hsl(207, 18%, 7%);
+  --grey-95: hsl(207, 18%, 5%);
+  --grey-97: hsl(207, 18%, 3%);
+  --grey-99: hsl(207, 18%, 1%);
+
+  --main-content-gap: 1rem;
+  --input-border-radius: 0.25rem;
+  --input-padding: 0.5rem 0.75rem;
+  --input-padding-condensed: 0.25rem 0.5rem;
+  --main-padding-sides: 1rem;
+  --card-border-radius: 0rem;
+  --card-padding: 0.5rem;
+  --svg-fill: transparent;
+
+  color: var(--copy-color);
+
+  --TheHeader-height: 2.5rem;
+
+  @include mediaPhone('max') {
+    --TheHeader-height: 3rem;
+    --TheMobileNavigation-height: 5rem;
+  }
+}
+
+html.light-theme {
+  --workmark-color: var(--B-55);
+  --grey-99: rgba(241, 242, 244, 1);
+  --S-35: var(--S-05);
+  --S-45: var(--S-00);
+  --grey-80: var(--S-10);
+  --grey-92: var(--S-02);
+  --line-break: 1px solid var(--grey-20);
+  --background-color: var(--S-00);
+  --button-background-color: var(--grey-20);
+  --copy-color: var(--S-40);
+  --copy-color-muted: var(--grey-70);
+  --svg-stroke-color: var(--S-45);
+  --input-background-color: var(--S-05);
+  --input-border-color: var(--S-10);
+  --focus-outline: 1px dashed var(--Y-35);
+  --card-border-color: var(--S-10);
+  --card-box-shadow: 0px 2px 16px -2px var(--grey-99);
+  --card-background-color: var(--S-02);
+  --hover-brightness: 0.96;
+  --footer-background: white;
+  --primary-color-base: var(--primary-color-40);
+  --primary-color-darker-1: var(--primary-color-55);
+  --primary-color-darker-2: var(--primary-color-60);
+  --primary-color-lighter-1: var(--primary-color-45);
+  --primary-color-lighter-2: var(--primary-color-40);
+}
+//.dark-theme
+html {
+  --focus-outline: 1px dashed var(--Y-35);
+  --svg-stroke-color: var(--copy-color-muted);
+  --line-break-color: rgba(0, 0, 0, 0.2);
+  --line-break: 1px solid var(--grey-80);
+  --selected-outline: 2px dotted var(--O-55);
+  //also want offset of -4px;
+  --background-color: var(--S-40, #0d0d0d);
+  --button-background-color: var(--grey-90);
+  --copy-color: var(--S-05);
+  --copy-color-muted: var(--S-20);
+  --card-border: 0.5px solid var(--B-40);
+  ;
+  --card-box-shadow: 0px 2px 16px -2px var(--grey-99);
+  --card-background-color: var(--background-color);
+  --grid-line-color: var(--S-35);
+  --hover-brightness: 1.3;
+  --footer-background: black;
+  --workmark-color: var(--B-35);
+  --focus-border-color: var(--primary-color-base);
+  --input-background-color: var(--grey-85);
+  --input-border-color: var(--grey-90);
+  /* --card-box-shadow: var(10px 5px 5px red); */
+  --modal-card-background: var(--grey-90);
+  --content-box-shadow: 2px 2px 0 0 var(--copy-color, black);
+
+  --svg-stroke-width: 1.2px;
+
+
+  //temperature colurs
+  --temp-spark: hsla(54, 97%, 61%, 1);
+  --temp-burn: hsla(37, 98%, 61%, 1);
+  --temp-blaze: hsla(9, 98%, 59%, 1);
+  --temp-chill: hsla(198, 90%, 65%, 1);
+  --temp-frost: hsla(222, 95%, 62%, 1);
+  --temp-freeze: hsla(247, 98%, 61%, 1);
+  --temp-spark-border: darkgoldenrod;
+  --temp-burn-border: orange;
+  --temp-blaze-border: orangered;
+  --temp-chill-border: aquamarine;
+  --temp-frost-border: blueviolet;
+  --temp-freeze-border: indigo;
+}
+
+.spark {
+  --border-color: var(--temp-spark-border);
+  --background-color: var(--temp-spark);
+}
+
+.burn {
+  --border-color: var(--temp-burn-border);
+  --background-color: var(--temp-burn);
+}
+
+.blaze {
+  --border-color: var(--temp-blaze-border);
+  --background-color: var(--temp-blaze);
+}
+
+.chill {
+  --border-color: var(--temp-chill-border);
+  --background-color: var(--temp-chill);
+}
+
+.frost {
+  --border-color: var(--temp-frost-border);
+  --background-color: var(--temp-frost);
+}
+
+.freeze {
+  --border-color: var(--temp-freeze-border);
+  --background-color: var(--temp-freeze);
+}
+
+.comfortable {
+  --border-color: var(--grey-60);
+  --background-color: var(--grey-20);
+}
+
+.error {
+  --content-color: var(--error-color-base);
+  --border-color: var(--error-color-border);
+  --background-color: var(--error-color-light);
+}
+
+.success {
+  --content-color: var(--success-color-base);
+  --border-color: var(--success-color-border);
+  --background-color: var(--success-color-light);
+}
+
+.warning {
+  --content-color: var(--warning-color-base);
+  --border-color: var(--warning-color-border);
+  --background-color: var(--warning-color-light);
+}
+
+.info {
+  --content-color: var(--info-color-blue-base);
+  --border-color: var(--info-color-blue-border);
+  --background-color: var(--info-color-blue-light);
+}
+
+.yellow-amber {}
+
+.fyi {
+  --content-color: var(--info-color-grey-base);
+  --border-color: var(--info-color-grey-border);
+  --background-color: var(--info-color-grey-light);
+}

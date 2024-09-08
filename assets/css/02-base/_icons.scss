@@ -1,0 +1,32 @@
+svg {
+  height: auto;
+  // max-width: 100%;
+  overflow: visible;
+}
+
+svg.feather {
+  display: block;
+  fill: var(--svg-fill-color, transparent);
+  stroke: var(--svg-stroke-color);
+  stroke-width: var(--svg-stroke-width, 0.8px);
+  transition: stroke var(--fade-timing);
+}
+
+symbol {
+  overflow: visible;
+}
+
+.pixel-icon {
+  --pixel-fill-color: var(--primary-color-base);
+  fill: var(--grey-99);
+  overflow: visible;
+
+  &:hover {
+    #active-pix {
+      transition: filter 240ms ease-in-out;
+      filter: brightness(1.6) drop-shadow(0 0 4px var(--primary-color-base));
+    }
+
+    // filter: drop-shadow(0 0 3px var(--Y-40));
+  }
+}

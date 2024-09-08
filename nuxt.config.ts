@@ -1,16 +1,17 @@
 export default defineNuxtConfig({
   // Having SSR allows us to use `nuxt generate`, turn it off if you don't care
   ssr: true,
+
   devtools: { enabled: true },
 
   app: {
     head: {
       title: 'Nuxt + VueFire Blaze Plan Example',
       link: [
-        {
-          href: 'https://cdn.jsdelivr.net/npm/water.css@2/out/water.css',
-          rel: 'stylesheet',
-        },
+        // {
+        //   href: 'https://cdn.jsdelivr.net/npm/water.css@2/out/water.css',
+        //   rel: 'stylesheet',
+        // },
         {
           rel: 'icon',
           type: 'image/svg+xml',
@@ -20,7 +21,16 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['~/assets/style.css'],
+  css: ['~/assets/main.scss'],
+
+  components: {
+    dirs: [
+      {
+        path: '~/components',
+        pathPrefix: false // Disable prefix for all subdirectories
+      }
+    ]
+  },
 
   nitro: {
     prerender: {
@@ -51,12 +61,12 @@ export default defineNuxtConfig({
     },
     auth: true,
 
-    appCheck: {
-      provider: 'ReCaptchaV3',
-      // site key, NOT secret key
-      key: '6LeS5q0nAAAAABH3u13ntLwuIOkiNjHlXJOXoN5T',
-      isTokenAutoRefreshEnabled: true,
-    },
+    // appCheck: {
+    //   provider: 'ReCaptchaV3',
+    //   // site key, NOT secret key
+    //   key: '6LeS5q0nAAAAABH3u13ntLwuIOkiNjHlXJOXoN5T',
+    //   isTokenAutoRefreshEnabled: true,
+    // },
 
 
     config: {
@@ -86,12 +96,16 @@ export default defineNuxtConfig({
     // Make some pages client only (since we have an SPA)
     // useful for authenticated pages that require the user to be logged in to be
     // displayed
+
     '/admin': { ssr: false },
     '/login': { ssr: false },
     '/analytics': { ssr: false },
     // you don't need to add ssr: true to any route, it's the default
-    // '/users': { ssr: true },
-    // '/posts/new': { ssr: true },
+    '/users': { ssr: true },
+    '/posts/new': { ssr: true },
+    '/bingoCards/bingo-card-creator': { ssr: false }
     // '/emoji-panel': { swr: true },
   },
+
+  compatibilityDate: '2024-09-03',
 })

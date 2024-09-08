@@ -1,0 +1,192 @@
+//@import '@/components/base/controls/control-styles.module.scss'; usage
+@import '@/assets/css/01-config/mixins.module.scss';
+
+//remove default counter buttons
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+label,
+.label {
+  display: flex;
+  width: max-content;
+  font-size: 0.875rem;
+
+  &.mimic {
+    all: inherit;
+    border: 0;
+
+    &:before {
+      color: var(--copy-color-muted);
+      content: 'edit:';
+    }
+
+    &:after {
+      color: var(--copy-color-muted);
+      content: '::'
+    }
+
+    &>.control {
+      all: inherit;
+      border: 0;
+      padding: 0;
+
+      &:hover,
+      &:focus {
+        background-color: var(--grey-92);
+      }
+    }
+  }
+
+  &>.control {
+    background-color: var(--input-background-color);
+    padding: var(--input-padding);
+    border: 1px solid var(--input-border-color);
+    border-radius: 4px;
+    font-size: 0.825rem;
+    color: var(--copy-color);
+    font-family: inherit;
+
+    @include mediaPhone('max') {
+      font-size: 16px;
+    }
+  }
+
+  &.condensed {
+    --input-padding: var(--input-padding-condensed);
+  }
+
+  &.error {
+    color: var(--error-color-base);
+    --input-border-color: var(--error-color-border);
+  }
+
+  &.retro {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0.16px;
+    color: var(--S-20, #7D7D7D);
+    font-family: var(--font-ibm-mono);
+    background-color: var(--background-color);
+    padding: 0.25rem 0.5rem;
+    gap: 0rem;
+    height: 100%;
+
+    &:hover {
+      background-color: var(--grey-92);
+    }
+
+    &>textarea.control {
+      resize: none;
+      max-height: 4.125rem;
+      overflow-y: auto;
+    }
+
+    &:focus-within {
+      outline: 1px dashed var(--Y-35);
+      outline-offset: -1px;
+    }
+
+    &>.control {
+
+      &:focus {
+        outline: none;
+      }
+
+      border-radius: 0;
+      color: var(--O-55, #B34600);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      /* 128.571% */
+      letter-spacing: 0.16px;
+      cursor: initial;
+      background-color: transparent;
+      border: none;
+      font-size: 0.825rem;
+      padding: 0;
+    }
+
+    &.vertical {
+      gap: 0rem;
+      flex-direction: column;
+    }
+
+    &.horizontal {
+      gap: 0.5rem;
+    }
+  }
+
+  &:has(.control[readonly]) {
+    cursor: default;
+
+    &>.control {
+      background-color: var(--grey-90);
+    }
+  }
+
+  &.vertical {
+    gap: 0.25rem;
+    flex-direction: column;
+  }
+
+  &.horizontal {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+.bp-input {
+  &.vertical {
+    gap: 0.5rem;
+    flex-direction: column;
+  }
+
+  &.horizontal {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+
+label.fill-content,
+label.fill-content>.control {
+  width: 100%;
+}
+
+.control:focus {
+  outline-offset: -2px;
+  outline: solid 2px var(--primary-color-base);
+}
+
+.control:hover {}
+
+.error-text {
+  color: var(--error-color-base);
+}
+
+.helper-text {
+  color: var(--copy-color-muted);
+  font-size: 0.75rem;
+}
+
+.helper-content {
+  display: flex;
+
+  &:empty {
+    display: none;
+  }
+
+  & *+* {
+    margin-left: auto;
+  }
+}

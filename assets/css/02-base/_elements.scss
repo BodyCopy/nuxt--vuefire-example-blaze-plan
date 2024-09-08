@@ -1,0 +1,45 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+fieldset {
+    margin: 0;
+    border: 0.5px solid var(--B-40);
+    padding: 0.25rem 0.75rem 0.75rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+legend {
+    color: var(--copy-color);
+    font-family: var(--font-ibm-mono);
+    padding: 0.25rem 0.5rem;
+}
+
+menu {
+    margin: 0;
+    padding: 0;
+
+    & li {
+        list-style: none;
+    }
+}
+
+table {}
+
+tbody {}
+
+thead {}
+
+th {}
+
+td {
+    color: var(--copy-color-muted);
+}
+
+figure {
+    margin: 0;
+}

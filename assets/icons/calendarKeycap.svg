@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="feather feather-calendar">
+  <defs>
+    <filter id="keycap-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <!-- Offset the shadow -->
+      <feOffset dx="0" dy="1" result="offset-shadow"/>
+
+      <!-- Create a colored flood for the shadow color -->
+      <feFlood flood-color="#888888" result="shadow-color"/>
+
+      <!-- Composite the color with the offset shadow -->
+      <feComposite in="shadow-color" in2="offset-shadow" operator="in" result="colored-shadow"/>
+    
+      <!-- Merge the pieces together -->
+      <feMerge>
+        <feMergeNode in="colored-shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#keycap-shadow)">
+    <rect stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x="3" y="4" width="18" height="18" rx="1" ry="1"></rect>
+    <line x1="16" y1="2" x2="16" y2="6"></line>
+    <line x1="8" y1="2" x2="8" y2="6"></line>
+    <line x1="3" y1="10" x2="21" y2="10"></line>
+  </g>
+
+  <text fill="grey" x="12" y="16" text-anchor="middle" dominant-baseline="middle" style="font-size: 10px">esc</text>
+</svg>

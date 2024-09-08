@@ -1,0 +1,108 @@
+.horizontal-scroll {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: inline mandatory;
+    overscroll-behavior-x: contain;
+    &>li {
+        flex: 1 0 300px;
+        scroll-snap-align: center;
+    }
+}
+
+.grid-wrapper {
+    overflow: hidden;
+    // border: var(--line-break);
+    //Grid
+    --_gallery-column-layout: repeat(auto-fill, minmax(12rem, 1fr));
+    --_gallery-padding: 2rem;
+    --_gallery-gap: 0.8px;
+
+    &.small-grid {
+        --_gallery-column-layout: repeat(auto-fill, minmax(5rem, 1fr));
+        --_gallery-padding: 0.5rem;
+        --_gallery-gap: 0.8px;
+    }
+
+    &>.contest-gallery,
+    &>.base-grid {
+        display: grid;
+        isolation: isolate;
+        position: relative;
+        gap: var(--_gallery-gap);
+        grid-template-columns: var(--_gallery-column-layout);
+        background-color: var(--grid-line-color);
+
+        &.list {
+            grid-template-columns: 1fr;
+        }
+
+        @include mediaPhone("max") {
+            --main-padding-sides: 0.5rem;
+            --grid-column-layout: 1fr;
+            --_gallery-column-layout: 1fr;
+            --_gallery-padding: 0;
+            --gallery-gap: 0;
+        }
+    }
+
+    &>.base-grid {
+
+        @include mediaTabletPortrait("max") {}
+
+        &>* {
+            background-color: var(--background-color);
+        }
+
+        &:after {
+            font-family: var(--font-ibm);
+            font-weight: 800;
+            color: var(--background-color);
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            line-height: 100%;
+            letter-spacing: -0.1em;
+            font-size: 1em;
+            white-space: pre;
+            content: '    /\\_/\\\A(=･ω･=)つ .+$+.';
+            z-index: -1;
+
+        }
+    }
+
+    &>.contest-gallery {
+        --gallery-row-layout: fit-content(80px);
+        --_gallery-column-layout: repeat(auto-fit, minmax(3rem, 1fr));
+    }
+
+
+}
+
+.settings-grid {
+    border: 0.5px solid var(----S-25, #616161);
+    background-color: var(--S-25);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5px;
+
+
+    &__sub-heading {
+        font-family: var(--font-ibm-mono);
+        padding: 0.25rem 0.5rem;
+        color: var(--S-40, #0D0D0D);
+        background-color: var(--S-25);
+        font-size: 0.825rem;
+        font-weight: 500;
+        letter-spacing: 0.16px;
+    }
+
+    &>* {
+        flex: 1 1 164px;
+
+        &:last-child {
+            flex-grow: 2;
+        }
+    }
+}

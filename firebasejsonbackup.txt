@@ -1,0 +1,18 @@
+    // {
+    //   "source": "firebase-functions",
+    //   "codebase": "firebase-functions",
+    //   "ignore": [
+    //     "node_modules",
+    //     ".git",
+    //     "firebase-debug.log",
+    //     "firebase-debug.*.log",
+    //     "*.local"
+    //   ],
+    //   "predeploy": [
+    //     "npm --prefix \"$RESOURCE_DIR\" run lint",
+    //     "npm --prefix \"$RESOURCE_DIR\" run build"
+    //   ]
+    // }
+
+Credentials issue
+    https://stackoverflow.com/questions/77824667/error-in-firebase-functions-after-deploying-nuxt-3-app-vuefire

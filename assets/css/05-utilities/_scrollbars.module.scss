@@ -1,0 +1,115 @@
+//@import '@/assets/css/05-utilities/scrollbars.module.scss'; usage
+
+@mixin customScrollBar($hover: true) {
+  --scrollbar-thumb: var(--grey-70);
+  --scrollbar-track: var(--grey-80);
+
+  @if $hover {
+    --scrollbar-thumb: transparent;
+    --scrollbar-track: transparent;
+
+    &:hover {
+      --scrollbar-thumb: var(--grey-70);
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &:hover::-webkit-scrollbar {
+      display: block;
+    }
+  }
+
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &:hover::-webkit-scrollbar {
+    display: block;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--scrollbar-track);
+    margin-right: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+  }
+}
+
+.thin-scrollbar {
+  --scrollbar-thumb: var(--grey-70);
+  --scrollbar-track: var(--grey-80);
+
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: thin;
+
+  &:not(:hover) {
+    --scrollbar-thumb: transparent;
+    --scrollbar-track: transparent;
+  }
+
+  &:hover {
+    --scrollbar-thumb: var(--grey-70);
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:hover::-webkit-scrollbar {
+    display: block;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &:hover::-webkit-scrollbar {
+    display: block;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--scrollbar-track);
+    margin-right: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+  }
+}
+
+
+.edge-cursor {
+  position: relative;
+
+  &:before {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background-image: url('@/assets/icons/element-cursor.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+}
+
+//hide scroll-bar
+.no-scrollbar {
+  overflow-y: scroll;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+
+  /* IE 10+ */
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}

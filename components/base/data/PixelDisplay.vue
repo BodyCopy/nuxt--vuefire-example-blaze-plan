@@ -1,0 +1,297 @@
+<template>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor"
+        stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="pixel-display">
+        <defs>
+            <circle id="pixel" cx="0" cy="0" r="1" style="" />
+        </defs>
+        <rect x="0" y="0" width="32" height="32" style="fill:red;" />
+        <g id="row-1">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-2" transform="translate(0,2)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-3" transform="translate(0,4)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-4" transform="translate(0,6)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-5" transform="translate(0,8)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-6" transform="translate(0,10)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-7" transform="translate(0,12)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-8" transform="translate(0,14)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-9" transform="translate(0,16)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-10" transform="translate(0,18)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-11" transform="translate(0,20)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-12" transform="translate(0,22)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-13" transform="translate(0,24)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-14" transform="translate(0,26)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-15" transform="translate(0,28)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+        <g id="row-16" transform="translate(0,30)">
+            <use href="#pixel" x="1" y="1" />
+            <use href="#pixel" x="3" y="1" />
+            <use href="#pixel" x="5" y="1" />
+            <use href="#pixel" x="7" y="1" />
+            <use href="#pixel" x="9" y="1" />
+            <use href="#pixel" x="11" y="1" />
+            <use href="#pixel" x="13" y="1" />
+            <use href="#pixel" x="15" y="1" />
+            <use href="#pixel" x="17" y="1" />
+            <use href="#pixel" x="19" y="1" />
+            <use href="#pixel" x="21" y="1" />
+            <use href="#pixel" x="23" y="1" />
+            <use href="#pixel" x="25" y="1" />
+            <use href="#pixel" x="27" y="1" />
+            <use href="#pixel" x="29" y="1" />
+            <use href="#pixel" x="31" y="1" />
+        </g>
+    </svg>
+</template>

@@ -25,11 +25,14 @@ const routes = computed(() =>
 </template>
 
 <style scoped>
+nav.links{
+  height: 3rem;
+}
 nav.links ul {
+  height: 100%;
   list-style: none;
   margin: 0;
   padding: 0;
-
   display: flex;
 }
 
@@ -38,6 +41,7 @@ nav.links li a {
   display: block;
   text-align: center;
   padding: 8px 12px;
+  width: max-content;
 
   --background: var(--background-alt);
 }
@@ -70,15 +74,15 @@ nav.links li a.router-link-active::after {
 
 nav.links > ul {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  overflow-x: auto;
+  display: flex;
+  flex-wrap: nowrap;
   gap: 0.75rem;
   justify-items: center;
-  max-width: 1000px; /* Optional: set a max width for the grid */
   margin: 0 auto; /* Optional: center the grid horizontally */
 }
 
 .links li {
-  width: 150px;
   block-size: fit-content;
 }
 </style>

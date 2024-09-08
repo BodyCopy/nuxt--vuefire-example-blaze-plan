@@ -1,0 +1,29 @@
+html {
+  --nav-height: 4rem;
+  --grid-padding: 1rem;
+
+  @include mediaPhone("max") {
+    --nav-height: 3rem;
+    --grid-gap: 1rem;
+    --layout-grid: 1fr;
+  }
+
+  @include mediaTabletPortrait("min") {
+    --nav-height: 3rem;
+    --grid-padding: 1.5rem;
+    --layout-grid: 1fr;
+    --grid-gap: 1.25rem;
+  }
+
+  @include mediaTabletLandscape("min") {
+    --grid-gap: 1.5rem;
+    --grid-padding: 2rem;
+    --layout-grid: 1fr;
+  }
+
+  @include mediaDesktop1280 {
+    --grid-gap: 2rem;
+    --grid-padding: 3rem;
+    --layout-grid: 1fr;
+  }
+}
