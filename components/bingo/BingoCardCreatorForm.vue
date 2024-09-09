@@ -43,7 +43,6 @@ const uploadedFiles = ref(null);
 function randomize() {
     bingoItems.value = getRandomItemsWithSeed(bingoItems.value, randomSeed.value, bingoItems.value.length);
     console.log(bingoItems.value);
-
 }
 async function handleUploads(files) {
     const file = files[0]
@@ -103,7 +102,9 @@ async function createBingoCard() {
         {
             createdOn: serverTimestamp(),
             creator: user.displayName || 'Anonymous',
-            size: cardSize.value
+            size: cardSize.value,
+            score:{},
+            players:[]
         }
         if (!template.value) {
             template.value = uuidv4();

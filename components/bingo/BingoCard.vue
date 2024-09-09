@@ -10,28 +10,11 @@
     </div>
 </template>
 <script setup>
-import { doc, getDoc, collection, updateDoc } from 'firebase/firestore';
+import { useRoomStore } from '~/stores/roomData';
+const props = defineProps({ bingoItems: Array });
 const route = useRoute();
 const id = route.params.id;
-const db = useFirestore();
-const docRef = doc(db, `rooms/${id}`);
-
-async function updateBingoItem(coordinance, key, value) {
-
-    let itemId = (coordinance[0] * 5) + (coordinance[1]);
-    console.log(itemId);
-
-    try {
-        await updateDoc(docRef, {
-            [`bingoItems.item-${itemId}.${key}`]: value
-        });
-        console.log('success');
-    } catch (err) {
-        console.log(err);
-
-    }
-}
-const props = defineProps({ bingoItems: Array });
+const { updateBingoItem } = useRoomStore(id);
 
 const bingoItemsArray = computed(() => {
     let output = [];
@@ -43,11 +26,18 @@ const bingoItemsArray = computed(() => {
 
 </script>
 <style lang="scss">
+@import '~/assets/css/01-config/mixins.module.scss';
+
 .bingo {
     &-container {
         container: bingo-card / size;
         height: calc(100svh - 3rem);
         aspect-ratio: 1/1;
+
+        @include mediaTabletLandscape('max') {
+            border: 1px solid red;
+            height: 100svw;
+        }
     }
 
     &-card {

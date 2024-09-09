@@ -5,7 +5,6 @@ export default (() => {
     function generateRandomSeed() {
         let randomSeed = uuidv4();
         console.log(randomSeed);
-
         return randomSeed;
     }
 

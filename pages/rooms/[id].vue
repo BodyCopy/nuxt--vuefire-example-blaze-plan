@@ -6,21 +6,19 @@
 </template>
 <script setup>
 import { doc, getDoc, collection, updateDoc } from 'firebase/firestore';
+import { useRoomStore } from '../../stores/roomData';
 definePageMeta({
     title: 'Room',
     linkTitle: `test`,
     order: 1,
     layout: 'room-layout'
 })
+
 const route = useRoute();
 const id = route.params.id;
-const db = useFirestore();
+const { roomData } = useRoomStore(id);
 
-const room = computed(() =>
-    doc(collection(db, 'rooms'), id)
-)
 // contact will always be in sync with the data source
-const roomData = useDocument(room);
 
 const bingoItemKeys = computed(() => {
     const orderedItems = Object.keys(roomData.value.bingoItems)
@@ -35,23 +33,11 @@ const bingoItemKeys = computed(() => {
     return orderedItems;
 })
 
-const docRef = doc(db, `rooms/${id}`);
-
-async function updateBingoItem(itemId, key, value) {
-    try {
-        await updateDoc(docRef, {
-            [`bingoItems.item-${itemId}.${key}`]: value
-        });
-        console.log('success');
-    } catch (err) {
-        console.log(err);
-
-    }
-}
 </script>
 <style lang="scss">
 .bingo-room {
     display: grid;
     grid-template-columns: max-content 1fr;
+    --player-color: rebeccapurple;//todo:afterIdentifyingPlayer match colour this needs to be a v-bind
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="bingo-card-creator">
         <BingoCardCreatorForm @test-bingo-card="loadTestCard"></BingoCardCreatorForm>
-        <BingoCard v-if="testBingoCardItems" :bingoItems="testBingoCardItems"></BingoCard>
+        <!-- <BingoCard v-if="testBingoCardItems" :bingoItems="testBingoCardItems"></BingoCard> -->
         <h2>SEE EXAMPLE</h2>
         <button>See example</button>
         <p>{{ testBingoCardItems }}</p>
@@ -20,7 +20,6 @@ definePageMeta({
     layout: 'room-layout'
 })
 
-const { getRandomItemsWithSeed } = useBingoUtilities();
 const testBingoCardItems = ref([]);
 function loadTestCard(data) {
     console.log('test', data);
@@ -28,12 +27,6 @@ function loadTestCard(data) {
     console.log(testBingoCardItems.value);
 
 }
-// const seed = ref(uuidv4());
-// const randomItems = ref(getRandomItemsWithSeed(bingoItems, seed.value, 25));
-
-// function generateWithNewSeed() {
-//     randomItems.value = getRandomItemsWithSeed(bingoItems, seed.value, 25)
-// }
 
 
 

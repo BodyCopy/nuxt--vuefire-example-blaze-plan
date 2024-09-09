@@ -95,11 +95,7 @@ label,
     }
 
     &>.control {
-
-      &:focus {
-        outline: none;
-      }
-
+      
       border-radius: 0;
       color: var(--O-55, #B34600);
       font-size: 14px;
@@ -112,6 +108,11 @@ label,
       border: none;
       font-size: 0.825rem;
       padding: 0;
+      
+      &:focus {
+        outline: none;
+      }
+
     }
 
     &.vertical {

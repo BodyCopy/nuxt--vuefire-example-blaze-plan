@@ -6,8 +6,14 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore'
+import {
+  signInAnonymously,
+} from 'firebase/auth'
 import { updateProfile } from 'firebase/auth'
-
+const auth = useFirebaseAuth()! // only exists on client side
+function anonSignIn() {
+  signInAnonymously(auth);
+}
 const db = useFirestore()
 const user = useCurrentUser()
 
@@ -68,6 +74,13 @@ watch(user, async (currentUser, previousUser) => {
       }
       console.log('User updated')
     }
+  }
+})
+onMounted(() => {
+  console.log('USER',user.value);
+  
+  if (!user.value) {
+    anonSignIn();
   }
 })
 </script>

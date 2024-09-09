@@ -21,7 +21,6 @@ definePageMeta({
   linkTitle: 'Login',
   order: 2,
 })
-
 const auth = useFirebaseAuth()! // only exists on client side
 const user = useCurrentUser()
 const isUserLoaded = useIsCurrentUserLoaded()
@@ -30,6 +29,9 @@ function signinRedirect() {
     console.error('Failed signinRedirect', reason)
     error.value = reason
   })
+}
+function anonSignIn() {
+  signInAnonymously(auth);
 }
 
 function signinPopup() {
@@ -44,6 +46,7 @@ function signinPopup() {
 const error = ref<Error | null>(null)
 // only on client side
 onMounted(() => {
+
   getRedirectResult(auth).catch((reason) => {
     console.error('Failed redirect result', reason)
     error.value = reason
@@ -65,8 +68,7 @@ const route = useRoute()
 
     <div v-else-if="route.query.redirect" class="message-box">
       <p>
-        Please login to access <code>{{ route.query.redirect }}</code
-        >.
+        Please login to access <code>{{ route.query.redirect }}</code>.
       </p>
     </div>
 
@@ -74,16 +76,9 @@ const route = useRoute()
       <div>
         You are currently logged in as:
         <br />
-        <img
-          class="avatar"
-          v-if="user.photoURL"
-          :src="user.photoURL"
-          referrerpolicy="no-referrer"
-        />
+        <img class="avatar" v-if="user.photoURL" :src="user.photoURL" referrerpolicy="no-referrer" />
         <br />
-        <strong
-          >{{ user.isAnonymous ? '🥸' : '' }} {{ user.displayName }}.</strong
-        >
+        <strong>{{ user.isAnonymous ? '🥸' : '' }} {{ user.displayName }}.</strong>
       </div>
 
       <button @click="signOut(auth)">Logout</button>
@@ -93,6 +88,7 @@ const route = useRoute()
       <button @click="signinRedirect()">SignIn with Google (redirect)</button>
       <br />
       <button @click="signinPopup()">SignIn with Google (popup)</button>
+      <button @click="anonSignIn()">Sign in Anon</button>
       <!-- <br /> -->
       <!-- <button @click="signInAnonymously(auth)">SignIn Anonymously</button> -->
     </template>
@@ -104,7 +100,7 @@ const route = useRoute()
   padding: 1em 0;
 }
 
-main > button {
+main>button {
   margin: 1em 0;
 }
 </style>

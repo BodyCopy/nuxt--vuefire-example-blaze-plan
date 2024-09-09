@@ -216,6 +216,18 @@ dt.key {
 }
 
 .fake-input {
+  
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.16px;
+  color: var(--S-20, #7D7D7D);
+  font-family: var(--font-ibm-mono);
+  background-color: var(--background-color);
+  padding: 0.125rem 0.5rem;
+  gap: 0rem;
+  height: 100%;
+
   &.neutral {
     &>dd {
       color: var(--S-10, #999);
@@ -228,16 +240,6 @@ dt.key {
     }
   }
 
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 150%;
-  letter-spacing: 0.16px;
-  color: var(--S-20, #7D7D7D);
-  font-family: var(--font-ibm-mono);
-  background-color: var(--background-color);
-  padding: 0.125rem 0.5rem;
-  gap: 0rem;
-  height: 100%;
 
   &>dt {}
 
