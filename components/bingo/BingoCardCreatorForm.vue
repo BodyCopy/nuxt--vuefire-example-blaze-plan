@@ -8,7 +8,8 @@
             </BaseSelect>
             <BaseInput v-model="cardSize" label="Card size" width="fc" type="number"></BaseInput>
             <BaseTextArea v-model="randomSeed" label="Seed" width="fc"></BaseTextArea>
-            <BaseSelect default-value="Standard" label="Game mode" width="fc" :options="['yellow', 'red']"></BaseSelect>
+            <BaseSelect v-model="gameMode" label="Game mode" width="fc"
+                :options="{ ['Lock out']: 'lock-out', Standard: 'standard' }"></BaseSelect>
         </fieldset>
         <fieldset>
             <legend>Bingo card</legend>
@@ -80,6 +81,7 @@ const randomSeed = ref(generateRandomSeed());
 const template = ref(null);
 const bingoItem = ref('');
 const bingoItems = ref([]);
+const gameMode = ref('standard');
 function addItem() {
     if (bingoItems.value.length >= 25) {
         alert('full')
@@ -101,10 +103,8 @@ async function createBingoCard() {
         const data =
         {
             createdOn: serverTimestamp(),
-            creator: user.displayName || 'Anonymous',
+            creator: { uid: user.value.uid || '', displayName: user.value.displayName || 'Anonymous' },
             size: cardSize.value,
-            score:{},
-            players:[]
         }
         if (!template.value) {
             template.value = uuidv4();
@@ -113,13 +113,13 @@ async function createBingoCard() {
                 ...data,
                 bingoItems: bingoItems.value,
                 updatedOn: serverTimestamp(),
-                lastUserOn: serverTimestamp(),
+                lastUserOn: serverTimestamp()
             }, { merge: true })
         }
         const randomItems = getRandomItemsWithSeed(bingoItems.value, randomSeed.value, (cardSize.value ** 2));
 
         const mappedItems = randomItems.reduce((acc, item, index) => {
-            acc[`item-${index}`] = { name: item, complete: false };
+            acc[`item-${index}`] = { name: item, complete: '' };
             return acc;
         }, {});
 
@@ -131,6 +131,9 @@ async function createBingoCard() {
             seed: randomSeed.value,
             bingoItems: mappedItems,
             lastUserOn: serverTimestamp(),
+            score: { bingos: Array(12).fill[''] },
+            players: [],
+            gameMode: gameMode.value
         });
         console.log('added');
     }

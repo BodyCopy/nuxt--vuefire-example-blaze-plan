@@ -103,7 +103,9 @@ export default defineNuxtConfig({
     // you don't need to add ssr: true to any route, it's the default
     '/users': { ssr: true },
     '/posts/new': { ssr: true },
-    '/bingoCards/bingo-card-creator': { ssr: false }
+    '/bingoCards/bingo-card-creator': { ssr: false },
+    // '/rooms/**': { ssr: false },
+    '/profile/**': { ssr: false }
     // '/emoji-panel': { swr: true },
   },
 

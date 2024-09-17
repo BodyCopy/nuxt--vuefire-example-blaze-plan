@@ -8,10 +8,9 @@
     </label> -->
     <label :class="[inputStyles]">{{ props.label }}
         <select class="control" v-model="model" :id="props.name" :name="props.name">
-            <option value="default" selected>{{ defaultValue }}</option>
-            <option v-if="typeof props.options === 'object'" v-for="(value, key, index) in options" :value="key">{{ key +
-                ':' + value.width + 'X' + value.height }}</option>
-            <option v-else v-for="option in props.options" :value="option">{{ option }}++</option>
+            <option v-if="defaultValue" value="default" selected>{{ defaultValue }}</option>
+            <option v-if="typeof props.options === 'object'" v-for="(value, key, index) in options" :value="value">{{ key }}</option>
+            <option v-else v-for="option in props.options" :value="option">{{ option }}</option>
         </select>
         <span v-if="helperText" class="helper-text">{{ helperText }}</span>
         <span v-if="!validated && errorText" class="error-text">{{ errorText }}</span>
@@ -21,7 +20,19 @@
 import { isObject } from '@vue/shared';
 import { ref, computed } from 'vue';
 import { useControlBoilerplate } from './controlBoilerplate.js';
-const props = defineProps({ options: { type: [Object, Array] }, inputStyle: String, defaultValue: String, readOnly: { type: Boolean, default: false }, type: String, name: String, label: String, display: { type: String, default: 'ttb' }, width: String, helperText: String, validated: { type: Boolean, default: true }, errorText: String, retro: { type: Boolean, default: false } });
+const props = defineProps({
+    options: { type: [Object, Array] },
+    inputStyle: String,
+    defaultValue: String,
+    readOnly: { type: Boolean, default: false },
+    type: String,
+    name: String, label: String,
+    display: { type: String, default: 'ttb' },
+    width: String,
+    helperText: String,
+    validated: { type: Boolean, default: true },
+    errorText: String,
+    retro: { type: Boolean, default: false } });
 const { inputStyles } = useControlBoilerplate(props);
 const model = defineModel({ type: String });
 

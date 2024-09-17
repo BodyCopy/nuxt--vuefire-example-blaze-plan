@@ -1,6 +1,6 @@
 <template>
     <div class="room-score">
-        <div class="color-score" v-for="(obj,key) in score">
+        <div class="color-score" v-for="(obj,key) in score.scoreBoard">
             {{ key + ':' + obj }}
         </div>
     </div>

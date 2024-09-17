@@ -1,5 +1,12 @@
 {
   "projects": {
     "default": "vue-fire-demo-713ba"
-  }
+  },
+  "targets": {},
+  "etags": {
+    "vue-fire-demo-713ba": {
+      "extensionInstances": {}
+    }
+  },
+  "dataconnectEmulatorConfig": {}
 }

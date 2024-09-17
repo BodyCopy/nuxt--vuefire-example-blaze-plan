@@ -27,19 +27,12 @@ const db = admin.firestore();
 //the below was running infinitly
 export const watchRoomUpdates = functions.firestore
     .document('rooms/{roomId}')
-    .onUpdate(async (change, context) => {
+    .onCreate(async (snapshot, context) => {
         const { roomId } = context.params;
-        const newValue = change.after.data();
-        const previousValue = change.before.data();
-        console.log(`room ${roomId} written: ${newValue}`)
-        if (!newValue || !previousValue) {
+        const docData = snapshot.data();
+        console.log(`room ${roomId} written: ${docData}`)
+        if (!docData) {
             return null;
-        }
-
-        // Compare and check if the room expiry needs to be updated
-        const expiryTime = newValue.createdOn;
-        if (expiryTime === previousValue.expiry) {
-            return null; // No changes, so exit early
         }
 
         // Add X days to the current time in the server

@@ -16,7 +16,7 @@ function anonSignIn() {
 }
 const db = useFirestore()
 const user = useCurrentUser()
-
+provide('user', user);
 const {
   public: { vuefireVersion, nuxtVuefireVersion },
 } = useRuntimeConfig()
@@ -74,14 +74,12 @@ watch(user, async (currentUser, previousUser) => {
       }
       console.log('User updated')
     }
+    if (currentUser.isAnonymous) {
+      anonSignIn();
+    }
   }
 })
 onMounted(() => {
-  console.log('USER',user.value);
-  
-  if (!user.value) {
-    anonSignIn();
-  }
 })
 </script>
 

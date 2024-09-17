@@ -1,11 +1,14 @@
 <template>
-    <div ref="itemCell" :class="['bingo-item', { complete: item.complete }]">
+    <div ref="itemCell" :class="['bingo-item', { complete: item.complete, bingo: item?.bingo }]">
         <p ref="itemText">{{ item.name }}</p>
     </div>
 </template>
 <script setup>
 
 const props = defineProps({ item: Object });
+const completedColor = computed(() => {
+    return props.item.complete || 'black';
+})
 const itemText = ref(null);
 const itemCell = ref(null);
 // const text = reactive(useElementSize(itemText));
@@ -55,6 +58,8 @@ function checkFontSize() {
 }
 
 .complete {
-    background-color: var(--player-color, red);
+    --completed-color: v-bind(completedColor);
+    background-color: var(--completed-color, black);
 }
+
 </style>

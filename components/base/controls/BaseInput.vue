@@ -2,7 +2,8 @@
     <label :class="[inputStyles]"><span v-if="props.label">{{ props.label }}</span>
         <input ref="inputRef" class="control" @blur="() => { $emit('blur') }" v-model="model" :id="props.name"
             :readonly="props.readOnly" :name="props.name" :type="props.type || 'text'" :max-length="props.maxLength"
-            :placeholder="props.placeholder" :autocomplete="autocomplete" :pattern="props.pattern">
+            :placeholder="props.placeholder" :autocomplete="autocomplete" :pattern="props.pattern"
+            :required="required">
         <div class="helper-content">
             <span v-if="helperText" class="helper-text">{{ helperText }}</span>
             <span v-if="characterCount" class="character-count">{{ characterCount }}</span>
@@ -34,7 +35,7 @@ const props = defineProps({
 const { inputStyles } = useControlBoilerplate(props);
 const emits = defineEmits(['blur']);
 const model = defineModel({ type: [String, Number] });
-const { autocomplete } = useAttrs();
+const { autocomplete, required } = useAttrs();
 const inputRef = ref(null);
 /*
 pattern="[A-Za-z\s]+" string
@@ -71,4 +72,13 @@ defineExpose({ focusInput });
 @import './control-styles.module.scss';
 
 input[type="text"] {}
+input:user-valid{
+
+}
+input:user-invalid{
+
+}
+input:focus:user-invalid{
+    
+}
 </style>
