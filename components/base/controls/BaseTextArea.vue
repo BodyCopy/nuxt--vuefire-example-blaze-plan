@@ -31,7 +31,7 @@ const props = defineProps(
         helperText: String,
         validated: { type: Boolean, default: true },
         errorText: String,
-        maxLength: Number,
+        maxLength: [Number, String],
         characterCount: Number,
         rows: Number, cols: Number,
         retro: { type: Boolean, default: false },

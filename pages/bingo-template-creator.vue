@@ -9,9 +9,7 @@
 </template>
 <script setup>
 import { ref, reactive } from 'vue';
-import { v4 as uuidv4 } from 'uuid';
-import useBingoUtilities from '~/composables/bingoUtilities';
-import BingoCardCreatorForm from '~/components/bingo/BingoCardCreatorForm.vue';
+import BingoCardCreatorForm from '~/components/bingo/CustomTemplateForm.vue';
 
 definePageMeta({
     title: 'Card Creator',
@@ -25,8 +23,8 @@ function loadTestCard(data) {
     console.log('test', data);
     testBingoCardItems.value = data;
     console.log(testBingoCardItems.value);
-
 }
+
 
 
 

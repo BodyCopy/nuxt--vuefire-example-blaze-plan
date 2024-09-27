@@ -20,9 +20,11 @@
         <use id="seg-10" :class="['seg', { ['active-seg']: output[10] }]" href="#vertical-segment" x="17" y="26" />
         <use id="seg-11" :class="['seg', { ['active-seg']: output[11] }]" href="#horizontal-segment" x="0" y="26" />
         <use id="seg-12" :class="['seg', { ['active-seg']: output[12] }]" href="#diagonal-segment-back" x="0" y="0" />
-        <use id="seg-13" :class="['seg', { ['active-seg']: output[13] }]" href="#diagonal-segment-forward" x="0" y="0" />
+        <use id="seg-13" :class="['seg', { ['active-seg']: output[13] }]" href="#diagonal-segment-forward" x="0"
+            y="0" />
         <use id="seg-14" :class="['seg', { ['active-seg']: output[14] }]" href="#diagonal-segment-back" x="17" y="26" />
-        <use id="seg-15" :class="['seg', { ['active-seg']: output[15] }]" href="#diagonal-segment-forward" x="-17" y="26" />
+        <use id="seg-15" :class="['seg', { ['active-seg']: output[15] }]" href="#diagonal-segment-forward" x="-17"
+            y="26" />
     </svg>
 </template>
 <script setup>
@@ -31,7 +33,7 @@ const props = defineProps(['val', 'freakout']);
 
 const segmentMap = {
     a: [1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0],
-    b: [0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0],
+    b: [1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0],
     c: [1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
     d: [0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0],
     e: [1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0],
@@ -48,7 +50,7 @@ const segmentMap = {
     p: [1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0],
     q: [1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
     r: [1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0],
-    s: [1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
+    s: [1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
     t: [1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
     u: [0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
     v: [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1],
@@ -72,6 +74,7 @@ const segmentMap = {
     '=': [1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
     '/': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
     '\\': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+    '.': [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 }
 const output = ref([]);
@@ -135,7 +138,7 @@ onUnmounted(() => {
 }
 
 .active-seg {
-    fill: var(--O-55);
-    filter: drop-shadow(0 0 4px var(--O-55));
+    fill: #CD9BEC;
+    filter: drop-shadow(0 0 4px #CD9BEC);
 }
 </style>

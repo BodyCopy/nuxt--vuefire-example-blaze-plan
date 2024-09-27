@@ -9,7 +9,8 @@
     <label :class="[inputStyles]">{{ props.label }}
         <select class="control" v-model="model" :id="props.name" :name="props.name">
             <option v-if="defaultValue" value="default" selected>{{ defaultValue }}</option>
-            <option v-if="typeof props.options === 'object'" v-for="(value, key, index) in options" :value="value">{{ key }}</option>
+            <option v-if="typeof props.options === 'object'" v-for="(value, key, index) in options" :value="value">{{
+                key }}</option>
             <option v-else v-for="option in props.options" :value="option">{{ option }}</option>
         </select>
         <span v-if="helperText" class="helper-text">{{ helperText }}</span>
@@ -28,20 +29,22 @@ const props = defineProps({
     type: String,
     name: String, label: String,
     display: { type: String, default: 'ttb' },
-    width: String,
+    width: { type: String, default: 'fc' },
     helperText: String,
     validated: { type: Boolean, default: true },
     errorText: String,
-    retro: { type: Boolean, default: false } });
+    retro: { type: Boolean, default: false }
+});
 const { inputStyles } = useControlBoilerplate(props);
 const model = defineModel({ type: String });
 
 </script>
 <style lang="scss" scoped>
 @import './control-styles.module.scss';
-select{
-}
-option{
+
+select {}
+
+option {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-family: var(--font-ibm-mono);
 }

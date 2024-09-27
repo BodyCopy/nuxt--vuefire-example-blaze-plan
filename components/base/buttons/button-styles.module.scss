@@ -136,10 +136,10 @@
   
   &.neutral {
     --color: var(--copy-color);
+    --active-color: hsla(var(--primary-color-darker-2-partial), 1);
     &:hover{
       --color: hsla(var(--primary-color-darker-1-partial), 1);
     }
-    --active-color: hsla(var(--primary-color-darker-2-partial), 1);
   }
 }
 

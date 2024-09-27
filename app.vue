@@ -14,9 +14,11 @@ const auth = useFirebaseAuth()! // only exists on client side
 function anonSignIn() {
   signInAnonymously(auth);
 }
+const mobile = ref(true);
 const db = useFirestore()
 const user = useCurrentUser()
 provide('user', user);
+provide('mobile', mobile);
 const {
   public: { vuefireVersion, nuxtVuefireVersion },
 } = useRuntimeConfig()
@@ -79,7 +81,14 @@ watch(user, async (currentUser, previousUser) => {
     }
   }
 })
-onMounted(() => {
+
+function isMobile() {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  return /android|iPad|iPhone|iPod/i.test(userAgent.toLowerCase());
+}
+
+onBeforeMount(() => {
+  mobile.value = isMobile();
 })
 </script>
 

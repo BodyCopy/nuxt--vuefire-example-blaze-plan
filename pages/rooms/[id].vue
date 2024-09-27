@@ -14,13 +14,14 @@ definePageMeta({
     title: 'Room',
     linkTitle: `test`,
     order: 1,
-    layout: 'room-layout'
+    layout: 'room-layout',
+    middleware: 'check-room-password'
 })
 const db = useFirestore();
 const route = useRoute();
-const roomId = computed(() => route.params.id);
+// const roomId = computed(() => route.params.id);
 const user = useCurrentUser();
-const roomDocRef = computed(() => doc(collection(db, 'rooms'), roomId.value));
+const roomDocRef = computed(() => doc(collection(db, 'rooms'), route.params.id));
 const roomData = useDocument(roomDocRef);
 const gameMode = computed(() => roomData.value.gameMode);
 const player = computed(() => {

@@ -34,7 +34,7 @@ p.body-copy {
       calc(1rem + var(--fluid-type-target, 1.1vw)),
       var(--fluid-type-max, 1.2rem));
   margin: 0;
-  color: var(--B-15);
+  color: var(--B-05);
 }
 
 label,
@@ -70,7 +70,7 @@ h4 {
 
 h5 {
   font-size: 1rem;
-  color: var(----S-10, #b5b5b5);
+  color: var(--S-05);
   font-family: var(--font-ibm-mono);
   font-weight: 500;
   line-height: 150%;
@@ -129,7 +129,7 @@ legend.retro,
 label.retro,
 b.retro,
 div.retro {
-  color: var(--S-15, #999);
+  color: var(--copy-color-muted);
   font-family: var(--font-ibm-mono);
   font-size: 0.875rem;
   font-style: normal;
@@ -224,7 +224,7 @@ dt.key {
   color: var(--S-20, #7D7D7D);
   font-family: var(--font-ibm-mono);
   background-color: var(--background-color);
-  padding: 0.125rem 0.5rem;
+  padding: 0.5rem 0.5rem 0.5rem;
   gap: 0rem;
   height: 100%;
 
@@ -295,14 +295,14 @@ dt.key {
 ol {
   list-style: none;
   counter-reset: ordered-list-counter;
-
+  font-family: var(--font-ibm-mono);
   &>li {
     margin-left: var(--list-offset);
     counter-increment: ordered-list-counter;
     position: relative;
 
     &:before {
-      content: counter(ordered-list-counter) ")";
+      content: counter(ordered-list-counter) "•";
       margin-inline-end: 0.25em;
     }
   }

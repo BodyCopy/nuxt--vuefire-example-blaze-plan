@@ -1,7 +1,7 @@
 <template>
     <label :class="[inputStyles]"><span v-if="props.label">{{ props.label }}</span>
         <input ref="inputRef" class="control" @blur="() => { $emit('blur') }" v-model="model" :id="props.name"
-            :readonly="props.readOnly" :name="props.name" :type="props.type || 'text'" :max-length="props.maxLength"
+            :readonly="props.readOnly" :name="props.name" :type="props.type || 'text'" :maxLength="props.maxLength"
             :placeholder="props.placeholder" :autocomplete="autocomplete" :pattern="props.pattern"
             :required="required">
         <div class="helper-content">
@@ -23,7 +23,7 @@ const props = defineProps({
     name: String,
     label: String,
     display: { type: String, default: 'ttb' },
-    width: String,
+    width: {type: String, default: 'fc'},
     helperText: String,
     validated: { type: Boolean, default: true },
     errorText: String,
@@ -76,7 +76,7 @@ input:user-valid{
 
 }
 input:user-invalid{
-
+    border: 1px solid purple;
 }
 input:focus:user-invalid{
     

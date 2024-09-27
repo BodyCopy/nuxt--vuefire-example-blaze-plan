@@ -1,44 +1,15 @@
-function tryModulo() {
-    return 10 % 5;
-}
-
-const testArray = [
-    { name: 'cool' },
-    { name: 'cooler' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
-    { name: 'hotty' },
+let colors = [
+    { color: 'red', available: true, selected: false },
+    { color: 'orange', available: true, selected: false },
+    { color: 'yellow', available: true, selected: false },
+    { color: 'green', available: true, selected: true },
+    { color: 'teal', available: true, selected: false },
+    { color: 'blue', available: false, selected: false },
+    { color: 'purple', available: true, selected: false },
+    { color: 'pink', available: true, selected: false }
 ]
-function TestOutput() {
-    let output = [];
-    let rowIndex = 0;
-    for (let i = 0; i < testArray.length; i++) {
-        if (i === 0) {
-            output.push([testArray[i]])
-        }
-        else if (i % 5 === 0) {
-            output.push([testArray[i]]);
-            rowIndex++
-        } else {
-            output[rowIndex].push(testArray[i]);
-        }
-    }
-    return output;
-}
 
-console.log(TestOutput());
+colors = colors.map((c) => { return { ...c, selected: false } });
+
+let output = colors;
+console.log(output);

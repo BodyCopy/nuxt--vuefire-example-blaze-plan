@@ -1,17 +1,11 @@
 <template>
     <div>
         <h2>Templates:</h2>
-        <ul v-if="templates">
-            <li v-for="template in templates">
-                <BaseButton @click="" btn-style="filled">Create room</BaseButton>
-                {{ template?.createdOn || 'Templates go here' }}
-                <ul>
-                    <li v-for="item in template.bingoItems">
-                        {{ item }}
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        <LineItemGrid v-if="templates">
+            <template #grid-items>
+                <TemplateLineItem v-for="template in templates" :template="template"></TemplateLineItem>
+            </template>
+        </LineItemGrid>
     </div>
 </template>
 <script setup>

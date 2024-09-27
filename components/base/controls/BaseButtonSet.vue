@@ -1,8 +1,8 @@
 <template>
-    <div :class="[inputStyle, 'condensed','bp-input']" style="display:flex">
+    <div :class="[inputStyle, 'condensed', 'bp-input', 'fake-input']">
         <label v-if="props.label">{{ props.label }}</label>
         <div class="button-wrapper control">
-            <button v-for="(option, key, index) in  processedItems " :key="option.value"
+            <button v-for="(option, key, index) in processedItems " :key="option.value"
                 @click.prevent="selected(option.value)"
                 :class="[model === option.value ? 'active' : '', 'bp-button', 'outline', 'condensed']">{{
                     option.label }}</button>
@@ -47,9 +47,10 @@ const processedItems = computed(() => {
 function selected(option) {
     let value = option
     if (value === model.value) {
-        return;
+        model.value = null;
+    } else {
+        model.value = value;
     }
-    model.value = value;
 }
 // const buttonSetStyles = computed(() => {
 //     return {
@@ -66,13 +67,11 @@ function selected(option) {
     flex-wrap: nowrap;
     width: max-content;
     border: var(--line-break);
-    border-radius: 0px;
-    gap: 1px;
-    background-color: var(--grid-line-color);
+    border-radius: 0.5rem;
+    overflow: hidden
 }
 
 .fill-content {
-
     &>.button-wrapper {
         width: 100%;
 
@@ -98,14 +97,7 @@ function selected(option) {
     padding: 0.125rem 0.5rem;
     gap: 0rem;
 
-    &>label {
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 150%;
-        letter-spacing: 0.16px;
-        color: var(--S-20, #7D7D7D);
-        font-family: var(--font-ibm-mono);
-    }
+    &>label {}
 
     &>.control {
         width: 100%;
@@ -125,13 +117,24 @@ function selected(option) {
     border-radius: 0;
     box-shadow: none;
 
-    &.active {
-        background-color: var(--button-background-color);
-        text-decoration: underline;
+    &:focus {
+        outline: none !important;
     }
-}
 
-.selected {
-    color: red;
+    &.active {
+        color: var(--copy-color);
+        border: var(--line-break);
+        border-radius: 0.375rem;
+        text-decoration: underline;
+        margin-block: -1px;
+
+        &:first-of-type {
+            border-inline-start: none;
+        }
+
+        &:last-of-type {
+            border-inline-end: none;
+        }
+    }
 }
 </style>

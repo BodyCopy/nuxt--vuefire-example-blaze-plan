@@ -3,7 +3,7 @@
         <ProfileBingoRooms :rooms="userRooms"></ProfileBingoRooms>
         <ProfileBingoTemplates :templates="userTemplates"></ProfileBingoTemplates>
         <button @click="() => {
-            console.log(userRooms);
+            console.log(userTemplates);
         }">Room Data</button>
     </div>
 </template>

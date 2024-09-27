@@ -1,8 +1,8 @@
 <template>
-    <div :class="'boolean'">
+    <div :class="'boolean control'">
         <label :class="[booleanStyle, 'boolean-label', 'checkbox-container']" :for="id || label" :aria-label="label">
-            <input :class="['hidden-checkbox']" ref="hiddenCheckbox" role="checkbox" :aria-checked="model" type="checkbox"
-                :id="id ?? label" :checked="model" @change="updateValue" />
+            <input :class="['hidden-checkbox']" ref="hiddenCheckbox" role="checkbox" :aria-checked="model"
+                type="checkbox" :id="id ?? label" :checked="model" @change="updateValue" />
             <svg class="checkbox" viewBox="0 0 24 24" aria-hidden="true" stroke-width="1px" stroke="var(--temp-freeze)">
                 <rect class="checkbox-box" rx="0px" x="2" y="2" width="20" height="20" stroke-linejoin="round" />
                 <path class="checkbox-check" d="M6,12 L10,16 L18,8"></path>
@@ -11,7 +11,7 @@
         </label>
     </div>
 </template>
-  
+
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 const props = defineProps({ booleanStyle: String, size: { type: String, default: 'lg' }, readOnly: { type: Boolean, default: false }, name: String, label: String, id: String, display: String, width: String, helperText: String, hideLabel: { type: Boolean, default: false }, retro: { type: Boolean, default: false } });
@@ -93,6 +93,9 @@ onMounted(() => {
 }
 
 .checkbox-container {
+    cursor: pointer;
+    display: flex;
+
     &.sm {
         --checkbox-size: 1rem;
     }
@@ -105,8 +108,6 @@ onMounted(() => {
         --checkbox-size: 1.75rem;
     }
 
-    cursor: pointer;
-    display: flex;
 
     &.horizontal {
         gap: 0.25rem;
@@ -163,4 +164,3 @@ onMounted(() => {
     }
 }
 </style>
-  

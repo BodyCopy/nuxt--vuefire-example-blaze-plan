@@ -3,8 +3,9 @@
     </i>
 </template>
 <script setup>
-const props = defineProps({ name: { type: String, required: true }, size: { type: String } });
+const props = defineProps({ name: { type: String, required: true }, size: { type: String, default: 20 } });
 const iconContent = ref(null);
+//todo this doesn't work the icons pop in so bad.
 const size = computed(() => {
     return {
         XVI: props.size.toString() === '16',

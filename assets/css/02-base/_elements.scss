@@ -13,6 +13,17 @@ fieldset {
     gap: 1rem;
 }
 
+fieldset.retro-form {
+    display: grid;
+    gap: 1px;
+    background-color: var(--S-30);
+    border: 1px solid var(--S-30);
+    padding: 0;
+    &>.control{
+        background-color: var(--background-color);
+    }
+}
+
 legend {
     color: var(--copy-color);
     font-family: var(--font-ibm-mono);
@@ -42,4 +53,8 @@ td {
 
 figure {
     margin: 0;
+}
+
+br {
+    border-color: red;
 }

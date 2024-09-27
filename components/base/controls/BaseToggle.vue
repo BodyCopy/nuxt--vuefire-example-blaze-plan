@@ -1,7 +1,8 @@
 <template>
-    <div class="toggle-control">
-        <span v-if="statusText">{{ props.modelValue ? 'Yes' : 'No' }}</span>
-        <label :class="['toggle-switch', toggleStyle]">
+    <div :class="['label', 'control', toggleStyle]">
+        <span v-if="props.label">{{ props.label }}</span>
+        <!-- <span v-if="statusText">{{ props.modelValue ? 'Yes' : 'No' }}</span> -->
+        <label :class="['toggle-switch']">
             <input type="checkbox" @input="(e) => { $emit('update:modelValue', e.target.checked) }" :id="props.name"
                 :name="props.name" :checked="props.modelValue" />
             <span class="slider round"></span>
@@ -10,12 +11,20 @@
             <span v-if="helperText" class="helper-text">{{ helperText }}</span>
             <span v-if="!validated && errorText" class="error-text">{{ errorText }}</span>
         </div>
-
     </div>
 </template>
 <script setup>
-import { computed } from 'vue';
-const props = defineProps(['readOnly', 'type', 'name', 'label', 'modelValue', 'display', 'width', 'helperText', 'validated', 'errorText', 'statusText']);
+const props = defineProps({
+    readOnly: Boolean,
+    name: String,
+    label: String,
+    modelValue: Boolean,
+    display: { type: String, default: 'ttb' },
+    helperText: String,
+    validated: Boolean,
+    errorText: String,
+    statusText: Boolean
+})
 const emits = defineEmits(['update:modelValue']);
 const toggleStyle = computed(() => {
     return {
