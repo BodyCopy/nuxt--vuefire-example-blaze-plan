@@ -1,10 +1,15 @@
 <template>
     <div class="bingo-room">
-        <BingoCard :bingo-items="bingoItemKeys" :bingos="bingos"></BingoCard>
+        <div>
+            <h5>{{ roomData.roomName }}</h5>
+            <BingoCard :bingo-items="bingoItemKeys" :bingos="bingos"></BingoCard>
+        </div>
         <div>
             <p>BINGOS{{ bingos }}</p>
-            <RoomControls :roomData="roomData"></RoomControls>
+            <RoomDetails :roomData="roomData"></RoomDetails>
+            <p>{{ player.color }}</p>
         </div>
+        <RoomControls></RoomControls>
     </div>
 </template>
 <script setup>
@@ -15,8 +20,8 @@ definePageMeta({
     linkTitle: `test`,
     order: 1,
     layout: 'room-layout',
-    middleware: 'check-room-password'
 })
+//    middleware: 'check-room-password'
 const db = useFirestore();
 const route = useRoute();
 // const roomId = computed(() => route.params.id);
@@ -74,7 +79,7 @@ function useRoom() {
     const bingoLines = (() => { return getBingoLines() })();
     async function updatePlayerColor(color) {
         try {
-            await updateDoc(roomDocRef, {
+            await updateDoc(roomDocRef.value, {
                 [`players.${player.value.uuid}.color`]: color
             })
             console.log('NEW COLOR', color);
@@ -127,7 +132,7 @@ function useRoom() {
             // Update bingos only once after all checks
             console.log('SCORE BINGOS', scoreBingos);
 
-            await updateDoc(roomDocRef,
+            await updateDoc(roomDocRef.value,
                 {
                     'score.bingos': scoreBingos,
                     [`bingoItems.item-${index}.complete`]: val,
@@ -172,7 +177,7 @@ function useRoom() {
                     }
                 })
                 const roomRef = doc(collection(db, `users/${uuid}/rooms`), roomId.value);
-                await setDoc(roomRef, { roomTitle: roomData.value.title, roomId: roomId.value, joinedOn: serverTimestamp() }, { merge: true });
+                await setDoc(roomRef, { roomName: roomData.value.name, roomId: roomId.value, joinedOn: serverTimestamp() }, { merge: true });
             } catch (err) {
                 console.log(err);
             }
@@ -188,7 +193,7 @@ function useRoom() {
 <style lang="scss">
 .bingo-room {
     display: grid;
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: 1fr;
     --player-color: v-bind(player.color); //todo:afterIdentifyingPlayer match colour this needs to be a v-bind
 }
 </style>

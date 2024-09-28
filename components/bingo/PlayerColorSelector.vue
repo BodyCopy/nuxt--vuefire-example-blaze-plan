@@ -1,6 +1,6 @@
 <template>
     <div class="fake-input">
-        <label for="color-selector">Color selector</label>
+        <label v-if="label" for="color-selector">{{ label }}</label>
         <ul id="color-selector" class="player-color-selector">
             <li v-for="(value, index) in colors" :key="value.color">
                 <ColorSelectorButton @click.prevent="selected(index, value.color)" :color="value.color"
@@ -11,24 +11,18 @@
     </div>
 </template>
 <script setup>
-import RedSword from '~/assets/icons/bingo-weapons/Red-Sword.svg';
-import OrangeBomb from '~/assets/icons/bingo-weapons/Orange-Bomb.svg';
-import YellowBow from '~/assets/icons/bingo-weapons/Yellow-Bow.svg';
-import GreenShield from '~/assets/icons/bingo-weapons/Green-Shield.svg';
-import TealSpell from '~/assets/icons/bingo-weapons/Teal-Spell.svg';
-import BlueAxe from '~/assets/icons/bingo-weapons/Blue-Axe.svg';
-import PurpleMace from '~/assets/icons/bingo-weapons/Purple-Mace.svg';
-import PinkSharuken from '~/assets/icons/bingo-weapons/Pink-Sharuken.svg';
+
 const colors = ref([
-    { color: 'red', asset: RedSword, available: true, selected: false },
-    { color: 'orange', asset: OrangeBomb, available: true, selected: false },
-    { color: 'yellow', asset: YellowBow, available: true, selected: false },
-    { color: 'green', asset: GreenShield, available: true, selected: false },
-    { color: 'teal', asset: TealSpell, available: true, selected: false },
-    { color: 'blue', asset: BlueAxe, available: false, selected: false },
-    { color: 'purple', asset: PurpleMace, available: true, selected: false },
-    { color: 'pink', asset: PinkSharuken, available: true, selected: false }
+    { color: 'red', available: true, selected: false },
+    { color: 'orange', available: true, selected: false },
+    { color: 'yellow', available: true, selected: false },
+    { color: 'green', available: true, selected: false },
+    { color: 'teal', available: true, selected: false },
+    { color: 'blue', available: false, selected: false },
+    { color: 'purple', available: true, selected: false },
+    { color: 'pink', available: true, selected: false }
 ])
+const props = defineProps({ label: { type: String, default: '' } })
 const selectedColor = ref(false);
 const model = defineModel({ type: [String, Number, Boolean], default: null })
 function selected(index, option) {

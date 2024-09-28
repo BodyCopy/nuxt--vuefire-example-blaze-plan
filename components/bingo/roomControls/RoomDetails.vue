@@ -1,6 +1,6 @@
 <template>
-    <div class="room-controls">
-        <h5>{{ roomData.title }}</h5>
+    <div class="room-details">
+        <h5>{{ roomData.roomName }}</h5>
         <RoomUserControl :creator="roomData.creator"></RoomUserControl>
         <RoomData :seed="roomData.seed"></RoomData>
         <RoomScore :score="roomData.score"></RoomScore>

@@ -1,22 +1,21 @@
 <template>
-    <form action="">
+    <form @submit.prevent="joinRoom" action="">
         <fieldset class="retro-form">
             <BaseInput v-model="nickname.value" label="Nickname" retro :validated="nickname.validated"
                 :error-text="nickname.errorText" placeholder="Your gamer name"></BaseInput>
             <BaseInput v-model="password.value" placeholder="-secret-" label="Password" retro
                 :validated="password.validated" :error-text="password.errorText"></BaseInput>
             <!-- todo add the burnpad typeAhead chipInput -->
-            <BaseButtonSet label="Joining as" v-model="playerRole.value" width="fc" :options="playerRole.options"></BaseButtonSet>
-            <PlayerColorSelector v-model="playerColor.value"></PlayerColorSelector>
+            <BaseButtonSet label="Joining as" v-model="playerRole.value" width="fc" :options="playerRole.options">
+            </BaseButtonSet>
+            <PlayerColorSelector v-model="playerColor.value" label="Choose your weapon"></PlayerColorSelector>
         </fieldset>
         <ArrowSeperator />
-        <ActionBar>
-            <BaseButton :disabled="buttonDisabled" btn-style="filled" width="fc">Join room</BaseButton>
-        </ActionBar>
+        <JoinEnterRoomSection :player-color="playerColor.value" :nickname="nickname.value" :ready></JoinEnterRoomSection>
     </form>
 </template>
 <script setup>
-const emits = ['join-room'];
+const emits = defineEmits(['join-room']);
 const buttonDisabled = computed(() => {
     if (password.validated && nickname.validated && playerColor.validated) {
         return false;
@@ -38,9 +37,11 @@ const nickname = reactive({
 })
 const playerColor = reactive({
     value: '',
-    validated: true,
     errorText: 'Invalid',
-    pattern: ''
+    pattern: '',
+    get validated() {
+        return !!this.value;
+    }
 })
 const playerRole = reactive({
     value: null,
@@ -50,4 +51,18 @@ const playerRole = reactive({
         return !!this.value;
     }
 })
+const ready = computed(() => {
+    return nickname.validated && password.validated && playerColor.validated && playerRole.validated;
+})
+function joinRoom() {
+    //validate here before emit
+    //todo
+    const payload = {
+        password: password.value,
+        nickname: nickname.value,
+        playerRole: playerRole.value,
+        playerColor: playerColor.value
+    }
+    emits('join-room', payload);
+}
 </script>

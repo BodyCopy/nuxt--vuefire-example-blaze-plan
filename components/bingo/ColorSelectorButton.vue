@@ -1,15 +1,19 @@
 <template>
-    <button :disabled="!available" :class="['color-selector-button', color, selected ? 'selected' : '']">
-        <img :src="icon" alt="">
+    <button :disabled="!available"
+        :class="['color-selector-button', color, selected ? 'selected' : '', flat ? 'flat' : '']">
+        <img :src="icons[color]" alt="">
     </button>
 </template>
 <script setup>
+import { icons } from './colors/icons.js';
 const props = defineProps({
-    icon: String,
     color: String,
     selected: Boolean,
-    available: { type: Boolean, default: true }
+    available: { type: Boolean, default: true },
+    flat: { type: Boolean, default: false }
 })
+
+
 </script>
 <style lang="scss">
 .color-selector-button {
@@ -19,12 +23,16 @@ const props = defineProps({
     --selector-button-color: black;
     background-color: var(--selector-button-color);
     padding: 0.375rem;
-    border-radius: 0.25rem;
+    border-radius: 0.375rem;
     border: 0.5px solid rgba(18, 18, 18, 0.9);
-    box-shadow: var(--tile-box-shadow);
-    transition: filter 160ms ease-in box-shadow 160ms ease-in;
     max-height: 2.5rem;
     z-index: 1;
+
+    &:not(.flat) {
+        box-shadow: var(--tile-box-shadow);
+        transition: filter 160ms ease-in box-shadow 160ms ease-in;
+    }
+
     //creating a stacking context kind of breakst the effect
     //todo 
     // &:hover {
@@ -44,24 +52,24 @@ const props = defineProps({
         position: relative;
 
         &:after {
-            border-radius: 0.25rem;
-            z-index: -1;
-            content: '';
-            position: absolute;
-            inset: calc(var(--selected-border-size) * -1);
-            /* Linear gradient with rainbow colors */
-            // background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet, red, orange, yellow, green, blue, indigo, violet, red);
+            // border-radius: 0.25rem;
+            // z-index: -1;
+            // content: '';
+            // position: absolute;
+            // inset: calc(var(--selected-border-size) * -1);
+            // /* Linear gradient with rainbow colors */
+            // // background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet, red, orange, yellow, green, blue, indigo, violet, red);
 
-            // /* Set the background size large enough for continuous movement */
-            // background-size: 400% 100%;
-            // /* Ensures the gradient can smoothly animate */
-            // animation: rainbow 8s linear infinite;
-            /* Animate the gradient */
-            --angle: 0deg;
-            border: 1px solid;
-            border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
+            // // /* Set the background size large enough for continuous movement */
+            // // background-size: 400% 100%;
+            // // /* Ensures the gradient can smoothly animate */
+            // // animation: rainbow 8s linear infinite;
+            // /* Animate the gradient */
+            // --angle: 0deg;
+            // border: 1px solid;
+            // border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
 
-            animation: 4s rotate linear infinite;
+            // animation: 4s rotate linear infinite;
         }
     }
 

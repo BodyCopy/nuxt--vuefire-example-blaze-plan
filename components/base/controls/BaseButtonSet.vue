@@ -7,6 +7,7 @@
                 :class="[model === option.value ? 'active' : '', 'bp-button', 'outline', 'condensed']">{{
                     option.label }}</button>
         </div>
+        <span v-if="helperText" class="helper-text">{{ helperText }}</span>
     </div>
 </template>
 <script setup>
@@ -19,7 +20,8 @@ const props = defineProps({
     readOnly: { type: Boolean, default: false },
     boolean: { type: Boolean, default: false },
     retro: { type: Boolean, default: false },
-    wrap: { type: Boolean, default: false }
+    wrap: { type: Boolean, default: false },
+    helperText: { type: String }
 });
 const inputStyle = computed(() => {
     return {

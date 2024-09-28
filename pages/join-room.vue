@@ -1,6 +1,6 @@
 <template>
     <main class="join-room">
-        <JoinRoomForm></JoinRoomForm>
+        <JoinRoomForm @join-room="joinRoom"></JoinRoomForm>
     </main>
 </template>
 <script lang="ts" setup>
@@ -13,5 +13,8 @@ definePageMeta({
     linkTitle: 'Join room',
     order: 0,
 })
+async function joinRoom(data: any) {
+    console.log(data);
+}
 </script>
 <style lang="scss"></style>
