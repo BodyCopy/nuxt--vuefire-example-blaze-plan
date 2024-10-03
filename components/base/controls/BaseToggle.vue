@@ -43,8 +43,8 @@ const toggleStyle = computed(() => {
 .toggle-switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 3rem;
+    height: 1.5rem;
 }
 
 /* Hide default HTML checkbox */
@@ -70,8 +70,8 @@ const toggleStyle = computed(() => {
 .slider:before {
     position: absolute;
     content: '';
-    height: 30px;
-    width: 30px;
+    height: 1.25rem;
+    width: 1.25rem;
     left: 0px;
     bottom: 0px;
     background-color: var(--copy-color);
@@ -89,7 +89,7 @@ input:focus+.slider {
 }
 
 input:checked+.slider:before {
-    transform: translateX(26px);
+    transform: translateX(1.5rem);
 }
 
 /* Rounded sliders */

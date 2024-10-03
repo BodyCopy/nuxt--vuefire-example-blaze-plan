@@ -15,8 +15,8 @@ const props = defineProps({ items: { type: Array }, heading: { type: String, def
 <style lang="scss">
 .fake-input-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 0.8px;
+    grid-template-columns: 1fr;
+    gap: 1px;
     background-color: var(--grid-line-color);
 
     &__heading {

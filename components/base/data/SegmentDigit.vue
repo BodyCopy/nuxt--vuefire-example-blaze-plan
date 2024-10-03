@@ -1,6 +1,6 @@
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="29" viewBox="0 0 40 58" fill="none" stroke-width="0"
-        stroke="transparent" class="segment-digit">
+    <svg v-if="val !== ':'" xmlns="http://www.w3.org/2000/svg" width="20" height="29" viewBox="0 0 40 58" fill="none"
+        stroke-width="0" stroke="transparent" class="segment-digit">
         <defs>
             <polygon id="horizontal-segment" points="3,3 6,0 17,0 20,3 17,6 6,6"></polygon>
             <polygon id="vertical-segment" points="0,6 3,3 6,6 6,26 3,29 0,26" style="" />
@@ -25,6 +25,11 @@
         <use id="seg-14" :class="['seg', { ['active-seg']: output[14] }]" href="#diagonal-segment-back" x="17" y="26" />
         <use id="seg-15" :class="['seg', { ['active-seg']: output[15] }]" href="#diagonal-segment-forward" x="-17"
             y="26" />
+    </svg>
+    <svg v-else xmlns="http://www.w3.org/2000/svg" width="9" height="29" viewBox="0 0 18 58" fill="none"
+        stroke-width="0" stroke="transparent" class="segment-digit">
+        <circle class="active-seg" cx="9" cy="16" r="5" />
+        <circle class="active-seg" cx="9" cy="46" r="5" />
     </svg>
 </template>
 <script setup>
@@ -133,12 +138,14 @@ onUnmounted(() => {
 .segment-digit {}
 
 .seg {
-    fill: transparent;
-    transition: fill 64ms linear;
+    fill: var(--S-35a);
+    transition: fill 96ms linear;
 }
 
 .active-seg {
-    fill: #CD9BEC;
-    filter: drop-shadow(0 0 4px #CD9BEC);
+    fill: hsla(var(--active-seg-color, 0, 0%, 96%), 1);
+    filter: drop-shadow(0 0 calc(var(--segment-display-height) / 6) hsla(var(--active-seg-color, 0, 0%, 96% ), 0.706));
+    /* fill: #CD9BEC;
+    filter: drop-shadow(0 0 4px #CD9BEC); */
 }
 </style>

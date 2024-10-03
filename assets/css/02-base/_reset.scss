@@ -1,11 +1,13 @@
 html {
   box-sizing: border-box;
 }
+
 *,
 *:before,
 *:after {
   box-sizing: border-box;
 }
+
 button {
   all: unset;
   cursor: pointer;
@@ -14,6 +16,27 @@ button {
 
 body {
   margin: 0;
+}
+
+.prose {
+  font-variant-numeric: oldstyle-nums;
+}
+
+.prose abbr {
+  font-variant-caps: all-small-caps;
+}
+
+.tech{
+  font-variant-numeric: diagonal-fractions;
+}
+
+.chemical{
+  font-feature-settings: "sinf";
+}
+
+table,
+time {
+  font-variant-numeric: tabular-nums;
 }
 
 ul,

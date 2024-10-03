@@ -1,20 +1,29 @@
 <template>
     <div class="bingo-room">
-        <div>
-            <h5>{{ roomData.roomName }}</h5>
-            <BingoCard :bingo-items="bingoItemKeys" :bingos="bingos"></BingoCard>
+        <div class="bingo-room-section">
+            <header class="room-header">
+                <h1>{{ roomData.roomName }}</h1>
+                <BaseButton btn-modifier="micro" @click="copyLink">
+                    <!-- <template #icon>
+                        <IconLink />
+                    </template> -->
+                    Share
+                </BaseButton>
+            </header>
+            <RoomScore :scores="scores"></RoomScore>
+            <RoomTimer :startTime="roomData.createdOn" :isPaused="false" />
+            <div class="room-card">
+                <BingoCard :bingo-items="bingoItemKeys" :bingos="bingos"></BingoCard>
+            </div>
         </div>
-        <div>
-            <p>BINGOS{{ bingos }}</p>
-            <RoomDetails :roomData="roomData"></RoomDetails>
-            <p>{{ player.color }}</p>
-        </div>
-        <RoomControls></RoomControls>
+        <RoomControls :roomData :player></RoomControls>
     </div>
 </template>
 <script setup>
-import { doc, collection, setDoc, getDoc, updateDoc, serverTimestamp, FieldValue, increment, addDoc } from "firebase/firestore";
+import { doc, collection, setDoc, getDoc, updateDoc, serverTimestamp, FieldValue, increment, addDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { useFirestore, useDocument } from "vuefire";
+import IconExternalLink from "~/components/icons/IconExternalLink.vue";
+import { createSnackbar } from '~/stores/snackbar.js';
 definePageMeta({
     title: 'Room',
     linkTitle: `test`,
@@ -24,10 +33,28 @@ definePageMeta({
 //    middleware: 'check-room-password'
 const db = useFirestore();
 const route = useRoute();
+const { text, copy } = useClipboard();
+function copyLink() {
+    copy(`rooms/${route.params.id}`);
+    createSnackbar({ type: 'info', message: 'Link copied to clipboard' })
+}
 // const roomId = computed(() => route.params.id);
 const user = useCurrentUser();
 const roomDocRef = computed(() => doc(collection(db, 'rooms'), route.params.id));
 const roomData = useDocument(roomDocRef);
+const scores = computed(() => {
+    return roomData.value.score;
+})
+// const sortedScores = computed(() => {
+//     // Combine players with their scores
+//     return Object.values(roomData.value.score.scoreBoard).map(color => ({
+//         ...color,
+//         score: roomData.value.score.scoreBoard[color] || 0 // default to 0 if no score
+//     }))
+//         .sort((a, b) => b.score - a.score);
+// });
+provide('roomData', roomData);
+
 const gameMode = computed(() => roomData.value.gameMode);
 const player = computed(() => {
     if (user.value) {
@@ -53,10 +80,12 @@ const bingoItemKeys = computed(() => {
         return null;
     }
 })
-const { toggleItemCompletion, initPlayer, updatePlayerColor } = useRoom();
+const { toggleItemCompletion, focusItem, initPlayer, updatePlayerColor, updateRoomData } = useRoom();
 
 provide('updatePlayerColor', updatePlayerColor);
 provide('toggleItemCompletion', toggleItemCompletion);
+provide('focusItem', focusItem);
+provide('updateRoomData', updateRoomData);
 
 onMounted(async () => {
     await getCurrentUser();
@@ -70,13 +99,14 @@ async function checkPassword() {
 }
 
 
-
-
-
-
-
 function useRoom() {
     const bingoLines = (() => { return getBingoLines() })();
+    async function updateLog(payload) {
+        const player = payload.player;
+        const action = payload.action;
+        const value = payload.value;
+
+    }
     async function updatePlayerColor(color) {
         try {
             await updateDoc(roomDocRef.value, {
@@ -84,6 +114,20 @@ function useRoom() {
             })
             console.log('NEW COLOR', color);
 
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    async function updateRoomData(field, value) {
+        console.log('updating', field);
+
+        try {
+
+            await updateDoc(roomDocRef.value,
+                {
+                    [field]: value
+                }
+            );
         } catch (err) {
             console.log(err);
         }
@@ -143,6 +187,22 @@ function useRoom() {
             console.log(err);
         }
     }
+    async function focusItem(coordinates, action) {
+        let index = [(coordinates[0] * 5) + coordinates[1]];
+        if (action === 'add') {
+            await updateDoc(roomDocRef.value,
+                {
+                    [`bingoItems.item-${index}.focusedBy`]: arrayUnion(user.value.uid)
+                }
+            );
+        } else {
+            await updateDoc(roomDocRef.value,
+                {
+                    [`bingoItems.item-${index}.focusedBy`]: arrayRemove(user.value.uid)
+                }
+            );
+        }
+    }
     function getBingoLines() {
         const lines = [];
 
@@ -185,15 +245,115 @@ function useRoom() {
             console.log('PLAYER EXISTS');
         }
     }
-    return { toggleItemCompletion, getBingoLines, initPlayer, updatePlayerColor }
+    return { toggleItemCompletion, focusItem, getBingoLines, initPlayer, updatePlayerColor, updateRoomData }
 }
 
 
 </script>
 <style lang="scss">
+@import '~/assets/css/01-config/mixins.module.scss';
+
 .bingo-room {
     display: grid;
     grid-template-columns: 1fr;
     --player-color: v-bind(player.color); //todo:afterIdentifyingPlayer match colour this needs to be a v-bind
+    --room-control-header-height: 3rem;
+    height: calc(100dvh - (var(--top-nav-height) + 0.5rem)); //calc with header
+
+    &-section {
+        display: grid;
+        grid-template-areas:
+            'h'
+            's'
+            't'
+            'c'
+            '.';
+        grid-template-rows: max-content max-content max-content 1fr var(--room-control-header-height);
+        grid-template-columns: 1fr;
+    }
+
+    @include mediaTabletLandscape('min') {
+        &-section {
+            display: grid;
+            grid-template-areas:
+                'h h r'
+                'c c r'
+                'c c .';
+            grid-template-columns: max-content 1fr 1fr;
+            grid-template-rows: auto;
+        }
+    }
+}
+
+.room-header {
+    grid-area: h;
+    padding: 0.5rem;
+    display: flex;
+
+    &>h1 {
+        color: var(--S-05);
+        margin-inline-end: auto;
+        font-size: 1.5rem;
+    }
+}
+
+.room-score {
+    grid-area: s;
+}
+
+.room-timer {
+    grid-area: t;
+}
+
+.room-timer,
+.room-score {
+    &>*:first-child {
+        width: 4.5rem;
+
+        &:after {
+            content: ':';
+        }
+    }
+}
+
+.room-card {
+    grid-area: c;
+    // align-items: center;
+    display: flex;
+}
+
+//contains the codes for the differant player colors
+.bingo-color {
+    &.red {
+        --selector-button-color: hsl(9, 98%, 59%, 1);
+    }
+
+    &.orange {
+        --selector-button-color: #FD7427;
+    }
+
+    &.yellow {
+        --selector-button-color: #FFB401;
+    }
+
+    &.green {
+        --selector-button-color: #00820B;
+    }
+
+    &.teal {
+        --selector-button-color: #0ABBD3;
+    }
+
+    &.blue {
+        --selector-button-color: #4279FA;
+    }
+
+    &.purple {
+        --selector-button-color: #9747FF;
+    }
+
+    &.pink {
+        --selector-button-color: #FF00E5;
+    }
 }
 </style>

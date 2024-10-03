@@ -27,7 +27,7 @@ const btnStyle = computed(() => {
 .icon-button {
     --_btn-background-color: transparent;
     background-color: var(--_btn-background-color);
-    border: none;
+    border: var(--border-color, none);
     cursor: pointer;
     display: inline-block;
     width: 2.5rem;

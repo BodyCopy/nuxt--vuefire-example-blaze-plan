@@ -2,6 +2,11 @@ html {
   height: 100%;
   width: 100%;
   -webkit-tap-highlight-color: transparent;
+  background-color: var(--background-color);
+  &:has( *.fixed-layout) {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
 }
 
 html.locked {}
@@ -21,15 +26,18 @@ body {
     max-height: 100lvh;
   }
 }
+
 #app {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   height: 100%;
 }
+
 .app-wrapper {
   height: 100%;
 }
+
 .app-content {
   height: 100%;
   overflow-y: auto;

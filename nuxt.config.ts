@@ -20,7 +20,9 @@ export default defineNuxtConfig({
       ],
     },
   },
-
+  plugins: [
+    '~/plugins/tooltip.js'
+  ],
   css: ['~/assets/main.scss'],
 
   components: {

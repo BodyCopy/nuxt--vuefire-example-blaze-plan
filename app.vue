@@ -101,10 +101,15 @@ onBeforeMount(() => {
       <img src="/vuefire.svg" class="logo vuefire" alt="VueFire logo" />
     </a>
   </div> -->
-  <NavigationLinks />
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <div id="app">
+    <main>
+      <!-- <NavigationLinks /> -->
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+      <SnackBarController></SnackBarController>
+    </main>
+  </div>
   <!-- <footer>
     <a href="https://github.com/posva/nuxt--vuefire-example-blaze-plan">
       <img src="@/assets/github-mark.svg" alt="GitHub logo" class="logo github" />
@@ -114,6 +119,12 @@ onBeforeMount(() => {
 </template>
 
 <style scoped>
+html{
+}
+#app {
+  --top-nav-height: 2rem;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

@@ -1,8 +1,8 @@
 <template>
-    <button :disabled="!available"
-        :class="['color-selector-button', color, selected ? 'selected' : '', flat ? 'flat' : '']">
+    <component :is="flat ? 'div' : 'button'" :disabled="!available"
+        :class="['color-selector-button','bingo-color', color, selected ? 'selected' : '', flat ? 'flat' : '']">
         <img :src="icons[color]" alt="">
-    </button>
+    </component>
 </template>
 <script setup>
 import { icons } from './colors/icons.js';
@@ -44,7 +44,7 @@ const props = defineProps({
     //     box-shadow: var(--tile-box-shadow-pressed);
     // }
 
-    &[disabled] {
+    &[disabled="true"] {
         filter: opacity(0.4) saturate(0.8);
     }
 
@@ -73,7 +73,7 @@ const props = defineProps({
         }
     }
 
-    &[disabled],
+    &[disabled="true"],
     &.selected {
         box-shadow: var(--tile-box-shadow-pressed);
     }
@@ -85,38 +85,6 @@ const props = defineProps({
             // transform: translateY(0.125rem);
             // scale: 0.98;
         }
-    }
-
-    &.red {
-        --selector-button-color: hsl(9, 98%, 59%, 1);
-    }
-
-    &.orange {
-        --selector-button-color: #FD7427;
-    }
-
-    &.yellow {
-        --selector-button-color: #FFB401;
-    }
-
-    &.green {
-        --selector-button-color: #00820B;
-    }
-
-    &.teal {
-        --selector-button-color: #0ABBD3;
-    }
-
-    &.blue {
-        --selector-button-color: #4279FA;
-    }
-
-    &.purple {
-        --selector-button-color: #9747FF;
-    }
-
-    &.pink {
-        --selector-button-color: #FF00E5;
     }
 }
 

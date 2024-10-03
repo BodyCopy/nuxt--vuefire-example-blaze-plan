@@ -72,7 +72,10 @@ function createRoom() {
     const payload = {
         roomName: roomName.value,
         password: password.value, // You can hash it here if needed
-        creator: user.value.uid,
+        creator: {
+            uid: user.value.uid,
+            nickname: nickname.value
+        },
         players: {
             [user.value.uid]: {
                 nickname: nickname.value,

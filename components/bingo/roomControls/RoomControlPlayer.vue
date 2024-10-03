@@ -1,10 +1,10 @@
 <template>
     <div class="room-control-player">
-        <h5>Hello</h5>
+        <RoomColorSelector></RoomColorSelector>
     </div>
 </template>
 <script setup>
-
+const props = defineProps({});
 </script>
 <style lang="scss">
 

@@ -2,7 +2,8 @@
     <div class="bingo-container">
         <div class="bingo-card">
             <div class="bingo-row" v-for="(row, rIndex) in bingoItemsArray">
-                <BingoItem v-for="(col, cIndex) in row" :item="col" @click="toggleItemCompletion([rIndex, cIndex])">
+                <BingoItem v-for="(col, cIndex) in row" :item="col" @click.left="toggleItemCompletion([rIndex, cIndex])"
+                    @player-focus="(e) => { toggleFocusItem([rIndex, cIndex], e) }">
                 </BingoItem>
             </div>
             <div class="bingo-graphics" v-for="item in bingos" :class="{ bingo: item }">
@@ -23,37 +24,52 @@ const bingoItemsArray = computed(() => {
     return output;
 });
 const toggleItemCompletion = inject('toggleItemCompletion');
+const focusItem = inject('focusItem');
+async function toggleFocusItem(coordinates, event) {
+    console.log(event);
+    console.log(coordinates);
 
+    if (!event) {
+        await focusItem(coordinates, 'add');
+    } else {
+        console.log('remove');
+
+        await focusItem(coordinates, 'remove');
+    }
+}
 </script>
 <style lang="scss">
 @import '~/assets/css/01-config/mixins.module.scss';
 
 .bingo {
     &-container {
+        --card-aspect-ratio: 1/1;
         container: bingo-card / size;
-        height: calc(100svh - 3rem);
-        aspect-ratio: 1/1;
+        // height: calc(100svh - 3rem);
+        width: 100dvw;
 
+        // aspect-ratio: var(--card-aspect-ratio);
+        //todo bingo-items do need a size for size fit to work
         @include mediaTabletLandscape('max') {
-            border: 1px solid red;
-            height: calc(100svw * 1.333); //todo:convert bingoitems to portraitish as screen a/r changes
-            aspect-ratio: 1/1.333;
+            // --card-aspect-ratio: 1/1.24;
+            // height: calc(100svw * 1.24); //todo:convert bingoitems to portraitish as screen a/r changes
         }
     }
 
     &-card {
+        --_card-gap: 1px;
+        border: 1px solid var(--S-35);
         background-color: rgba(255, 255, 0, 0.16);
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: repeat(5, 1fr);
-        gap: 1px;
-        aspect-ratio: 1/1;
+        grid-template-rows: repeat(5, calc(20cqh - var(--_card-gap)));
+        gap: var(--_card-gap);
         height: 100cqmin;
-        width: auto;
+        width: 100%;
 
         @include mediaTabletLandscape('max') {
-            height: calc(100svw * 1.333);
-            aspect-ratio: 1/1.333;
+            height: 100cqmax;
+            // aspect-ratio: 1/1.333;
         }
     }
 
