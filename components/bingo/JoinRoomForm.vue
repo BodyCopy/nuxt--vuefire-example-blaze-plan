@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="joinRoom" action="">
+    <form @submit.prevent="joinRoom">
         <fieldset class="retro-form">
             <BaseInput v-model="nickname.value" label="Nickname" retro :validated="nickname.validated"
                 :error-text="nickname.errorText" placeholder="Your gamer name"></BaseInput>
@@ -11,11 +11,31 @@
             <PlayerColorSelector v-model="playerColor.value" label="Choose your weapon"></PlayerColorSelector>
         </fieldset>
         <ArrowSeperator />
-        <JoinEnterRoomSection :player-color="playerColor.value" :nickname="nickname.value" :ready></JoinEnterRoomSection>
+        <div class="testing">
+            <h5>For testing:</h5>
+            <p>{{ user?.uid || 'tbd' }}</p>
+            <strong>{{ user?.isAnonymous ? 'Anon' : '' || 'tbd' }}</strong>
+            <button v-if="isUserLoaded && !user?.uid" btn-style="outline" @click.prevent="anonSignIn">Anon login</button>
+        </div>
+        <JoinEnterRoomSection v-if="userExists" :player-color="playerColor.value" :nickname="nickname.value" :ready>
+        </JoinEnterRoomSection>
     </form>
 </template>
 <script setup>
+import { signInAnonymously } from 'firebase/auth';
+import { useFirebaseAuth, getCurrentUser, useIsCurrentUserLoaded } from 'vuefire'
 const emits = defineEmits(['join-room']);
+const props = defineProps({ roomData: Object });
+//anon auth for testing purposes
+const userExists = getCurrentUser();
+const isUserLoaded = useIsCurrentUserLoaded()
+const user = useCurrentUser();
+const auth = useFirebaseAuth(); // only exists on client side
+function anonSignIn() {
+    signInAnonymously(auth);
+    console.log('anon login');
+}
+
 const buttonDisabled = computed(() => {
     if (password.validated && nickname.validated && playerColor.validated) {
         return false;
@@ -63,6 +83,7 @@ function joinRoom() {
         playerRole: playerRole.value,
         playerColor: playerColor.value
     }
+
     emits('join-room', payload);
 }
 </script>

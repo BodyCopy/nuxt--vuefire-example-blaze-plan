@@ -13,7 +13,7 @@ import RoomControlSettings from './RoomControlSettings.vue';
 import RoomControlPlayers from './RoomControlPlayers.vue';
 import RoomControlLog from './RoomControlLog.vue';
 import { useStorage } from '@vueuse/core';
-const props = defineProps({ roomData: Object, player: Object });
+const props = defineProps({ roomData: Object, scoreData: Object, player: Object });
 const selectedTab = ref('Player');
 const roomControl = ref(null);
 const roomControlContent = ref(null);
@@ -27,7 +27,7 @@ const playerDetails = computed(() => {
     return {
         nickname: props.player.nickname,
         color: props.player.color,
-        score: props.roomData.score.scoreBoard[props.player.color]
+        // score: props.scoreData.find(d => d.id === props.player.color)
     }
 })
 const payload = computed(() => {

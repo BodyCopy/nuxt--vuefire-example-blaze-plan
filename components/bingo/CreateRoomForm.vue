@@ -40,9 +40,13 @@
         </JoinEnterRoomSection>
     </form>
 </template>
-<script lang="ts" setup>
+<script lang="js" setup>
 import bcrypt from 'bcryptjs';
+import { useFirestore } from 'vuefire';
+import { addDoc, collection, serverTimestamp, getDoc, doc } from 'firebase/firestore';
 // Analytics can only be retrieved on the client
+const db = useFirestore();
+
 function checkUser() {
     console.log(user.value.uid);
 }
@@ -61,15 +65,22 @@ const ready = computed(() => {
 });
 
 const user = useCurrentUser()
-// const user = inject('user');
 const emits = defineEmits(['create-room']);
 
-function createRoom() {
+async function createRoom() {
     if (!ready.value) {
         console.log("Form not ready, validation failed.");
         return;
     }
+     
+    //grab a specified card template
+    //todo we can sideload this after the value is updated
+    const bingoItemsObject = await getRandomizedCardFromTemplate();
+ 
+
     const payload = {
+        creatorColor: playerColor.value,    
+        bingoItems: bingoItemsObject,
         roomName: roomName.value,
         password: password.value, // You can hash it here if needed
         creator: {
@@ -81,10 +92,6 @@ function createRoom() {
                 nickname: nickname.value,
                 color: playerColor.value
             }
-        },
-        score: {
-            bingos: ['', '', '', '', '', '', '', '', '', '', '', ''],
-            scoreBoard: {},
         },
         game: game.value,
         template: template.value,
@@ -144,7 +151,7 @@ const gameType = reactive({
     get helperText() {
         return this.helperTextMap[this.value] || '';
     }
-} as const);
+});
 
 const gameMode = reactive({
     options: { Standard: 'standard', 'Lock-out': 'lockOut' },
@@ -159,7 +166,8 @@ const gameMode = reactive({
     get helperText() {
         return this.helperTextMap[this.value] || '';
     }
-} as const)
+})
+
 const seed = reactive({
     value: '',
     validated: true,

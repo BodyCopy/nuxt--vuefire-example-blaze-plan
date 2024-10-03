@@ -10,13 +10,15 @@
                     Share
                 </BaseButton>
             </header>
-            <RoomScore :scores="scores"></RoomScore>
+            <RoomScore :scores="scoreData"></RoomScore>
             <RoomTimer :startTime="roomData.createdOn" :isPaused="false" />
-            <div class="room-card">
+            <!-- <div class="room-card">
                 <BingoCard :bingo-items="bingoItemKeys" :bingos="bingos"></BingoCard>
-            </div>
+            </div> 
+            something here
+            -->
         </div>
-        <RoomControls :roomData :player></RoomControls>
+        <RoomControls :roomData :scoreData :player></RoomControls>
     </div>
 </template>
 <script setup>
@@ -40,11 +42,30 @@ function copyLink() {
 }
 // const roomId = computed(() => route.params.id);
 const user = useCurrentUser();
+
 const roomDocRef = computed(() => doc(collection(db, 'rooms'), route.params.id));
 const roomData = useDocument(roomDocRef);
-const scores = computed(() => {
-    return roomData.value.score;
+const player = computed(() => {
+    if (user.value) {
+        return { ...roomData.value.players[user.value.uid], uuid: user.value.uid }
+    } else {
+        return {};
+    }
+});
+const scoreData = ref(null);
+let scoreDataRef;
+const bingoCardData = ref(null);
+let bingoCardRef;
+
+watch(user, (nV, oV) => {
+
+    scoreDataRef = collection(roomDocRef.value, 'scores');
+    const { data: scoreTempData } = useCollection(scoreDataRef, { target: scoreData });
+    const test = useDocument(doc(roomDocRef.value, `cards/${player.value.color}-card`), { target: bingoCardData });
+
+    console.log('BingoCArdDat', roomDocRef.value, bingoCardData.value, player.value, scoreData.value, test.value);
 })
+
 // const sortedScores = computed(() => {
 //     // Combine players with their scores
 //     return Object.values(roomData.value.score.scoreBoard).map(color => ({
@@ -56,24 +77,20 @@ const scores = computed(() => {
 provide('roomData', roomData);
 
 const gameMode = computed(() => roomData.value.gameMode);
-const player = computed(() => {
-    if (user.value) {
-        return { ...roomData.value.players[user.value.uid], uuid: user.value.uid }
-    } else {
-        return {};
-    }
-});
-const bingos = computed(() => roomData.value.score.bingos);
+//fix
+// const bingos = computed(() => scoreData.value.find(s => s.id === 'bingos'));
+
 const bingoItemKeys = computed(() => {
-    if (roomData) {
-        const orderedItems = Object.keys(roomData.value.bingoItems)
+    if (bingoCardData) {
+        console.log(bingoCardData.value);
+        const orderedItems = Object.keys(bingoCardData.value.bingoItems)
             .sort((a, b) => {
                 // Extract the number from the key and compare numerically
                 const numA = parseInt(a.replace('item', ''), 10);
                 const numB = parseInt(b.replace('item', ''), 10);
                 return numB - numA;
             })
-            .map(key => roomData.value.bingoItems[key]); // Convert sorted keys back to array of objects
+            .map(key => bingoCardData.value.bingoItems[key]); // Convert sorted keys back to array of objects
         console.log('ORDERED', orderedItems);
         return orderedItems;
     } else {
@@ -105,7 +122,6 @@ function useRoom() {
         const player = payload.player;
         const action = payload.action;
         const value = payload.value;
-
     }
     async function updatePlayerColor(color) {
         try {
@@ -120,9 +136,7 @@ function useRoom() {
     }
     async function updateRoomData(field, value) {
         console.log('updating', field);
-
         try {
-
             await updateDoc(roomDocRef.value,
                 {
                     [field]: value
@@ -133,17 +147,17 @@ function useRoom() {
         }
     }
     async function toggleItemCompletion(coordinates) {
-        const items = roomData.value.bingoItems;
-        const bingos = roomData.value.score.bingos;
+        const items = bingoCardData.value.bingoItems;
+        const bingos = bingos.value;
 
         let scoreBingos = JSON.parse(JSON.stringify(bingos));
         // Toggle the completion state of the clicked item
         let index = [(coordinates[0] * 5) + coordinates[1]];
 
         let val = '';
-        if (roomData.value.bingoItems[`item-${index}`].complete === '') {
+        if (bingoCardData.value.bingoItems[`item-${index}`].complete === '') {
             val = player.value.color;
-        } else if (roomData.value.bingoItems[`item-${index}`].complete === player.value.color) {
+        } else if (bingoCardData.value.bingoItems[`item-${index}`].complete === player.value.color) {
             val = '';
         } else {
             return;
@@ -176,32 +190,35 @@ function useRoom() {
             // Update bingos only once after all checks
             console.log('SCORE BINGOS', scoreBingos);
 
-            await updateDoc(roomDocRef.value,
-                {
-                    'score.bingos': scoreBingos,
-                    [`bingoItems.item-${index}.complete`]: val,
-                    [`score.scoreBoard.${player.value.color}`]: increment(val ? 1 : -1)
-                }
-            );
+            //update this 
+            // await updateDoc(roomDocRef.value,
+            //     {
+            //         'score.bingos': scoreBingos,
+            //         [`bingoItems.item-${index}.complete`]: val,
+            //         [`score.scoreBoard.${player.value.color}`]: increment(val ? 1 : -1)
+            //     }
+            // );
         } catch (err) {
             console.log(err);
         }
     }
+
+    // update this
     async function focusItem(coordinates, action) {
-        let index = [(coordinates[0] * 5) + coordinates[1]];
-        if (action === 'add') {
-            await updateDoc(roomDocRef.value,
-                {
-                    [`bingoItems.item-${index}.focusedBy`]: arrayUnion(user.value.uid)
-                }
-            );
-        } else {
-            await updateDoc(roomDocRef.value,
-                {
-                    [`bingoItems.item-${index}.focusedBy`]: arrayRemove(user.value.uid)
-                }
-            );
-        }
+        // let index = [(coordinates[0] * 5) + coordinates[1]];
+        // if (action === 'add') {
+        //     await updateDoc(roomDocRef.value,
+        //         {
+        //             [`bingoItems.item-${index}.focusedBy`]: arrayUnion(user.value.uid)
+        //         }
+        //     );
+        // } else {
+        //     await updateDoc(roomDocRef.value,
+        //         {
+        //             [`bingoItems.item-${index}.focusedBy`]: arrayRemove(user.value.uid)
+        //         }
+        //     );
+        // }
     }
     function getBingoLines() {
         const lines = [];
