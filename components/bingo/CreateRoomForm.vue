@@ -1,25 +1,28 @@
 <template>
     <form @submit.prevent="createRoom" class="form-room">
-        <fieldset class="retro-form">
+        <fieldset class="retro-form calculator-screen">
             <BaseInput v-model="roomName.value" label="Room name" retro :validated="roomName.validated"
                 :error-text="roomName.errorText" :maxLength="20" :character-count="roomName.value.length"
                 helper-text="Max 20 characters" placeholder="---"></BaseInput>
             <BaseInput v-model="password.value" label="Password" retro :validated="password.validated"
                 :error-text="password.errorText" helper-text="Players will need this to enter" placeholder="---">
             </BaseInput>
-            <BaseSelect v-model="game.value" label="Game" retro></BaseSelect>
-            <BaseToggle v-model="game.custom" label="Custom game" retro :statusText="true"></BaseToggle>
-            <BaseInput v-model="template.value" label="Template" retro :validated="template.validated"
-                :error-text="template.errorText"></BaseInput>
-            <BaseButton btn-modifier="micro" @click.prevent="() => { $emit('custom-template', true) }">Upload JSON
-            </BaseButton>
-            <BaseButton btn-modifier="micro" @click.prevent="() => { $emit('custom-template', true) }">New template
-            </BaseButton>
-            <BaseButtonSet v-model="gameType.value" :options="gameType.options" label="Game type" width="fc"
-                :helper-text="gameType.helperText">
+            <BaseSelect v-model="game.value" label="Game" :options="game.options" retro></BaseSelect>
+            <!-- <BaseToggle v-model="game.custom" label="Custom game" retro :statusText="true" width="fc" :validated="true"></BaseToggle> -->
+            <!-- <BaseInput v-model="template.value" label="Template" retro :validated="template.validated"
+                :error-text="template.errorText"></BaseInput> -->
+            <TemplateSearch v-model="template.value" :game="game.value"></TemplateSearch>
+            <div class="inline-form-action-buttons">
+                <BaseButton btn-modifier="micro" @click.prevent="() => { $emit('custom-template', true) }">Upload JSON
+                </BaseButton>
+                <BaseButton btn-modifier="micro" @click.prevent="() => { $emit('custom-template', true) }">New template
+                </BaseButton>
+            </div>
+            <BaseButtonSet v-model="gameType.value" :options="gameType.options" label="Game type"
+                :helper-text="gameType.helperText" width="fc" :retro="true">
             </BaseButtonSet>
             <BaseButtonSet v-if="gameType.value === 'shared'" v-model="gameMode.value" :options="gameMode.options"
-                label="Game mode" width="fc" :helper-text="gameMode.helperText">
+                label="Game mode" :helper-text="gameMode.helperText" width="fc" :retro="true">
             </BaseButtonSet>
             <BaseInput v-if="gameType.value !== 'multi'" v-model="seed.value" label="Seed" retro
                 :validated="seed.validated" :error-text="seed.errorText" helper-text="Leave empty for a random seed"
@@ -29,10 +32,10 @@
             <BaseBoolean v-model="hasTimer.value" label="Include timer?"></BaseBoolean>
         </fieldset>
         <ArrowSeperator></ArrowSeperator>
-        <fieldset class="retro-form">
+        <fieldset class="retro-form calculator-screen">
             <BaseInput v-model="nickname.value" label="Nickname" retro :validated="nickname.validated"
-                :error-text="nickname.errorText" placeholder="ex. Morbius" :maxLength="20"
-                helper-text="Max 20 characters" :character-count="nickname.value.length"></BaseInput>
+                :error-text="nickname.errorText" placeholder="---" :maxLength="20" helper-text="Max 20 characters"
+                :character-count="nickname.value.length"></BaseInput>
             <PlayerColorSelector v-model="playerColor.value"></PlayerColorSelector>
         </fieldset>
         <ArrowSeperator></ArrowSeperator>
@@ -42,9 +45,11 @@
 </template>
 <script lang="js" setup>
 import bcrypt from 'bcryptjs';
+import { useRoom } from '~/composables/useRoom.js';
 import { useFirestore } from 'vuefire';
 import { addDoc, collection, serverTimestamp, getDoc, doc } from 'firebase/firestore';
 // Analytics can only be retrieved on the client
+const { getRandomizedCardFromTemplate } = useRoom();
 const db = useFirestore();
 
 function checkUser() {
@@ -72,15 +77,17 @@ async function createRoom() {
         console.log("Form not ready, validation failed.");
         return;
     }
-     
+
     //grab a specified card template
     //todo we can sideload this after the value is updated
-    const bingoItemsObject = await getRandomizedCardFromTemplate();
- 
+    console.log('TEMPLATE VAL', template.value);
+
+    const { newCard, seed } = await getRandomizedCardFromTemplate(template.value);
+
 
     const payload = {
-        creatorColor: playerColor.value,    
-        bingoItems: bingoItemsObject,
+        creatorColor: playerColor.value,
+        bingoItems: newCard,
         roomName: roomName.value,
         password: password.value, // You can hash it here if needed
         creator: {
@@ -90,14 +97,15 @@ async function createRoom() {
         players: {
             [user.value.uid]: {
                 nickname: nickname.value,
-                color: playerColor.value
+                color: playerColor.value,
+                cardId: `${playerColor.value}-card`
             }
         },
         game: game.value,
         template: template.value,
         gameType: gameType.value,
         gameMode: 'lockOut', // Include only if not 'multi'
-        seed: 'IM A RANDOM SEED', // Include only if not 'multi'
+        seed: seed, // Include only if not 'multi'
         hideBoardInitially: hideBoardInitially.value,
         hasTimer: hasTimer.value,
     };
@@ -125,7 +133,8 @@ const nickname = reactive({
     pattern: ''
 })
 const game = reactive({
-    value: 'Elden Ring',
+    options: { 'Custom': 'custom', 'Elden Ring': 'elden ring', 'Super Mario': 'super mario' },
+    value: 'custom',
     validated: true,
     errorText: 'Invalid',
     pattern: '',

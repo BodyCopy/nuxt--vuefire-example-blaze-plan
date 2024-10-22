@@ -25,7 +25,7 @@ const props = defineProps({
         border: 2px solid;
         border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
 
-        animation: 4s rotate linear infinite;
+        // animation: 4s rotate linear infinite;
     }
 }
 </style>

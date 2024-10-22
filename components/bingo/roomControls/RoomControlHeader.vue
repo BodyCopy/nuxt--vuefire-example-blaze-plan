@@ -4,8 +4,8 @@
             <div @click="openPanel('Player')" class="room-control-player-info">
                 <SegmentDisplay :string="playerScore" :displayBoard="true" />
                 <ColorSelectorButton :flat="true" :color="playerDetails.color" />
-                <!-- <img :src="icons[playerDetails.color]" alt=""> -->
-                <p class="room-control-header-player-nickname">{{ playerDetails.nickname || 'Anon' }}</p>
+                <p class="room-control-header-player-nickname" :title="playerDetails.nickname || 'Anon'">{{
+                    playerDetails.nickname || 'Anon' }}</p>
             </div>
             <ul class="room-control-menu-items">
                 <li>
@@ -50,7 +50,7 @@ const roomIcons = {
 }
 const playerScore = computed(() => {
     if (props.playerDetails?.score) {
-        return props.playerDetails.score.toString().padStart(2, '0');;
+        return props.playerDetails.score.toString().padStart(2, '0');
     } else {
         return '00'
     }
@@ -81,7 +81,8 @@ const playerScore = computed(() => {
 
         &-expanded {
             grid-template-columns: 24px 1fr max-content;
-            &-heading{
+
+            &-heading {
                 margin-block-start: 0.125rem;
             }
         }
@@ -104,7 +105,7 @@ const playerScore = computed(() => {
     }
 
     &-menu-items {
-        width: 120px;
+        width: 96px;
         height: 100%;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -115,8 +116,9 @@ const playerScore = computed(() => {
             display: flex;
             align-items: center;
             justify-content: center;
+
             &>svg {
-                height: 28px;
+                height: 24px;
                 aspect-ratio: 1/1;
             }
         }

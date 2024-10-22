@@ -6,7 +6,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Nuxt + VueFire Blaze Plan Example',
+      title: 'Miss.Bingo',
       link: [
         // {
         //   href: 'https://cdn.jsdelivr.net/npm/water.css@2/out/water.css',
@@ -15,7 +15,7 @@ export default defineNuxtConfig({
         {
           rel: 'icon',
           type: 'image/svg+xml',
-          href: '/vuefire.svg',
+          href: '/MissBingoLogo.svg',
         },
       ],
     },
@@ -72,19 +72,20 @@ export default defineNuxtConfig({
 
 
     config: {
-      apiKey: "AIzaSyCVB1PJ3o95pYSlF-1x3YZiE3A90FsWJBk",
+      apiKey: "AIzaSyDCrXmbdauNPNl0IY7uUdkuSjY7CLs9yIA",
 
-      authDomain: "vue-fire-demo-713ba.firebaseapp.com",
+      authDomain: "miss-bingo.firebaseapp.com",
 
-      databaseURL: "https://vue-fire-demo-713ba-default-rtdb.firebaseio.com",
+      databaseURL: "https://miss-bingo-default-rtdb.firebaseio.com",
 
-      projectId: "vue-fire-demo-713ba",
+      projectId: "miss-bingo",
 
-      storageBucket: "vue-fire-demo-713ba.appspot.com",
+      storageBucket: "miss-bingo.appspot.com",
 
-      messagingSenderId: "318800048874",
+      messagingSenderId: "70817967508",
 
-      appId: "1:318800048874:web:ca455e247d45d2dcf6dd93"
+      appId: "1:70817967508:web:1267ef06696f7045767381"
+
     },
   },
 
@@ -98,16 +99,16 @@ export default defineNuxtConfig({
     // Make some pages client only (since we have an SPA)
     // useful for authenticated pages that require the user to be logged in to be
     // displayed
-
+    '/': { prerender: true },
     '/admin': { ssr: false },
     '/login': { ssr: false },
     '/analytics': { ssr: false },
     // you don't need to add ssr: true to any route, it's the default
     '/users': { ssr: true },
     '/posts/new': { ssr: true },
-    '/bingoCards/bingo-card-creator': { ssr: false },
-    // '/rooms/**': { ssr: false },
-    '/profile/**': { ssr: false }
+    '/bingoCards/bingo-card-creator': { isr: 3600 },
+    '/rooms/**': { ssr: false },
+    '/profile/**': { isr: 3600 },
     // '/emoji-panel': { swr: true },
   },
 

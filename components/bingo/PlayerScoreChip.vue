@@ -14,7 +14,10 @@ const scoreDisplay = computed(() => {
 .player-score-chip {
     display: flex;
     gap: 0.5rem;
+    display: flex;
+    align-items: center;
     --segment-display-height: 1.25rem;
+    scroll-snap-align: center;
 }
 
 .player-score-chip-color {

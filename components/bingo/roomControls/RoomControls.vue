@@ -1,6 +1,6 @@
 <template>
     <div ref="roomControl" class="room-controls">
-        <RoomControlHeader @open-panel="openPanel" @close="expandCollapseContent" :expanded :selectedTab :playerDetails>
+        <RoomControlHeader @open-panel="openPanel" @close="expandCollapseContent" :expanded :selectedTab :playerDetails >
         </RoomControlHeader>
         <div v-touch:swipe.down="expandCollapseContent" ref="roomControlContent" class="room-controls-content">
             <component :is="controls[selectedTab]" :payload="payload"></component>
@@ -11,9 +11,8 @@
 import RoomControlPlayer from './RoomControlPlayer.vue';
 import RoomControlSettings from './RoomControlSettings.vue';
 import RoomControlPlayers from './RoomControlPlayers.vue';
-import RoomControlLog from './RoomControlLog.vue';
-import { useStorage } from '@vueuse/core';
-const props = defineProps({ roomData: Object, scoreData: Object, player: Object });
+import RoomControlLog from './roomLog/RoomControlLog.vue';
+const props = defineProps({ roomData: Object, scoreBoard: Object, scoreData: Object, bingoCardData: Object, player: Object });
 const selectedTab = ref('Player');
 const roomControl = ref(null);
 const roomControlContent = ref(null);
@@ -27,7 +26,7 @@ const playerDetails = computed(() => {
     return {
         nickname: props.player.nickname,
         color: props.player.color,
-        // score: props.scoreData.find(d => d.id === props.player.color)
+        score: props.scoreBoard[props.player.color]
     }
 })
 const payload = computed(() => {
@@ -35,15 +34,16 @@ const payload = computed(() => {
         return {
             creator: props.roomData?.creator,
             roomType: props.roomData?.roomType,
-            seed: props.roomData?.seed,
+            seed: props.bingoCardData?.seed,
             game: props.roomData?.game,
             gameMode: props.roomData?.gameMode,
+            gameType: props.roomData?.gameType
         };
     }
     if (selectedTab.value === 'Players') {
         return {
             players: props.roomData.players,
-            score: props.roomData.score,
+            score: props.scoreBoard,
         };
     }
     if (selectedTab.value === 'Player') {
@@ -74,10 +74,7 @@ const controls =
 <style lang="scss">
 .room-controls {
     border-block-start: 1px solid var(--S-30);
-    border-inline: 1px solid var(--S-30);
-    border-radius: 0.25rem 0.25rem 0 0;
     position: fixed;
-    // height: var(--room-control-header-height);
     top: calc(100dvh - (var(--room-control-header-height)));
     left: 0;
     right: 0;

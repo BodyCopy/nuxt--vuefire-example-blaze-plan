@@ -1,5 +1,6 @@
 <template>
-    <label :class="[inputStyles]" :for="props.name">{{ props.label }}
+    <label :class="[inputStyles]" :for="props.name">
+        <span v-if="props.label" class="control-label">{{ props.label }}</span>
         <textarea ref="textArea" :placeholder="props.placeholder" class="control" @input="emitInput" :id="props.name"
             :name="props.name" :value="props.modelValue" :maxlength="props.maxLength" :rows="props.rows || 5"
             :cols="props.cols || 33" :readonly="props.readOnly">
@@ -47,8 +48,10 @@ function emitInput(e) {
     model.value = e.target.value;
 }
 onMounted(() => {
-    textArea.value.style.height = ((textArea.value.scrollHeight) + 3) + 'px';
-    console.log(textArea.value.scrollHeight);
+    if (!props.rows) {
+        textArea.value.style.height = ((textArea.value.scrollHeight) + 3) + 'px';
+        console.log(textArea.value.scrollHeight);
+    }
 })
 
 </script>

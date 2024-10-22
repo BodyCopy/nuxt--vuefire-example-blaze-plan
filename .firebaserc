@@ -1,12 +1,9 @@
 {
   "projects": {
-    "default": "vue-fire-demo-713ba"
+    "prod": "miss-bingo",
+    "default": "miss-bingo"
   },
   "targets": {},
-  "etags": {
-    "vue-fire-demo-713ba": {
-      "extensionInstances": {}
-    }
-  },
+  "etags": {},
   "dataconnectEmulatorConfig": {}
 }

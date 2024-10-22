@@ -8,10 +8,14 @@
         <div class="control-modal">
             <Transition>
                 <BaseButton v-if="!isPaused" btn-style="outline" btn-modifier="micro">
-                    Pause
+                    <template #icon>
+                        <IconPause />
+                    </template>
                 </BaseButton>
                 <BaseButton v-else btn-style="outline" btn-modifier="micro">
-                    Resume
+                    <template #icon>
+                        <IconPlay />
+                    </template>
                 </BaseButton>
             </Transition>
             <BaseButton btn-style="outline" btn-modifier="micro">Reset</BaseButton>
@@ -79,12 +83,15 @@ onMounted(() => {
     display: grid;
     grid-template-columns: max-content 1fr max-content;
     position: relative;
-    border-block-start: 1px solid var(--S-30);
+
+    &>time {
+        margin-block: auto;
+    }
 
     &>.control-modal {
         gap: 0.5rem;
         display: flex;
-        background-color: var(--background-color);
+        // background-color: var(--background-color);
     }
 }
 </style>

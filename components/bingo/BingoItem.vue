@@ -41,33 +41,51 @@ onMounted(() => {
     display: grid;
     place-items: center;
     overflow: hidden;
-    background-color: var(--S-40);
+    background-color: var(--calculator-screen-background);
+    background-blend-mode: color-dodge;
+    isolation: isolate;
     position: relative;
     text-align: center;
-    @include mediaTabletLandscape('max') {
-    }
 
-    &:after {
+    @include mediaTabletLandscape('max') {}
+
+    &:after,
+    &:before {
         pointer-events: none;
         position: absolute;
         z-index: 0;
         content: '';
+    }
+
+    &:after {
         background-color: transparent;
         inset: 0.125rem;
         border-radius: 4px;
+    }
+
+    &:before {
+        z-index: 2;
+        inset: 0;
     }
 }
 
 .complete {
     position: relative;
     color: black;
-    background-color: black;
     overflow-wrap: break-word;
     hyphens: auto;
 
     &>.textFitted {
         z-index: 1;
     }
+
+    // &:before {
+    //     --angle: 0deg;
+    //     border: 3px solid;
+    //     border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
+    //     animation: 1.33s bingoItemRainbow linear 1 forwards;
+    //     filter: blur(2px), saturate(2), brightness(1.4), opacity(0.8);
+    // }
 
     &:after {
         background-color: var(--selector-button-color);

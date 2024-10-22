@@ -34,7 +34,7 @@
   --B-55: #001018;
   --B-60: #00000a;
   --B-65: #000000;
-
+  --focus-border-color: hsla(240, 93%, 53%, 0.706);
   --Y-00: #fffae5;
   --Y-05: #fff5cc;
   --Y-10: #ffeba3;
@@ -123,7 +123,8 @@
   --primary-color-lighter-1-partial: var(--primary-color-40-partial);
   --primary-color-lighter-2-partial: var(--primary-color-30-partial);
 
-  --primary-color-base: var(--primary-color-45);
+  // --primary-color-base: var(--primary-color-45);
+  --primary-color-base: rgb(139, 66, 242);
   --primary-color-darker-1: var(--primary-color-55);
   --primary-color-darker-2: var(--primary-color-60);
   --primary-color-lighter-1: var(--primary-color-45);
@@ -243,6 +244,7 @@ html {
   --selected-outline: 2px dotted var(--O-55);
   //also want offset of -4px;
   --background-color: black;
+  --calculator-screen-background: rgba(0, 0, 0, 0.64);
   --button-background-color: var(--grey-90);
   --copy-color: var(--S-05);
   --copy-color-muted: var(--S-20);
@@ -277,6 +279,40 @@ html {
   --temp-chill-border: aquamarine;
   --temp-frost-border: blueviolet;
   --temp-freeze-border: indigo;
+}
+
+.bingo-color {
+  &.red {
+    --selector-button-color: hsl(9, 98%, 59%, 1);
+  }
+
+  &.orange {
+    --selector-button-color: #FD7427;
+  }
+
+  &.yellow {
+    --selector-button-color: #FFB401;
+  }
+
+  &.green {
+    --selector-button-color: #00820B;
+  }
+
+  &.teal {
+    --selector-button-color: #0ABBD3;
+  }
+
+  &.blue {
+    --selector-button-color: #4279FA;
+  }
+
+  &.purple {
+    --selector-button-color: #9747FF;
+  }
+
+  &.pink {
+    --selector-button-color: #FF00E5;
+  }
 }
 
 .spark {

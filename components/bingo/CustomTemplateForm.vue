@@ -1,18 +1,24 @@
 <template>
     <BaseButton btn-modifier="condensed" @click="() => { $emit('custom-template', false) }">Back</BaseButton>
-    <form class="custom-template-form" @submit.prevent action="">
-        <fieldset>
-            <legend>Bingo card</legend>
-            <BaseDropZone @uploaded-images="handleUploads"></BaseDropZone>
-            <BaseTextArea v-model="bingoItem" label="Enter item" @keydown.enter.prevent="addItem" name="bingo-item"
+    <form class="custom-template-form room-form" @submit.prevent action="">
+        <fieldset class="retro-form calculator-screen">
+            <BaseDropZone @uploaded-images="handleUploads" :dropzone="false">Upload JSON</BaseDropZone>
+            <!-- <legend>Add items</legend> -->
+            <BaseTextArea v-model="bingoItem" label="Enter items" @keydown.enter.prevent="addItem" name="bingo-item"
                 helper-text='112 max characters' :character-count="bingoItem.length" max-length="112"
-                placeholder='Type a bingo card and press "enter"'></BaseTextArea>
-            <BaseButton @click="randomize">Randomize</BaseButton>
+                placeholder='Type a bingo card and press "enter"' :rows="2" retro width="fc"></BaseTextArea>
+        </fieldset>
+        <fieldset class="retro-forn calculator-screen">
             <div class="item-counter">
-                <SegmentDisplay :string="uploadAmount"></SegmentDisplay>
-                <p>items</p>
+                <div class="items-counter ltr-layout">
+                    <SegmentDisplay :string="uploadAmount"></SegmentDisplay>
+                    <label>Items</label>
+                </div>
                 <BaseButton @click="swapSortDirection" btn-modifier="micro">{{ sortDirection.toUpperCase() }}
                 </BaseButton>
+                <BaseButton @click="() => { bingoItems = [] }" btn-modifier="micro">{{ 'CLEAR' }}
+                </BaseButton>
+
             </div>
             <TransitionGroup name="list" tag="ol" class="bingo-items-list">
                 <BingoLineItem v-for="(item, i) in bingoItems" :key="i" :index="i" @delete="deleteItem(i)">
@@ -20,8 +26,13 @@
                 </BingoLineItem>
             </TransitionGroup>
         </fieldset>
-        <div class="fixed-action-bar">
-            <button @click.prevent="createBingoCard">Save</button><button @click.prevent="testBingoCard">Test</button>
+        <div class="fixed-action-bar ltr-layout">
+            <div class="items-counter ltr-layout">
+                <SegmentDisplay :string="uploadAmount"></SegmentDisplay>
+                <label>Items</label>
+            </div>
+            <BaseButton @click.prevent="createBingoCard" btn-style="outline">Save</BaseButton>
+            <BaseButton @click.prevent="testBingoCard" btn-style="outline">Test</BaseButton>
         </div>
     </form>
 </template>
@@ -29,9 +40,9 @@
 import { collection, doc, getDoc, addDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useFirestore } from 'vuefire';
 import { useRooms } from '~/composables/roomUtilities';
-import useBingoUtilities from '~/composables/bingoUtilities';
+import { generateRandomSeed, getRandomItemsWithSeed } from '~/composables/bingoUtilities';
 import { v4 as uuidv4 } from 'uuid';
-const { generateRandomSeed, getRandomItemsWithSeed } = useBingoUtilities();
+import { useStorage } from '@vueuse/core';
 const { createRoom } = useRooms();
 const db = useFirestore();
 const user = useCurrentUser();
@@ -78,14 +89,14 @@ async function handleUploads(files) {
     }
 }
 
-const roomName = ref('');
+const templateTitle = ref('');
 const password = ref('');
 const cardSize = ref(5);
 const randomSeed = ref(generateRandomSeed());
 const template = ref(route.query.templateId || false);
 const game = ref(route.query.game || '');
 const bingoItem = ref('');
-const bingoItems = ref([]);
+const bingoItems = useStorage('template-bingo-items', []);
 const sortDirection = ref('newest');
 function swapSortDirection() {
     sortDirection.value = sortDirection.value === 'oldest' ? 'newest' : 'oldest';
@@ -96,7 +107,8 @@ watch(sortDirection, (nV, oV) => {
 provide('bingoItems', bingoItems);
 const gameMode = ref('standard');
 function addItem() {
-    if (bingoItems.value.length >= 25) {
+    //todo add logic for staticBingo
+    if (bingoItems.value.length >= 50) {
         alert('full')
         return;
     }
@@ -139,23 +151,23 @@ async function createBingoCard() {
             return acc;
         }, {});
 
-        await createRoom({
-            ...data,
-            password: password.value,
-            templateId: template.value,
-            title: roomName.value || 'Untitled',
-            seed: randomSeed.value,
-            bingoItems: mappedItems,
-            lastUserOn: serverTimestamp(),
-            score: { bingos: Array(12).fill[''] },
-            players: [],
-            gameMode: gameMode.value
-        });
+        // await createRoom({
+        //     ...data,
+        //     password: password.value,
+        //     templateId: template.value,
+        //     title: templateTitle.value.toLowerCase() || 'untitled',
+        //     seed: randomSeed.value,
+        //     bingoItems: mappedItems,
+        //     lastUserOn: serverTimestamp(),
+        //     score: { bingos: Array(12).fill[{}] },
+        //     players: [],
+        //     gameMode: gameMode.value
+        // });
         // const roomCollectionRef = collection(db, 'rooms');
         // await addDoc(roomCollectionRef, {
         //     ...data,
         //     templateId: template.value,
-        //     title: roomName.value || 'Untitled',
+        //     title: templateTitle.value || 'Untitled',
         //     seed: randomSeed.value,
         //     bingoItems: mappedItems,
         //     lastUserOn: serverTimestamp(),
@@ -164,6 +176,7 @@ async function createBingoCard() {
         //     gameMode: gameMode.value
         // });
         console.log('added');
+        bingoItems.remove();
     }
 
 }
@@ -179,9 +192,12 @@ onBeforeMount(async () => {
 })
 </script>
 <style lang="scss">
-.bingo-card-creator-form {
-    display: grid;
-    grid-template-columns: minmax(24ch, 1fr) 3fr;
+.custom-template-form {
+    --segment-display-height: 1.125rem;
+
+    &>.calculator-screen::after {
+        background-color: black;
+    }
 }
 
 .bingo-items-list {
@@ -192,15 +208,22 @@ onBeforeMount(async () => {
 .item-counter {
     display: grid;
     gap: 0.5rem;
-    grid-template-columns: max-content 1fr max-content;
+    grid-template-columns: 1fr max-content;
+
+    &>.items-counter {
+        &>.segment-display {}
+    }
 }
-.fixed-action-bar{
+
+.fixed-action-bar {
     position: fixed;
     bottom: 0;
-    margin: 0.5rem;
+    padding: 0.5rem;
     left: 0;
     right: 0;
+    background-color: var(--background-color);
 }
+
 /* Transition styles */
 .list-enter-active,
 .list-leave-active {

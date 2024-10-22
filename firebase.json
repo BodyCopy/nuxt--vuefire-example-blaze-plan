@@ -7,23 +7,15 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": ".output/public",
-    "cleanUrls": true,
+    "source": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
-      {
-        "source": "**",
-        "function": "server"
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
   },
   "storage": {
     "rules": "storage.rules"

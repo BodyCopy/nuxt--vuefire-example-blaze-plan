@@ -1,5 +1,5 @@
 <template>
-    <div :class="['label', 'control', toggleStyle]">
+    <div :class="['label', 'control', 'retro', toggleStyle]">
         <span v-if="props.label">{{ props.label }}</span>
         <!-- <span v-if="statusText">{{ props.modelValue ? 'Yes' : 'No' }}</span> -->
         <label :class="['toggle-switch']">
@@ -23,7 +23,8 @@ const props = defineProps({
     helperText: String,
     validated: Boolean,
     errorText: String,
-    statusText: Boolean
+    statusText: Boolean,
+    width: { type: String, default: 'fc' },
 })
 const emits = defineEmits(['update:modelValue']);
 const toggleStyle = computed(() => {
@@ -38,6 +39,14 @@ const toggleStyle = computed(() => {
 </script>
 <style scoped lang="scss">
 @import '@/components/base/controls/control-styles.module.scss';
+
+.label.control.fill-content {
+    width: 100%;
+}
+
+.label.control>span {
+    margin-block-end: 0.25rem;
+}
 
 /* The switch - the box around the slider */
 .toggle-switch {

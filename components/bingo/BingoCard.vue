@@ -1,14 +1,14 @@
 <template>
     <div class="bingo-container">
-        <div class="bingo-card">
+        <div class="bingo-card calculator-screen">
             <div class="bingo-row" v-for="(row, rIndex) in bingoItemsArray">
                 <BingoItem v-for="(col, cIndex) in row" :item="col" @click.left="toggleItemCompletion([rIndex, cIndex])"
                     @player-focus="(e) => { toggleFocusItem([rIndex, cIndex], e) }">
                 </BingoItem>
             </div>
-            <div class="bingo-graphics" v-for="item in bingos" :class="{ bingo: item }">
+            <!-- <div class="bingo-graphics" v-for="item in bingos" :class="{ bingo: item }">
                 <b></b>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -17,16 +17,21 @@ import { useRoomStore } from '~/stores/roomData';
 import RoomData from './RoomData.vue';
 const props = defineProps({ bingoItems: Array, bingos: Array });
 const bingoItemsArray = computed(() => {
-    let output = [];
-    for (let i = 0; i < props.bingoItems.length; i += 5) {
-        output.push(props.bingoItems.slice(i, i + 5));
+    if (props.bingoItems) {
+        let output = [];
+        for (let i = 0; i < props.bingoItems.length; i += 5) {
+            output.push(props.bingoItems.slice(i, i + 5));
+        }
+        return output;
     }
-    return output;
+    else {
+        return null;
+    }
 });
 const toggleItemCompletion = inject('toggleItemCompletion');
 const focusItem = inject('focusItem');
 async function toggleFocusItem(coordinates, event) {
-    console.log(event);
+    console.log('FINISHED ITEM');
     console.log(coordinates);
 
     if (!event) {
@@ -47,6 +52,7 @@ async function toggleFocusItem(coordinates, event) {
         container: bingo-card / size;
         // height: calc(100svh - 3rem);
         width: 100dvw;
+        padding: 0rem 0.5rem 0.5rem 0.5rem;
 
         // aspect-ratio: var(--card-aspect-ratio);
         //todo bingo-items do need a size for size fit to work
@@ -58,18 +64,18 @@ async function toggleFocusItem(coordinates, event) {
 
     &-card {
         --_card-gap: 1px;
-        border: 1px solid var(--S-35);
-        background-color: rgba(255, 255, 0, 0.16);
+        // background-color: rgba(255, 255, 0, 0.16);
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: repeat(5, calc(20cqh - var(--_card-gap)));
+        grid-template-rows: repeat(5, calc(20cqh - var(--_card-gap) - 1.5px));
         gap: var(--_card-gap);
         height: 100cqmin;
         width: 100%;
+        position: relative;
+        overflow: clip;
 
         @include mediaTabletLandscape('max') {
             height: 100cqmax;
-            // aspect-ratio: 1/1.333;
         }
     }
 

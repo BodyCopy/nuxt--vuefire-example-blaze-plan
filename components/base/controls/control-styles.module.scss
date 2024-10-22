@@ -34,7 +34,7 @@ label,
     }
   }
 
-  &>.control {
+  &>.control:not(.button-wrapper) {
     background-color: var(--input-background-color);
     padding: var(--input-padding);
     border: 1px solid var(--input-border-color);
@@ -58,15 +58,25 @@ label,
   }
 
   &.retro {
+
     font-size: 12px;
     font-weight: 400;
     line-height: 150%;
     letter-spacing: 0.16px;
-    font-family: var(--font-ibm-mono);
-    background-color: var(--background-color);
-    padding: 0.5rem 0.5rem;
-    gap: 0rem;
+    font-family: var(--font-ibm);
+    background-color: var(--calculator-screen-background);
+    background-blend-mode: color-dodge;
+    padding: 0.75rem;
+    gap: 0.5rem;
     height: 100%;
+
+    &>.control-label,
+    &>label {
+      letter-spacing: 0.075em;
+      text-transform: uppercase;
+      color: var(--S-05);
+      text-shadow: 0 1px 2px black;
+    }
 
     &:hover {
       background-color: var(--grey-92);
@@ -78,13 +88,15 @@ label,
       overflow-y: auto;
     }
 
-    &:focus-within {
-      outline: 1px dashed var(--Y-35);
-      outline-offset: 0px;
+    &:not(:has(.button-wrapper)):focus-within {
+      outline: 2px solid var(--focus-border-color);
+      outline-offset: -2px;
+      border-radius: 4px;
     }
 
-    &>.control {
-      
+    &>.control:not(.button-wrapper) {
+      color: var(--S-02);
+      text-shadow: 0 1px 2px black;
       border-radius: 0;
       color: var(--copy-color);
       font-size: 1rem;
@@ -96,7 +108,7 @@ label,
       background-color: transparent;
       border: none;
       padding: 0;
-      
+
       &:focus {
         outline: none;
       }
@@ -104,7 +116,7 @@ label,
     }
 
     &.vertical {
-      gap: 0rem;
+      gap: 0.5rem;
       flex-direction: column;
     }
 
@@ -148,7 +160,9 @@ label,
 
 
 label.fill-content,
-label.fill-content>.control {
+label.fill-content>.control,
+.label.fill-content,
+.label-fill-content>.control {
   width: 100%;
 }
 

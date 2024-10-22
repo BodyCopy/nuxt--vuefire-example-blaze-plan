@@ -122,7 +122,7 @@ onBeforeMount(() => {
 html{
 }
 #app {
-  --top-nav-height: 2rem;
+  --top-nav-height: 2.25rem;
 }
 
 .logo {

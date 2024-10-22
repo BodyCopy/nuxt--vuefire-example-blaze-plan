@@ -1,5 +1,5 @@
 <template>
-    <div :class="[inputStyle, 'condensed', 'bp-input', 'fake-input']">
+    <div :class="[inputStyle, 'condensed', 'bp-input','label','base-button-set']">
         <label v-if="props.label">{{ props.label }}</label>
         <div class="button-wrapper control">
             <button v-for="(option, key, index) in processedItems " :key="option.value"
@@ -19,9 +19,9 @@ const props = defineProps({
     display: { type: String, default: 'ttb' },
     readOnly: { type: Boolean, default: false },
     boolean: { type: Boolean, default: false },
-    retro: { type: Boolean, default: false },
     wrap: { type: Boolean, default: false },
-    helperText: { type: String }
+    helperText: { type: String },
+    retro: { type: Boolean, default: false }
 });
 const inputStyle = computed(() => {
     return {
@@ -61,14 +61,14 @@ function selected(option) {
 // })
 </script>
 <style lang="scss" scoped>
-@import '@/components/base/buttons/button-styles.module.scss';
+@import '~/components/base/buttons/button-styles.module.scss';
 @import './control-styles.module.scss';
 
-.button-wrapper {
+.button-wrapper.control {
     display: flex;
     flex-wrap: nowrap;
     width: max-content;
-    border: var(--line-break);
+    border: 1px dotted var(--S-25);
     border-radius: 0.5rem;
     overflow: hidden
 }
@@ -106,7 +106,7 @@ function selected(option) {
         display: flex;
 
         &>.bp-button {
-            flex: 1 1 auto;
+            // flex: 1 1 auto;
         }
     }
 }
@@ -114,17 +114,21 @@ function selected(option) {
 .bp-button {
     text-align: center;
     font-size: 0.825rem;
-    background-color: var(--background-color);
+    background-color: transparent;
     border: none;
     border-radius: 0;
     box-shadow: none;
 
-    &:focus {
-        outline: none !important;
+    &:focus:not(.active) {
+        outline: 2px solid var(--focus-border-color);
+        outline-offset: -2px;
+        border-radius: 4px;
     }
 
     &.active {
-        color: var(--copy-color);
+        background-color: var(--background-color);
+        color: var(--S-05);
+        // color: var(--primary-base-color);
         border: var(--line-break);
         border-radius: 0.375rem;
         text-decoration: underline;

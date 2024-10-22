@@ -152,22 +152,73 @@
 /* Keyframe animation to move the gradient */
 @keyframes rainbow {
   0% {
-    background-position: 0% 50%;
+    background-position: 50% 0%;
   }
 
   100% {
-    background-position: 200% 50%;
+    background-position: 50% 100%;
   }
 }
 
 @keyframes rotate {
+  from {
+    --angle: 0deg;
+  }
+
   to {
     --angle: 360deg;
+  }
+}
+
+@keyframes bingoItemRainbow {
+  0% {
+    --angle: 0deg;
+    opacity: 0;
+  }
+
+  25% {
+    --angle: 180deg;
+    opacity: 1;
+  }
+
+  50% {
+    --angle: 360deg;
+  }
+
+  75% {
+    --angle: 540deg;
+  }
+
+  100% {
+    --angle: 720deg;
+    opacity: 0;
+  }
+}
+
+@keyframes animateTile {
+  from {
+    color: white;
+  }
+
+  to {
+    color: black;
   }
 }
 
 @property --angle {
   syntax: '<angle>';
   initial-value: 0deg;
+  inherits: false;
+}
+
+@property --border-opacity {
+  syntax: '<number>';
+  initial-value: 1;
+  inherits: false;
+}
+
+@property --_tile-background-color {
+  syntax: '<color>';
+  initial-value: transparent;
   inherits: false;
 }

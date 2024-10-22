@@ -192,7 +192,7 @@
 }
 
 .disabled,
-[disabled] {
+[disabled="true"] {
   --color: var(--disabled-color);
   pointer-events: none;
   background-color: var(--disabled-background-color);

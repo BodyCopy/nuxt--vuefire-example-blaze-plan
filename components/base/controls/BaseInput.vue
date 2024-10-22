@@ -1,5 +1,5 @@
 <template>
-    <label :class="[inputStyles]"><span v-if="props.label">{{ props.label }}</span>
+    <label :class="[inputStyles]"><span v-if="props.label" class="control-label">{{ props.label }}</span>
         <input ref="inputRef" class="control" @blur="() => { $emit('blur') }" v-model="model" :id="props.name"
             :readonly="props.readOnly" :name="props.name" :type="props.type || 'text'" :maxLength="props.maxLength"
             :placeholder="props.placeholder" :autocomplete="autocomplete" :pattern="props.pattern"

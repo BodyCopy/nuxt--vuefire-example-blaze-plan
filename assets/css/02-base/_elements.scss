@@ -16,11 +16,14 @@ fieldset {
 fieldset.retro-form {
     display: grid;
     gap: 1px;
-    background-color: var(--S-30);
-    border: 1px solid var(--S-30);
     padding: 0;
-    &>.control{
+
+    &>.control {
         background-color: var(--background-color);
+    }
+
+    &.calculator-screen>.control {
+        background-color: var(--calculator-screen-background);
     }
 }
 
@@ -57,4 +60,40 @@ figure {
 
 br {
     border-color: red;
+}
+
+.invisible-element {
+    position: absolute;
+    margin: -1px;
+    height: 1px;
+    width: 1px;
+    transform: translate(-9999px, -9999px);
+    overflow: hidden;
+    opacity: 0;
+}
+
+.calculator-screen {
+    border-radius: 0.675rem;
+    border: 4px double var(--S-35);
+    isolation: isolate;
+    overflow: clip;
+    position: relative;
+    outline: 4px solid hsl(0, 0%, 0%, 0.333);
+    outline-offset: -6px;
+
+    &:after {
+        // filter: url(#noiseFilter) invert(1) contrast(1);
+        background-color: var(--S-35);
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+    }
+}
+
+.inline-form-action-buttons {
+    background-color: var(--calculator-screen-background);
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem;
 }

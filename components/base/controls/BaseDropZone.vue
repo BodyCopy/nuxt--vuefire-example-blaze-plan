@@ -1,27 +1,31 @@
 <template>
-    <div v-if="touch || uploadStyle === 'button'" class="dropzone-touch dot-grid-paper">
-        <label class="dropzone-label bp-button outline" for="dropzoneFile">Upload File</label>
+    <div v-if="touch || !dropzone" class="dropzone-touch dot-grid-paper">
+        <label class="dropzone-label bp-button outline" for="dropzoneFile">
+            <slot>Upload file</slot>
+        </label>
         <input class="dropzone-input" @change="uploadedImages" type="file" id="dropzoneFile" name="dropzoneFile"
             accept="image/png, image/jpeg, image/webp" />
     </div>
-    <div v-else :class="['dropzone','dot-grid-paper', dropZoneActive ? 'active' : '']" @dragenter.prevent="toggleActive"
-        @dragleave.prevent="toggleActive" @dragover.prevent @drop.prevent="uploadedImages" class="dropzone">
+    <div v-else :class="['dropzone', 'dot-grid-paper', dropZoneActive ? 'active' : '']"
+        @dragenter.prevent="toggleActive" @dragleave.prevent="toggleActive" @dragover.prevent
+        @drop.prevent="uploadedImages" class="dropzone">
         <p>Drag and Drop or</p>
-        <label class="dropzone-label bp-button outline" for="dropzoneFile">Upload Files</label>
-        <input class="dropzone-input" @change="uploadedImages" type="file" multiple id="dropzoneFile" name="dropzoneFile"
-            accept="json, csv, txt" />
+        <label class="dropzone-label bp-button outline" for="dropzoneFile">
+            <slot>Upload Files</slot>
+        </label>
+        <input class="dropzone-input" @change="uploadedImages" type="file" multiple id="dropzoneFile"
+            name="dropzoneFile" accept="json, csv, txt" />
         <p class="rules retro small" v-if="slots.rules">
             <slot name="rules"></slot>
         </p>
     </div>
 </template>
 <script setup>
-import { ref, inject, useSlots } from 'vue';
 const props = defineProps({
-        uploadStyle: String,
-        uploadLimit: Number,
-        fileSizeLimit: Number
-    });
+    uploadLimit: Number,
+    fileSizeLimit: Number,
+    dropzone: { type: Boolean, default: true }
+});
 const touch = inject('touch');
 const dropZoneActive = ref(false);
 const emits = defineEmits(['uploaded-images']);
@@ -83,7 +87,8 @@ function toggleActive() {
         height: max-content;
         padding: 1rem;
         width: 100%;
-        &>label{
+
+        &>label {
             text-align: center;
             width: 100%;
         }

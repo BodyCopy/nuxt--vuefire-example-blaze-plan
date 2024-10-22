@@ -6,7 +6,8 @@
             <option v-for="model in aiModels" :value="model">{{ model }}</option>
         </select>
     </label> -->
-    <label :class="[inputStyles]">{{ props.label }}
+    <label :class="[inputStyles]">
+        <span v-if="props.label" class="control-label">{{ props.label }}</span>
         <select class="control" v-model="model" :id="props.name" :name="props.name">
             <option v-if="defaultValue" value="default" selected>{{ defaultValue }}</option>
             <option v-if="typeof props.options === 'object'" v-for="(value, key, index) in options" :value="value">{{
@@ -42,9 +43,18 @@ const model = defineModel({ type: String });
 <style lang="scss" scoped>
 @import './control-styles.module.scss';
 
-select {}
+label {
+    color: initial;
+}
+
+select {
+    color: initial;
+    background-color: var(--background-color);
+}
 
 option {
+    background-color: var(--background-color);
+    color: var(--copy-color);
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-family: var(--font-ibm-mono);
 }

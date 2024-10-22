@@ -2,17 +2,17 @@
     <nav class="top-nav">
         <MissBingoHeader />
         <Transition>
-            <BaseButton v-if="user" btn-modifier="micro" to="/login">Log in</BaseButton>
-            <BaseButton v-else btn-modifier="micro">Sign in</BaseButton>
+            <BaseButton v-if="!user" to="/login" btn-modifier="micro" btn-style="filled">Sign up</BaseButton>
         </Transition>
     </nav>
 </template>
 <script setup>
-const user = getCurrentUser();
+import { useUserData } from '~/stores/userData';
+const { user } = useUserData();
 </script>
 <style lang="scss">
 .top-nav {
-    margin: 0.25rem;
+    margin: 0.25rem 0.5rem;
     padding: 0.25rem;
     height: var(--top-nav-height, 2rem);
     border-radius: 4px;
@@ -23,7 +23,8 @@ const user = getCurrentUser();
     backdrop-filter: blur(4px);
     z-index: 9;
     display: flex;
-    &>*:first-child{
+
+    &>*:first-child {
         margin-right: auto;
     }
 }

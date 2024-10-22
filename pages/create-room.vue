@@ -1,9 +1,8 @@
 <template>
     <main class="create-room">
-        <h1>Create room</h1>
         <KeepAlive>
-            <component @custom-template="(e) => { activeComponent = e ? 'Create template' : 'Create room' }"
-                :is="components[activeComponent]" @create-room="createRoom"></component>
+            <component @custom-template="handleCustomTemplate" :is="components[activeComponent]"
+                @create-room="createRoom"></component>
         </KeepAlive>
         <!-- <CreateRoomForm></CreateRoomForm> -->
     </main>
@@ -13,14 +12,32 @@ import bcrypt from 'bcryptjs';
 import CreateRoomForm from '~/components/bingo/CreateRoomForm.vue';
 import CustomTemplateForm from '~/components/bingo/CustomTemplateForm.vue';
 import { useFirestore } from 'vuefire';
-import { addDoc, collection, serverTimestamp, getDoc, doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, getDoc, doc, setDoc, runTransaction } from 'firebase/firestore';
 // Analytics can only be retrieved on the client
 definePageMeta({
+    title: 'Create room',
     linkTitle: 'Create room',
     order: 0,
 })
+const route = useRoute();
+const router = useRouter();
 const db = useFirestore();
 const user = useCurrentUser();
+function handleCustomTemplate(data) {
+    if (data) {
+        router.push({ query: { 'custom-template': 12345 } });
+        activeComponent.value = 'Create template'
+    } else {
+        router.push({ query: null });
+        activeComponent.value = 'Create room'
+    }
+}
+onMounted(() => {
+    if (route.query['custom-template']) {
+        activeComponent.value = 'Create template';
+    }
+})
+
 async function createRoom(data) {
     const roomCollectionRef = collection(db, 'rooms');
 
@@ -59,19 +76,27 @@ async function createRoom(data) {
         }
     );
 
-    const scoreRef = doc(roomRef, `scores/${creatorColor}`);
-    await setDoc(scoreRef,
-        {
-            score: 0,
-            bingos: 0,
-        },
-    );
-    const scoreBingoRef = doc(roomRef, 'scores/bingos');
-    await setDoc(scoreBingoRef,{
-        bingos:['','','','','','','','','','','','']
+    const scoreBoardRef = doc(roomRef, 'scores/scoreBoard');
+
+    await runTransaction(db, async (transaction) => {
+        const scoreBoardDoc = await transaction.get(scoreBoardRef);
+
+        if (!scoreBoardDoc.exists() || !scoreBoardDoc.data().teams[data.creatorColor]) {
+            // Field doesn't exist, so initialize it
+            transaction.set(scoreBoardRef, {
+                bingos: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+                teams: {
+                    [data.creatorColor]: { players: [user.value.uid], score: 0 }
+                }
+            }, { merge: true }); // Use merge to avoid overwriting other fields
+        }
     });
 
     console.log('Doc added successfully! :)');
+
+    router.push(`/rooms/${roomRef.id}`);
+    //error
+    // Uncaught (in promise) TypeError: can't access property "players", roomData.value is undefined
 }
 
 const components =
@@ -100,7 +125,7 @@ const nickname = reactive({
     pattern: ''
 })
 const game = reactive({
-    value: '',
+    value: 'elden ring',
     validated: true,
     errorText: 'Invalid',
     pattern: '',

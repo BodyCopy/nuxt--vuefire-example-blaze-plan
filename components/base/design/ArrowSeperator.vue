@@ -1,7 +1,11 @@
 <template>
     <div class="arrow-seperator" aria-hidden="true">
         <span class="seperator"></span>
-        <IconArrow direction="down" class="XX"></IconArrow>
+        <div>
+            <IconArrow direction="down" class="XX"></IconArrow>
+            <IconArrow direction="down" class="XX"></IconArrow>
+            <IconArrow direction="down" class="XX"></IconArrow>
+        </div>
         <span class="seperator"></span>
     </div>
 </template>

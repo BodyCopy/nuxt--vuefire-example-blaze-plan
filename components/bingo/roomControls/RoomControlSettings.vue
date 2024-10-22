@@ -5,15 +5,22 @@
                 <FakeInput v-for="(item, key) in staticData" :title="key" :data="item"></FakeInput>
             </template>
         </FakeInputList>
-        <BaseToggle label="Timer" display="ltr"></BaseToggle>
         <BaseBoolean @change="updateRoomData('hideBoardInitially', roomData.hideBoardInitially)"
             v-model="roomData.hideBoardInitially" label="Hide board initially"></BaseBoolean>
+        <BaseBoolean @change="updateRoomData('hasTimer', roomData.hasTimer)" v-model="roomData.hasTimer"
+            label="Show timer">
+        </BaseBoolean>
+        <BaseButton v-if="roomData.creator.uid === user">New board</BaseButton>
     </div>
 </template>
 <script setup>
 import BaseBoolean from '~/components/base/controls/BaseBoolean.vue';
+import { useRoom } from '~/composables/useRoom.js';
+import { useUserData } from '~/stores/userData';
+const { user } = useUserData();
 const roomData = inject('roomData');
-const updateRoomData = inject('updateRoomData');
+const route = useRoute();
+const { updateRoomData } = useRoom(route.params.id);
 const props = defineProps({ payload: Object });
 const staticData = computed(() => {
     let payload = {
@@ -22,6 +29,7 @@ const staticData = computed(() => {
         seed: props.payload?.seed,
         game: props.payload?.game,
         gameMode: props.payload?.gameMode,
+        gameType: props.payload?.gameType
     };
     // Use Object.entries to convert the object into key-value pairs
     payload = Object.entries(payload)

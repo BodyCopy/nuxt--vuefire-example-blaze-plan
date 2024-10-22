@@ -41,16 +41,12 @@ onUnmounted(() => {
 <style lang="scss">
 .loader-screen {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 0.5px solid var(--B-45);
     padding-bottom: calc((200px + 0.875rem) / 2);
-
-    &.full-screen {
-        height: calc(100dvh - var(--TheHeader-height));
-    }
 }
 
 .loading-text {
