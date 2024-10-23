@@ -9,15 +9,17 @@
 </template>
 <script setup>
 import bcrypt from 'bcryptjs';
+import { v4 as uuidv4 } from 'uuid';
 import CreateRoomForm from '~/components/bingo/CreateRoomForm.vue';
 import CustomTemplateForm from '~/components/bingo/CustomTemplateForm.vue';
 import { useFirestore } from 'vuefire';
-import { addDoc, collection, serverTimestamp, getDoc, doc, setDoc, runTransaction } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, getDoc, doc, getDocs, query, where, setDoc, runTransaction } from 'firebase/firestore';
 // Analytics can only be retrieved on the client
 definePageMeta({
     title: 'Create room',
     linkTitle: 'Create room',
     order: 0,
+    layout: 'room-form'
 })
 const route = useRoute();
 const router = useRouter();
@@ -46,9 +48,26 @@ async function createRoom(data) {
 
     const { seed, bingoItems, creatorColor, ...roomData } = data;
 
+    async function generateUniqueRoomCode() {
+        const roomCodesRef = collection(db, 'rooms');
+        let roomCode;
+        let isUnique = false;
+
+        while (!isUnique) {
+            roomCode = uuidv4().slice(0, 6); // Extract first 6 characters from UUID
+            const querySnapshot = await getDocs(query(roomCodesRef, where('code', '==', roomCode)));
+            isUnique = querySnapshot.empty; // Ensure uniqueness
+        }
+
+        return roomCode;
+    }
+
+    const roomCode = await generateUniqueRoomCode();
+
     const roomRef = await addDoc(roomCollectionRef,
         {
             ...roomData,
+            roomCode: roomCode,
             password: hashedPassword,
             createdOn: serverTimestamp(),
             lastUsedOn: serverTimestamp(),

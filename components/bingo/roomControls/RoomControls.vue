@@ -90,4 +90,5 @@ const controls =
         overscroll-behavior: none;
     }
 }
+
 </style>

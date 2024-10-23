@@ -1,5 +1,5 @@
 <template>
-    <div class="event-log">
+    <div class="event-log room-log">
         <EventLogItem v-for="item in log" :item="item"></EventLogItem>
     </div>
 </template>

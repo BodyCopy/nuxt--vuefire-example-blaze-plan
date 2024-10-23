@@ -5,7 +5,7 @@
             <BaseBoolean v-model="searchCommunityTemplates" label="Community"></BaseBoolean>
             <BaseBoolean v-model="searchMyTemplates" label="Personal"></BaseBoolean>
         </div>
-        <BaseSearch v-model="model" @blur="closeMenu" ref="searchField" width="fc" :retro display="ttb">
+        <BaseSearch v-model.trim="model" @blur="closeMenu" ref="searchField" width="fc" :retro display="ttb">
         </BaseSearch>
         <BaseMenu v-if="searchResults" tab-index="1" class="type-ahead" :menuItems="searchResults"
             @menu-item-event="() => { model = ''; chipInputField.focusInput(); }">

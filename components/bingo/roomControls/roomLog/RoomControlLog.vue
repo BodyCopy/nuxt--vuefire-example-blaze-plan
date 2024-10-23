@@ -79,6 +79,6 @@ async function postMessage() {
     overflow-y: auto;
     display: grid;
     margin-block-start: auto;
-    height: 100%;
+    max-height: 100%;
 }
 </style>

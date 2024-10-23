@@ -1,5 +1,5 @@
 <template>
-    <div ref="chatLogElement" class="chat-log">
+    <div ref="chatLogElement" class="chat-log room-log">
         <ChatLogItem v-for="(item, index) of log" :key="item.id" :item="item"></ChatLogItem>
     </div>
 </template>

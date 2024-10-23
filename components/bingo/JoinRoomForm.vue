@@ -1,23 +1,28 @@
 <template>
     <form @submit.prevent="joinRoom">
-        <fieldset class="retro-form">
-            <BaseInput v-model="nickname.value" label="Nickname" retro :validated="nickname.validated"
-                :error-text="nickname.errorText" placeholder="Your gamer name"></BaseInput>
+        <fieldset class="retro-form calculator-screen">
             <BaseInput v-model="password.value" placeholder="-secret-" label="Password" retro
                 :validated="password.validated" :error-text="password.errorText"></BaseInput>
             <!-- todo add the burnpad typeAhead chipInput -->
-            <BaseButtonSet label="Joining as" v-model="playerRole.value" width="fc" :options="playerRole.options">
+            <BaseButtonSet label="Joining as" v-model="playerRole.value" width="fc" :options="playerRole.options"
+                :retro="true">
             </BaseButtonSet>
-            <PlayerColorSelector v-model="playerColor.value" label="Choose your weapon"></PlayerColorSelector>
         </fieldset>
         <ArrowSeperator />
-        <div class="testing">
+        <fieldset class="retro-form calculator-screen">
+            <BaseInput v-model="nickname.value" label="Nickname" retro :validated="nickname.validated"
+                :error-text="nickname.errorText" placeholder="---" :maxLength="20" helper-text="Max 20 characters"
+                :character-count="nickname.value.length"></BaseInput>
+            <PlayerColorSelector v-model="playerColor.value"></PlayerColorSelector>
+        </fieldset>
+        <ArrowSeperator />
+        <!-- <div class="testing">
             <h5>For testing:</h5>
             <p>{{ user?.uid || 'tbd' }}</p>
             <strong>{{ user?.isAnonymous ? 'Anon' : '' || 'tbd' }}</strong>
             <button v-if="isUserLoaded && !user?.uid" btn-style="outline" @click.prevent="anonSignIn">Anon
                 login</button>
-        </div>
+        </div> -->
         <JoinEnterRoomSection v-if="userExists" :player-color="playerColor.value" :nickname="nickname.value" :ready
             :submitCopy>
         </JoinEnterRoomSection>
@@ -99,7 +104,7 @@ const playerColor = reactive({
     }
 })
 const playerRole = reactive({
-    value: null,
+    value: 'player',
     errorText: 'Select your role',
     options: { Player: 'player', Spectator: 'spectator' },
     get validated() {

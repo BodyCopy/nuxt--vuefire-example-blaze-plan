@@ -1,15 +1,16 @@
 <template>
-    <h1>Join {{ roomId }}</h1>
-    <JoinRoomForm @join-room="joinRoom" :roomData></JoinRoomForm>
+    <div class="join">
+        <JoinRoomForm @join-room="joinRoom" :roomData></JoinRoomForm>
+    </div>
 </template>
 <script setup>
 import { useRoom } from '~/composables/useRoom';
-import { doc, serverTimestamp, setDoc, updateDoc, runTransaction } from 'firebase/firestore';
+import { doc, collection, query, serverTimestamp, setDoc, updateDoc, runTransaction, where } from 'firebase/firestore';
 definePageMeta({
     title: `Join room`,
     linkTitle: `join-room`,
     order: 1,
-    layout: 'room-layout',
+    layout: 'room-form'
 })
 
 
@@ -20,6 +21,7 @@ const route = useRoute();
 const router = useRouter();
 const roomId = computed(() => route.params.id);
 const db = useFirestore();
+const roomQuery = query(collection(db, `rooms`), where('roomCode', '==', route.params.id));
 const roomRef = doc(db, `rooms/${route.params.id}`);
 const roomData = useDocument(roomRef);
 
