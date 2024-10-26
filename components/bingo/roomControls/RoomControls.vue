@@ -1,6 +1,6 @@
 <template>
     <div ref="roomControl" class="room-controls">
-        <RoomControlHeader @open-panel="openPanel" @close="expandCollapseContent" :expanded :selectedTab :playerDetails >
+        <RoomControlHeader @open-panel="openPanel" @close="expandCollapseContent" :expanded :selectedTab :playerDetails>
         </RoomControlHeader>
         <div v-touch:swipe.down="expandCollapseContent" ref="roomControlContent" class="room-controls-content">
             <component :is="controls[selectedTab]" :payload="payload"></component>
@@ -42,6 +42,7 @@ const payload = computed(() => {
     }
     if (selectedTab.value === 'Players') {
         return {
+            nickname: props.player.nickname,
             players: props.roomData.players,
             score: props.scoreBoard,
         };
@@ -78,6 +79,8 @@ const controls =
     top: calc(100dvh - (var(--room-control-header-height)));
     left: 0;
     right: 0;
+    bottom: 0;
+    height: max-content;
     background-color: var(--background-color);
     z-index: 4;
     transition: transform 240ms ease-in-out;
@@ -90,5 +93,4 @@ const controls =
         overscroll-behavior: none;
     }
 }
-
 </style>

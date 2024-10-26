@@ -102,13 +102,11 @@ onBeforeMount(() => {
     </a>
   </div> -->
   <div id="app">
-    <main>
-      <!-- <NavigationLinks /> -->
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-      <SnackBarController></SnackBarController>
-    </main>
+    <!-- <NavigationLinks /> -->
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+    <SnackBarController></SnackBarController>
   </div>
   <!-- <footer>
     <a href="https://github.com/posva/nuxt--vuefire-example-blaze-plan">
@@ -119,10 +117,10 @@ onBeforeMount(() => {
 </template>
 
 <style scoped>
-html{
-}
+html {}
+
 #app {
-  --top-nav-height: 2.25rem;
+  --top-nav-height: 2rem;
 }
 
 .logo {

@@ -1,6 +1,6 @@
 <template>
     <div class="room-control-player ttb-layout">
-        <PlayerRoomStatCard v-for="player in sortedPlayers" :player="player" :gameType="roomData.gameType">
+        <PlayerRoomStatCard v-for="(player, key) in sortedPlayers" :player :gameType="roomData.gameType">
         </PlayerRoomStatCard>
     </div>
 </template>
@@ -21,7 +21,5 @@ const sortedPlayers = computed(() => {
 
 </script>
 <style lang="scss">
-.room-control-player{
-
-}
+.room-control-player {}
 </style>

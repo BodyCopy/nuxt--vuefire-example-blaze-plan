@@ -3,10 +3,16 @@ html {
   width: 100%;
   -webkit-tap-highlight-color: transparent;
   background-color: var(--background-color);
-  &:has( *.fixed-layout) {
+
+  &:has(*.fixed-layout) {
     overflow: hidden;
     overscroll-behavior: none;
   }
+}
+
+#__nuxt {
+  display: flex;
+  height: 100%;
 }
 
 html.locked {}

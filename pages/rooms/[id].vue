@@ -1,6 +1,6 @@
 <template>
     <BingoRoom v-if="roomData && scoreData" :roomData="roomData" :scoreData="scoreData"></BingoRoom>
-    <LoaderScreen v-else ></LoaderScreen>
+    <LoaderScreen v-else></LoaderScreen>
 </template>
 <script setup>
 import { doc, collection, setDoc, getDoc, updateDoc, serverTimestamp, FieldValue, increment, addDoc, arrayUnion, arrayRemove } from "firebase/firestore";
@@ -21,5 +21,6 @@ const { data: roomData } = useDocument(roomDocRef);
 const scoresRef = doc(db, `rooms/${route.params.id}/scores/scoreBoard`);
 const { data: scoreData } = useDocument(scoresRef);
 provide('roomData', roomData);
+provide('roomDocRef', roomDocRef);
 //    middleware: 'check-room-password'
 </script>

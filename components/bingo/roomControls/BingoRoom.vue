@@ -11,7 +11,7 @@
                 </BaseButton>
             </header>
             <div class="room-data calculator-screen">
-                <RoomScore :scores="scoreBoard"></RoomScore>
+                <RoomScore :scores="scoreBoard" :bingos="scoreData.bingos"></RoomScore>
                 <RoomTimer v-if="roomData.hasTimer" :startTime="roomData.createdOn" :isPaused="false" />
             </div>
             <div class="room-card">
@@ -53,6 +53,7 @@ const player = computed(() => {
         return {};
     }
 });
+provide('loggedInPlayer', player);
 
 // const scoreData = ref({});
 const scoreBoard = computed(() => {
@@ -72,7 +73,12 @@ function extractAndSortTeamScores(teams) {
         });
 
     // Sort the array by the score in descending order
-    const sortedTeamScores = teamScores.sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
+    const sortedTeamScores = teamScores.sort(([colorA, scoreA], [colorB, scoreB]) => {
+        if (scoreB !== scoreA) {
+            return scoreB - scoreA; // Sort by score
+        }
+        return colorA.localeCompare(colorB); // Tie-breaker by color
+    });
 
     // Convert the sorted array back to an object
     return Object.fromEntries(sortedTeamScores);
@@ -117,7 +123,6 @@ const bingos = computed(() => props.scoreData.bingos);
 //[{red:true},{blue:true, red:true}...]
 const bingoItemKeys = computed(() => {
     if (bingoCardData.value?.bingoItems) {
-        console.log(bingoCardData.value, 'BINGOITEMS');
         const orderedItems = Object.keys(bingoCardData.value.bingoItems)
             .sort((a, b) => {
                 // Extract the number from the key and compare numerically
@@ -126,7 +131,6 @@ const bingoItemKeys = computed(() => {
                 return numB - numA;
             })
             .map(key => bingoCardData.value.bingoItems[key]); // Convert sorted keys back to array of objects
-        console.log('ORDERED', orderedItems);
         return orderedItems;
     } else {
         return [];
@@ -206,21 +210,20 @@ function useLocalRoom() {
             ///////////////
             // Iterate over all possible bingo lines (rows, columns, diagonals)
             for (const [bingoIndex, line] of bingoLines.entries()) {
-                // Get the color of the first item in the line to compare with others
                 const firstItemColor = items[`item-${line[0]}`].complete;
 
                 // Check if all items in the line have the same non-empty color
                 const isComplete = firstItemColor !== '' && line.every(i => items[`item-${i}`].complete === firstItemColor);
-                console.log('BINGO DATA', isComplete, line);
+                // console.log('COMPLETE', isComplete, scoreBingos[bingoIndex]);
 
-                // If the line is complete and not yet marked as bingo, mark it
-                if (isComplete && !(bingos[bingoIndex]?.[player.value.color])) {
-                    // If the line is complete and the bingo isn't marked for this color, mark it
-                    scoreBingos[bingoIndex][player.value.color] = true; // Mark the line as bingo
+                // If the line is complete and not yet marked, mark it
+                if (isComplete && !(scoreBingos[bingoIndex]?.[player.value.color])) {
+                    scoreBingos[bingoIndex] = { ...(scoreBingos[bingoIndex] || {}), [player.value.color]: true };
                 }
-                else if (!isComplete && bingos[bingoIndex]?.[player.value.color]) {
-                    // If the line was marked but is now incomplete, unmark it
-                    scoreBingos[bingoIndex][player.value.color] = false; // Unmark the line as bingo
+                // If the line was marked but is now incomplete, unmark it
+                else if (!isComplete && scoreBingos[bingoIndex]?.[player.value.color]) {
+                    console.log('UNMARK');
+                    scoreBingos[bingoIndex] = { ...(scoreBingos[bingoIndex] || {}), [player.value.color]: false };
                 }
             }
 
@@ -391,5 +394,9 @@ function useLocalRoom() {
     grid-area: c;
     // align-items: center;
     display: flex;
+}
+
+.room-card-view {
+    grid-area: v;
 }
 </style>

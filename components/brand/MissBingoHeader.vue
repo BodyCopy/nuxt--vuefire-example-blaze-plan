@@ -2,7 +2,7 @@
     <NuxtLink to="/">
         <div class="miss-bingo-header">
             <img :src="MissBingoLogo">
-            <SegmentDisplay string="miss.bing0"></SegmentDisplay>
+            <SegmentDisplay string="miss.bing0" :freakout="true"></SegmentDisplay>
         </div>
     </NuxtLink>
 </template>
@@ -14,9 +14,10 @@ import MissBingoLogo from '~/public/MissBingoLogo.svg';
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    margin-block: auto;
 
     &>.segment-display {
-        --active-seg-color: 277, 68%, 77%;
+        --active-seg-color: hsl(277, 68%, 77%);
         --segment-display-height: 1rem;
     }
 }

@@ -12,7 +12,7 @@
 </template>
 <script setup>
 import { useUserData } from '~/stores/userData';
-const { user, userNickname, userIsLoaded } = useUserData()
+const { user, userNickname, userIsLoaded } = useUserData();
 </script>
 <style lang="scss">
 .form-room {

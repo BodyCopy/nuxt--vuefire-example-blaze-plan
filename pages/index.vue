@@ -1,27 +1,21 @@
 <template>
-  <main>
-    <h2>Welcome!</h2>
-
-    <p>Click on one of the pages above to check the corresponding demo.</p>
-
-    <p>
-      Check out
-      <a href="https://vuefire.vuejs.org" target="_blank">VueFire docs</a> to
-      learn more
-    </p>
+  <TopNav></TopNav>
+  <main class="index-main">
     <div class="miss-bingo-index-actions">
       <div>
-        <h1>JOIN ROOM</h1>
-        <BaseInput v-model="roomCode" label="Room Code"></BaseInput>
-        <NuxtLink :to="joinRoomUrl">
-          Enter
-        </NuxtLink>
+        <BaseInput v-model="roomCode" label="Enter room code"></BaseInput>
+        <BaseButton :to="joinRoomUrl" width="fc">
+          Join room
+        </BaseButton>
       </div>
       <NuxtLink to="create-room">
         Create room
       </NuxtLink>
       <NuxtLink v-if="user" :to="`profile/${user}`">
         Profile
+      </NuxtLink>
+      <NuxtLink v-if="user" :to="`profile/${user}`">
+        Template
       </NuxtLink>
     </div>
   </main>
@@ -31,6 +25,7 @@ import { useUserData } from "~/stores/userData";
 definePageMeta({
   linkTitle: 'Home',
   order: 0,
+  layout: false
 })
 const roomCode = ref('');
 const joinRoomUrl = computed(() => {
@@ -39,14 +34,26 @@ const joinRoomUrl = computed(() => {
 const { user } = useUserData();
 </script>
 <style lang="scss">
+main.index-main {
+  padding: 0 0.5rem 0.5rem 0.5rem;
+
+}
+
 .miss-bingo-index-actions {
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
-  background-color: violet;
+  grid-template-rows: 1fr max-content;
+  grid-template-columns: 1fr 1fr 1fr;
   height: 100%;
-  & > *:first-child {
-    grid-column: span 2;
+  gap: 0.5rem;
+  &>*{
+    border: 1px solid var(--S-30);
+    padding: 0.5rem;
+    display: grid;
+    place-content: center;
+  }
+  &>*:first-child {
+    grid-column: span 3;
+    gap: 0.5rem;
   }
 }
 </style>

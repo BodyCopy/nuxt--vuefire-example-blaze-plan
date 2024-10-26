@@ -1,11 +1,11 @@
 <template>
-    <RouterLink v-if="to" :class="['btn', 'bp-button', props.disabled ? 'disabled' : '', buttonStyle]" :to="to">
+    <NuxtLink v-if="to" :class="['btn', 'bp-button', props.disabled ? 'disabled' : '', buttonStyle]" :to="to">
         <slot name="icon"></slot>
         <span class="btn-content">
             <slot></slot>
         </span>
         <slot name="trailingIcon"></slot>
-    </RouterLink>
+    </NuxtLink>
     <a v-else-if="href" :class="['btn', 'bp-button', buttonStyle]" :href="href">
         <slot></slot>
         <Icon name="external-link" />

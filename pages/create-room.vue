@@ -54,8 +54,8 @@ async function createRoom(data) {
         let isUnique = false;
 
         while (!isUnique) {
-            roomCode = uuidv4().slice(0, 6); // Extract first 6 characters from UUID
-            const querySnapshot = await getDocs(query(roomCodesRef, where('code', '==', roomCode)));
+            roomCode = uuidv4().slice(0, 4); // Extract first 6 characters from UUID
+            const querySnapshot = await getDocs(query(roomCodesRef, where('roomCode', '==', roomCode)));
             isUnique = querySnapshot.empty; // Ensure uniqueness
         }
 

@@ -79,7 +79,8 @@ const segmentMap = {
     '=': [1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
     '/': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
     '\\': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-    '.': [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    '.': [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ' ': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 }
 const output = ref([]);
@@ -143,8 +144,8 @@ onUnmounted(() => {
 }
 
 .active-seg {
-    fill: hsla(var(--active-seg-color, 0, 0%, 96%), 1);
-    filter: drop-shadow(0 0 calc(var(--segment-display-height) / 6) hsla(var(--active-seg-color, 0, 0%, 96% ), 0.706));
+    fill: hsl( from var(--active-seg-color) h 100 l / 1);
+    filter: drop-shadow(0 0 calc(var(--segment-display-height) / 6) hsl( from var(--active-seg-color) h s l / 0.706));
     /* fill: #CD9BEC;
     filter: drop-shadow(0 0 4px #CD9BEC); */
 }

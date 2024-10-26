@@ -26,6 +26,7 @@ const { user } = useUserData();
 
     &>*:first-child {
         margin-right: auto;
+        margin-block: auto;
     }
 }
 </style>

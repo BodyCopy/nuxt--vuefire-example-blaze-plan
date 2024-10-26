@@ -4,7 +4,8 @@
         <component class="room-log" :is="logViewComponents[logView.value]">
         </component>
         <div v-if="logView.value === 'chat'" class="room-control-log-chat-input">
-            <BaseInput v-model="chatMessage" @keydown.enter="postMessage" placeholder="-type message-"></BaseInput>
+            <BaseInput v-model="chatMessage" @keydown.enter="postMessage" placeholder="-type message-"
+                style="font-size:16px"></BaseInput>
             <IconSend />
         </div>
     </div>
@@ -63,7 +64,8 @@ async function postMessage() {
         display: grid;
         gap: 0.5rem;
         position: sticky;
-        &>.feather-send{
+
+        &>.feather-send {
             right: 0.5rem;
             top: 50%;
             transform: translateY(-50%);

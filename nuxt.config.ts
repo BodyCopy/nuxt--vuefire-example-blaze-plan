@@ -7,6 +7,10 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Miss.Bingo',
+      meta: [
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }
+      ],
       link: [
         // {
         //   href: 'https://cdn.jsdelivr.net/npm/water.css@2/out/water.css',
@@ -99,10 +103,10 @@ export default defineNuxtConfig({
     // Make some pages client only (since we have an SPA)
     // useful for authenticated pages that require the user to be logged in to be
     // displayed
-    '/': { prerender: true },
+    '/': { ssr: true },
     '/admin': { ssr: false },
     '/login': { ssr: false },
-    '/analytics': { ssr: false },
+    '/analytics': { ssr: true },
     // you don't need to add ssr: true to any route, it's the default
     '/users': { ssr: true },
     '/posts/new': { ssr: true },
