@@ -11,9 +11,7 @@
 </template>
 <script setup>
 import { useIsCurrentUserLoaded } from 'vuefire';
-import { useUserData } from '~/stores/userData';
 const props = defineProps({ rooms: { type: Array } });
-// const { userRooms } = useUserData();
 
 
 </script>

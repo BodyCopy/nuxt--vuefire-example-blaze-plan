@@ -11,14 +11,14 @@
     </div>
 </template>
 <script setup>
-import { useUserData } from '~/stores/userData';
+import { useUserStore } from '~/stores/userStore.js';
 import { push, ref as rtdRef, serverTimestamp } from 'firebase/database';
 import ChatLog from './ChatLog.vue';
 import EventLog from './EventLog.vue';
 
 const db = useDatabase();
 const route = useRoute();
-const { user } = useUserData();
+const { user } = useUserStore();
 const logView = reactive({
     options: { 'Chat': 'chat', 'Event Log': 'event' },
     value: 'chat'

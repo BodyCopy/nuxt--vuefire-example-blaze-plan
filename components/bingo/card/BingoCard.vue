@@ -1,20 +1,20 @@
 <template>
-    <div class="bingo-container">
-        <div class="bingo-card calculator-screen">
-            <div class="bingo-row" v-for="(row, rIndex) in bingoItemsArray">
-                <BingoItem v-for="(col, cIndex) in row" :item="col" @click.left="toggleItemCompletion([rIndex, cIndex])"
-                    @player-focus="(e) => { toggleFocusItem([rIndex, cIndex], e) }">
-                </BingoItem>
-            </div>
-            <!-- <div class="bingo-graphics" v-for="item in bingos" :class="{ bingo: item }">
+    <div class="bingo-card">
+        <BingoCardPlayer></BingoCardPlayer>
+        <div class="bingo-row" v-for="(row, rIndex) in bingoItemsArray">
+            <BingoItem v-for="(col, cIndex) in row" :item="col" @click.left="toggleItemCompletion([rIndex, cIndex])"
+                @player-focus="(e) => { toggleFocusItem([rIndex, cIndex], e) }">
+            </BingoItem>
+        </div>
+        <!-- <div class="bingo-graphics" v-for="item in bingos" :class="{ bingo: item }">
                 <b></b>
             </div> -->
-        </div>
     </div>
 </template>
 <script setup>
-import { useRoomStore } from '~/stores/roomData';
-import RoomData from './RoomData.vue';
+import { useRoomStore } from '~/stores/room/roomStore.js';
+import BingoCardPlayer from './BingoCardPlayer.vue';
+const roomStore = useRoomStore();
 const props = defineProps({ bingoItems: Array, bingos: Array });
 const bingoItemsArray = computed(() => {
     if (props.bingoItems) {
@@ -47,36 +47,16 @@ async function toggleFocusItem(coordinates, event) {
 @import '~/assets/css/01-config/mixins.module.scss';
 
 .bingo {
-    &-container {
-        --card-aspect-ratio: 1/1;
-        container: bingo-card / size;
-        // height: calc(100svh - 3rem);
-        width: 100dvw;
-        padding: 0rem 0.5rem 0.5rem 0.5rem;
-
-        // aspect-ratio: var(--card-aspect-ratio);
-        //todo bingo-items do need a size for size fit to work
-        @include mediaTabletLandscape('max') {
-            // --card-aspect-ratio: 1/1.24;
-            // height: calc(100svw * 1.24); //todo:convert bingoitems to portraitish as screen a/r changes
-        }
-    }
-
     &-card {
+        --bingo-card-player-height: 40px;
         --_card-gap: 1px;
         // background-color: rgba(255, 255, 0, 0.16);
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: repeat(5, calc(20cqh - var(--_card-gap) - 1.5px));
+        grid-template-rows: var(--bingo-card-player-height) repeat(5, calc(20cqh - var(--_card-gap) - 8px));
         gap: var(--_card-gap);
-        height: 100cqmin;
-        width: 100%;
         position: relative;
         overflow: clip;
-
-        @include mediaTabletLandscape('max') {
-            height: 100cqmax;
-        }
     }
 
     &-row {
@@ -86,23 +66,23 @@ async function toggleFocusItem(coordinates, event) {
         grid-template-columns: repeat(5, 1fr);
 
         &:nth-of-type(1) {
-            grid-row: 1/1;
-        }
-
-        &:nth-of-type(2) {
             grid-row: 2/3;
         }
 
-        &:nth-of-type(3) {
+        &:nth-of-type(2) {
             grid-row: 3/4;
         }
 
-        &:nth-of-type(4) {
+        &:nth-of-type(3) {
             grid-row: 4/5;
         }
 
-        &:nth-of-type(5) {
+        &:nth-of-type(4) {
             grid-row: 5/6;
+        }
+
+        &:nth-of-type(5) {
+            grid-row: 6/7;
         }
     }
 

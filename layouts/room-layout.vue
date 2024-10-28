@@ -11,8 +11,8 @@
     </main>
 </template>
 <script setup>
-import { useUserData } from '~/stores/userData';
-const { user, userNickname, userIsLoaded } = useUserData();
+import { useUserStore } from '~/stores/userStore';
+const { user, userNickname, userIsLoaded } = useUserStore();
 </script>
 <style lang="scss">
 .form-room {

@@ -41,16 +41,6 @@ export const useRoom = ((roomId) => {
         }
     }
 
-    async function updateRoomData(field, val) {
-        try {
-            await updateDoc(roomDocRef, {
-                [field]: val
-            })
-        } catch (err) {
-            console.log('error', err);
 
-        }
-    }
-
-    return { getRandomizedCardFromTemplate, logEvent, updateRoomData }
+    return { getRandomizedCardFromTemplate, logEvent }
 })

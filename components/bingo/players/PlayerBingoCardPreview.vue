@@ -35,7 +35,8 @@ const bingoItemKeys = computed(() => {
     height: 200px;
     gap: 1px;
     background-color: var(--S-30);
-    border: 2px double var(--S-30);
+    outline: 1px dotted var(--S-30);
+    outline-offset: -1px;
     border-radius: 0.5rem;
     overflow: clip;
 }

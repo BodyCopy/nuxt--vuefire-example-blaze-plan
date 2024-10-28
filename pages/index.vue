@@ -21,7 +21,7 @@
   </main>
 </template>
 <script setup>
-import { useUserData } from "~/stores/userData";
+import { useUserStore } from "~/stores/userStore.js";
 definePageMeta({
   linkTitle: 'Home',
   order: 0,
@@ -31,7 +31,7 @@ const roomCode = ref('');
 const joinRoomUrl = computed(() => {
   return `rooms/join/${roomCode.value}`;
 })
-const { user } = useUserData();
+const { user } = useUserStore();
 </script>
 <style lang="scss">
 main.index-main {

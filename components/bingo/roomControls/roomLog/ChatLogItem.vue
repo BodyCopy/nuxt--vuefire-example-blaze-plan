@@ -1,7 +1,7 @@
 <template>
-    <div class="chat-log-item">
-        <PlayerIdHeader :color="roomData.players[item.userId].color" :nickname="roomData.players[item.userId].nickname"
-            :colorChipSize="20">
+    <div class="chat-log-item calaculator-screen-item">
+        <PlayerIdHeader :color="roomStore.roomData.players[item.userId].color"
+            :nickname="roomStore.roomData.players[item.userId].nickname" :colorChipSize="20">
         </PlayerIdHeader>
         <p class="chat-log-item-message">
             {{ item.message }}
@@ -9,8 +9,9 @@
     </div>
 </template>
 <script setup>
+import { useRoomStore } from '~/stores/room/roomStore';
+const roomStore = useRoomStore();
 const props = defineProps({ item: Object });
-const roomData = inject('roomData');
 
 </script>
 <style lang="scss">
@@ -29,6 +30,7 @@ const roomData = inject('roomData');
 
     &-message {
         margin-top: 0.25rem;
+
         &:before {
             color: var(--copy-color-muted);
             content: '>> ';

@@ -7,8 +7,8 @@
     </nav>
 </template>
 <script setup>
-import { useUserData } from '~/stores/userData';
-const { user } = useUserData();
+import { useUserStore } from '~/stores/userStore';
+const { user } = useUserStore();
 </script>
 <style lang="scss">
 .top-nav {

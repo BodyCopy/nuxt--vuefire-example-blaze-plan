@@ -3,7 +3,7 @@ import { useFirestore, useDocument } from "vuefire";
 
 const roomStores = {};
 
-export function useRoomStore(id) {
+export function useRoomData(id) {
     if (!roomStores[id]) {
         const db = useFirestore();
         const docRef = doc(collection(db, 'rooms'), id);

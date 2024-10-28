@@ -1,7 +1,7 @@
 <template>
     <component :is="flat ? 'div' : 'button'" :disabled="!available"
-        :class="['color-selector-button','bingo-color', color, selected ? 'selected' : '', flat ? 'flat' : '']">
-        <img :src="icons[color]" alt="">
+        :class="['color-selector-button', 'bingo-color', color, selected ? 'selected' : '', flat ? 'flat' : '']">
+        <img :src="colorIcon" alt="">
     </component>
 </template>
 <script setup>
@@ -11,6 +11,9 @@ const props = defineProps({
     selected: Boolean,
     available: { type: Boolean, default: true },
     flat: { type: Boolean, default: false }
+})
+const colorIcon = computed(() => {
+    return icons[props.color];
 })
 
 

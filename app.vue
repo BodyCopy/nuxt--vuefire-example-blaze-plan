@@ -1,15 +1,8 @@
 <script lang="ts" setup>
-import {
-  doc,
-  getDoc,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from 'firebase/firestore'
-import {
-  signInAnonymously,
-} from 'firebase/auth'
-import { updateProfile } from 'firebase/auth'
+import { useUserStore } from '~/stores/userStore';
+import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
+import { signInAnonymously, updateProfile } from 'firebase/auth'
+const userStore = useUserStore();
 const auth = useFirebaseAuth()! // only exists on client side
 function anonSignIn() {
   signInAnonymously(auth);

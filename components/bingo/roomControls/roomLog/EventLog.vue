@@ -4,7 +4,6 @@
     </div>
 </template>
 <script setup>
-import { useUserData } from '~/stores/userData';
 import { push, ref as rtdRef, serverTimestamp } from 'firebase/database';
 const db = useDatabase();
 const route = useRoute();

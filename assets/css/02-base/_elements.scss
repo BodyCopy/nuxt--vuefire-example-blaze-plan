@@ -1,5 +1,3 @@
-
-
 form {
     display: flex;
     flex-direction: column;
@@ -83,8 +81,13 @@ br {
     outline: 4px solid hsl(0, 0%, 0%, 0.333);
     outline-offset: -6px;
 
+    &-item {
+        background-color: var(--calculator-screen-background);
+        background-blend-mode: color-dodge;
+    }
+
     &:after {
-        // filter: url(#noiseFilter) invert(1) contrast(1);
+        filter: url(#noiseFilter) invert(1) contrast(1);
         background-color: var(--S-35);
         content: '';
         position: absolute;

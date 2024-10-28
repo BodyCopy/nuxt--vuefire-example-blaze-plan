@@ -14,24 +14,39 @@
                 <RoomScore :scores="scoreBoard" :bingos="scoreData.bingos"></RoomScore>
                 <RoomTimer v-if="roomData.hasTimer" :startTime="roomData.createdOn" :isPaused="false" />
             </div>
-            <div class="room-card">
-                <BingoCard :bingo-items="bingoItemKeys" :bingos="bingos"></BingoCard>
+            <div class="room-view calculator-screen">
+                <Transition :name="transitionName">
+                    <component class="room-view-content" :is="roomViews[activeView]" :bingo-items="bingoItemKeys"
+                        :bingos="bingos">
+                    </component>
+                </Transition>
             </div>
+            <nav class="room-view-nav">
+                <BaseButtonSet v-model="activeView" width="fc"
+                    :options="{ Card: 'bingo-card', Scores: 'detailed-score-board', Chat: 'chat-log' }">
+                </BaseButtonSet>
+            </nav>
         </div>
-        <RoomControls :roomData :scoreData :scoreBoard :bingoCardData :player></RoomControls>
+        <!-- <RoomControls :roomData :scoreData :scoreBoard :bingoCardData :player></RoomControls> -->
     </div>
 </template>
 <script setup>
 import { doc, collection, setDoc, getDoc, updateDoc, serverTimestamp, FieldValue, increment, addDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { useFirestore, useDocument } from "vuefire";
+import { useStorage as vueUseStorage } from "@vueuse/core";
 import IconExternalLink from "~/components/icons/IconExternalLink.vue";
 import { createSnackbar } from '~/stores/snackbar.js';
-import { useUserData } from "~/stores/userData";
+import { useUserStore } from "~/stores/userStore.js";
 import { useRoom } from "~/composables/useRoom.js";
+import ChatLog from "./roomLog/ChatLog.vue";
+import BingoCard from "../card/BingoCard.vue";
+import BingoPlayers from "../players/BingoPlayers.vue";
+import { useRoomStore } from "~/stores/room/roomStore";
 const props = defineProps({ roomData: { type: Object }, scoreData: { type: Object } });
 //    middleware: 'check-room-password'
 const db = useFirestore();
 const route = useRoute();
+const roomStore = useRoomStore();
 const { logEvent } = useRoom(route.params.id);
 const { text, copy } = useClipboard();
 function copyLink() {
@@ -39,8 +54,17 @@ function copyLink() {
     createSnackbar({ type: 'info', message: 'Link copied to clipboard' })
 }
 // const roomId = computed(() => route.params.id);
-const { user } = useUserData();
+const { user } = useUserStore();
 // const user = useCurrentUser();
+const activeView = vueUseStorage('room-view', 'bingo-card');
+const roomViews = {
+    'bingo-card': BingoCard,
+    'detailed-score-board': BingoPlayers,
+    'chat-log': ChatLog
+}
+watch(activeView,(nV,oV)=>{
+    
+})
 
 const player = computed(() => {
     console.log('ROOMDATA', props.roomData);
@@ -95,26 +119,6 @@ const docRef = computed(() => {
     }
 })
 const bingoCardData = useDocument(docRef.value);
-// const bingoCardData = ref({});
-
-
-// watch(user, async (nV, oV) => {
-//     const docRef = doc(db, `rooms/${route.params.id}/cards/${player.value.color}-card`);
-//     useDocument(docRef, { target: bingoCardData });
-//     const scoresRef = doc(db, `rooms/${route.params.id}/scores/scoreBoard`);
-//     useDocument(scoresRef, { target: scoreData });
-//     console.log(props.scoreData);
-
-// })
-
-// const sortedScores = computed(() => {
-//     // Combine players with their scores
-//     return Object.values(props.roomData.score.scoreBoard).map(color => ({
-//         ...color,
-//         score: props.roomData.score.scoreBoard[color] || 0 // default to 0 if no score
-//     }))
-//         .sort((a, b) => b.score - a.score);
-// });
 
 
 const gameMode = computed(() => props.roomData.gameMode);
@@ -136,12 +140,11 @@ const bingoItemKeys = computed(() => {
         return [];
     }
 })
-const { toggleItemCompletion, focusItem, initPlayer, updatePlayerColor, updateRoomData } = useLocalRoom();
+const { toggleItemCompletion, focusItem, initPlayer, updatePlayerColor } = useLocalRoom();
 
 provide('updatePlayerColor', updatePlayerColor);
 provide('toggleItemCompletion', toggleItemCompletion);
 provide('focusItem', focusItem);
-provide('updateRoomData', updateRoomData);
 
 onMounted(async () => {
     console.log('USER VALUE', user.value);
@@ -172,18 +175,7 @@ function useLocalRoom() {
             console.log(err);
         }
     }
-    async function updateRoomData(field, value) {
-        console.log('updating', field);
-        try {
-            await updateDoc(roomDocRef.value,
-                {
-                    [field]: value
-                }
-            );
-        } catch (err) {
-            console.log(err);
-        }
-    }
+
     async function toggleItemCompletion(coordinates) {
         console.log('CLICKED');
 
@@ -306,7 +298,7 @@ function useLocalRoom() {
             console.log('PLAYER EXISTS');
         }
     }
-    return { toggleItemCompletion, focusItem, getBingoLines, initPlayer, updatePlayerColor, updateRoomData }
+    return { toggleItemCompletion, focusItem, getBingoLines, initPlayer, updatePlayerColor }
 }
 
 
@@ -325,11 +317,10 @@ function useLocalRoom() {
         display: grid;
         grid-template-areas:
             'h'
-            's'
-            't'
-            'c'
-            '.';
-        grid-template-rows: max-content max-content max-content 1fr calc(var(--room-control-header-height));
+            'd'
+            'v'
+            'n';
+        grid-template-rows: max-content max-content 1fr max-content;
         grid-template-columns: 1fr;
     }
 
@@ -359,6 +350,7 @@ function useLocalRoom() {
 }
 
 .room-data {
+    grid-area: d;
     position: relative;
     overflow: hidden;
     margin-inline: 0.5rem;
@@ -367,20 +359,15 @@ function useLocalRoom() {
     gap: 1px;
 }
 
-.room-score {
-    background-color: var(--calculator-screen-background);
-    background-blend-mode: color-dodge;
-    grid-area: s;
-}
+.room-score {}
 
-.room-timer {
-    background-color: var(--calculator-screen-background);
-    background-blend-mode: color-dodge;
-    grid-area: t;
-}
+.room-timer {}
 
 .room-timer,
 .room-score {
+    background-color: var(--calculator-screen-background);
+    background-blend-mode: color-dodge;
+
     &>*:first-child {
         width: 4.5rem;
 
@@ -390,13 +377,28 @@ function useLocalRoom() {
     }
 }
 
-.room-card {
-    grid-area: c;
+.room-view {
+    grid-area: v;
+    margin-inline: 0.5rem;
+
     // align-items: center;
     display: flex;
+    container: room-view / size;
+
+    &-content {
+        overflow-y: auto;
+        height: 100cqmin;
+        width: 100%;
+
+        @include mediaTabletLandscape('max') {
+            height: 100cqmax;
+        }
+    }
 }
 
-.room-card-view {
-    grid-area: v;
+.room-view-nav {
+    grid-area: n;
+    padding: 1rem;
+    background-color: black;
 }
 </style>

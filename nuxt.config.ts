@@ -53,7 +53,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['nuxt-vuefire', '@vueuse/nuxt'],
+  modules: ['nuxt-vuefire', '@vueuse/nuxt', '@pinia/nuxt'],
 
   vuefire: {
     emulators: {

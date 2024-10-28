@@ -1,29 +1,21 @@
-import {
-    doc,
-    getDoc,
-    serverTimestamp,
-    setDoc,
-    updateDoc,
-    query,
-    collection,
-    where,
-    getDocs
-} from 'firebase/firestore';
+import { defineStore } from 'pinia'
+import { doc, getDoc, serverTimestamp, setDoc, updateDoc, query, collection, where, getDocs } from 'firebase/firestore';
 import { signInAnonymously, updateProfile } from 'firebase/auth';
 import { useFirebaseAuth, useFirestore, getCurrentUser, useIsCurrentUserLoaded, useCurrentUser } from 'vuefire';
 import { useStorage as vueUseStorage } from '@vueuse/core';
-export const useUserData = () => {
-    const router = useRouter()
-    const route = useRoute()
+import { useRouter, useRoute } from 'nuxt/app';
+// You can name the return value of `defineStore()` anything you want,
+// but it's best to use the name of the store and surround it with `use`
+// and `Store` (e.g. `useUserStore`, `useCartStore`, `useProductStore`)
+// the first argument is a unique id of the store across your application
+const route = useRoute();
+export const useUserStore = defineStore('user', () => {
+    const router = useRouter();
     const auth = useFirebaseAuth();
     const db = useFirestore();
-    function anonSignIn() {
-        signInAnonymously(auth);
-    }
-    // Reactive localStorage bindings using useStorage
-    const user = vueUseStorage('user.uid', null);
-    const userNickname = vueUseStorage('user.nickname', 'Anonymous');
 
+    //STATE
+    const user = vueUseStorage('user.uid', null);
     const vueFireUser = useCurrentUser(); // Firestore Auth user
     const userIsLoaded = useIsCurrentUserLoaded();
 
@@ -90,5 +82,10 @@ export const useUserData = () => {
             }
         }
     })
-    return { user, userIsLoaded, userNickname }
-};
+
+    function anonSignIn() {
+        signInAnonymously(auth);
+    }
+
+    return { user, anonSignIn };
+})

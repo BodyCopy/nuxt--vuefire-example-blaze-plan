@@ -5,9 +5,3 @@
     <circle cx="12" cy="7" r="4"></circle>
   </svg>
 </template>
-<style scoped>
-svg {
-  fill: var(--svg-fill, transparent);
-  stroke: var(--svg-stroke, black);
-}
-</style>

@@ -1,24 +1,26 @@
 <template>
-    <div class="player-room-stat-card">
+    <div class="bingo-player-stat-card">
         <SegmentDisplay :string="playerScore" :displayBoard="true"></SegmentDisplay>
         <PlayerIdHeader :color="player.color" :nickname="player.nickname"></PlayerIdHeader>
-        <PlayerBingoCardPreview v-if="player.nickname !== loggedInPlayer.nickname && gameType === 'multi'"
+        <PlayerBingoCardPreview v-if="player.nickname !== loggedInPlayer.nickname && gameSettings.gameType === 'multi'"
             :playerCardId="player.cardId">
         </PlayerBingoCardPreview>
     </div>
 </template>
 <script setup>
-import { useUserData } from '~/stores/userData';
+import { useRoomStore } from '~/stores/room/roomStore';
 import SegmentDisplay from '~/components/base/data/SegmentDisplay.vue';
-const { userNickname } = useUserData();
 const loggedInPlayer = inject('loggedInPlayer');
-const props = defineProps({ player: { type: Object }, gameType: { type: String } });
+const roomStore = useRoomStore()
+const { gameSettings } = storeToRefs(roomStore);
+const props = defineProps({ player: { type: Object } });
 const playerScore = computed(() => {
     return props.player.score.toString().padStart(2, '0');
 })
 </script>
 <style lang="scss">
-.player-room-stat-card {
+.bingo-player-stat-card {
+    padding: 1rem 0.5rem;
     --segment-display-height: 1.75rem;
     display: grid;
     grid-template-columns: max-content 1fr;

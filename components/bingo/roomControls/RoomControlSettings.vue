@@ -15,12 +15,12 @@
 </template>
 <script setup>
 import BaseBoolean from '~/components/base/controls/BaseBoolean.vue';
-import { useRoom } from '~/composables/useRoom.js';
-import { useUserData } from '~/stores/userData';
-const { user } = useUserData();
+import { useRoomStore } from '~/stores/room/roomStore.js';
+import { useUserStore } from '~/stores/userStore.js';
+const { user } = useUserStore();
 const roomData = inject('roomData');
 const route = useRoute();
-const { updateRoomData } = useRoom(route.params.id);
+const { updateRoomData } = useRoomStore();
 const props = defineProps({ payload: Object });
 const staticData = computed(() => {
     let payload = {
