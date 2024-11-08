@@ -1,3 +1,5 @@
+@use "../01-config/mixins.module";
+
 .horizontal-scroll {
     display: flex;
     flex-direction: row;
@@ -38,7 +40,7 @@
             grid-template-columns: 1fr;
         }
 
-        @include mediaPhone("max") {
+        @include mixins.mediaPhone("max") {
             --main-padding-sides: 0.5rem;
             --grid-column-layout: 1fr;
             --_gallery-column-layout: 1fr;
@@ -49,7 +51,7 @@
 
     &>.base-grid {
 
-        @include mediaTabletPortrait("max") {}
+        @include mixins.mediaTabletPortrait("max") {}
 
         &>* {
             background-color: var(--background-color);

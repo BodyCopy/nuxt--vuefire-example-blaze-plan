@@ -56,5 +56,5 @@ onMounted(() => {
 
 </script>
 <style lang="scss" scoped>
-@import './control-styles.module.scss';
+//view assets/css/02-base/controls for full style sheet
 </style>

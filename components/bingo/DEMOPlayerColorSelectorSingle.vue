@@ -12,7 +12,6 @@
     </div>
 </template>
 <script setup>
-import { useRoomStore } from '~/stores/room/roomStore';
 const colors = ref([
     { color: 'red', isAvailable: true, selected: false, players: 0 },
     { color: 'orange', isAvailable: true, selected: false, players: 0 },
@@ -23,21 +22,10 @@ const colors = ref([
     { color: 'purple', isAvailable: true, selected: false, players: 0 },
     { color: 'pink', isAvailable: true, selected: false, players: 0 }
 ])
-const props = defineProps({ label: { type: String, default: '' }, playerAmounts: Object })
+const props = defineProps({ label: { type: String, default: '' }})
 const selectedColor = ref(false);
 const model = defineModel({ type: [String, Number, Boolean], default: null })
-const roomStore = useRoomStore();
 
-watchEffect(() => {
-    if (props.playerAmounts) {
-        const teamSize = roomStore.gameSettings.teamSizes;
-        for (const item of colors.value) {
-            if (item.color === model.value) { item.selected = true; }
-            item.players = props.playerAmounts[item.color];
-            item.isAvailable = item.players >= teamSize ? false : true;
-        }
-    }
-})
 ///Get the settings
 function selected(index, option) {
     let value = option

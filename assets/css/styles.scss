@@ -1,16 +1,19 @@
-@import '01-config/variables';
-@import '01-config/mixins.module.scss';
+@use '01-config/variables';
+@use '01-config/mixins.module.scss';
 
-@import '02-base/icons';
-@import '02-base/layout-variables';
-@import '02-base/layout';
-@import '02-base/typography';
-@import '02-base/reset';
-@import '02-base/elements';
-@import '03-objects/grid';
+@use '02-base/icons';
+@use '02-base/layout-variables';
+@use '02-base/layout';
+@use '02-base/typography';
+@use '02-base/reset';
+@use '02-base/elements';
+@use '02-base/controls';
+@use '02-base/buttons';
 
-@import '05-utilities/scrollbars.module.scss';
+@use '03-objects/grid';
 
-@import '07-embelishment/backgrounds.scss';
+@use '05-utilities/scrollbars.module.scss';
 
-@import '08-animations/animations';
+@use '07-embelishment/backgrounds.scss';
+
+@use '08-animations/animations';

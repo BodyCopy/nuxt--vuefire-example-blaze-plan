@@ -68,8 +68,8 @@ defineExpose({ focusInput });
 // })
 </script>
 
-<style lang="scss" scoped>
-@import './control-styles.module.scss';
+<style lang="scss">
+//view assets/css/02-base/controls for full style sheet
 
 input[type="text"] {}
 input:user-valid{

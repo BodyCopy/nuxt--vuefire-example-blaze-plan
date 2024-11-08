@@ -1,3 +1,5 @@
+@use "css/01-config/mixins.module";
+
 :root {
   --O-0: hsl(33, 100%, 77%);
   --O-5: hsl(30, 100%, 73%);
@@ -201,7 +203,7 @@
 
   --TheHeader-height: 2.5rem;
 
-  @include mediaPhone('max') {
+  @include mixins.mediaPhone('max') {
     --TheHeader-height: 3rem;
     --TheMobileNavigation-height: 5rem;
   }

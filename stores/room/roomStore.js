@@ -13,9 +13,11 @@ export const useRoomStore = defineStore('room', () => {
     const roomDocRef = computed(() => doc(db, `rooms/${route.params.id}`));
     const roomData = useDocument(roomDocRef);
     const gameSettings = computed(() => {
+        if (!roomData.value) return {};
         return {
-            gameType: roomData.value.gameType,
-            gameMode: roomData.value.gameMode,
+            gameType: roomData.value?.gameType,
+            gameMode: roomData.value?.gameMode,
+            teamSizes: roomData.value?.teamSizes
         }
     })
     const activePlayer = computed(() => {
@@ -39,7 +41,7 @@ export const useRoomStore = defineStore('room', () => {
     //ACTIONS
     async function updateRoomData(field, val) {
         try {
-            await updateDoc(roomDocRef, {
+            await updateDoc(roomDocRef.value, {
                 [field]: val
             })
         } catch (err) {

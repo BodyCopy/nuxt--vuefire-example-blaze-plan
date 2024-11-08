@@ -1,4 +1,0 @@
-tsconfig.dev.json
-`
-    ".eslintrc.js"
-    `

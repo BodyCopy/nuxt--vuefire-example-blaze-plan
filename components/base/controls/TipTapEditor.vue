@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
 })
 </script>
 <style lang="scss">
-@import '@/components/base/controls/control-styles.module.scss';
+//view assets/css/02-base/controls for full style sheet
 
 .micro-action-bar {
     display: flex;
@@ -138,10 +138,6 @@ onBeforeUnmount(() => {
         font-size: 0.825rem;
         color: var(--copy-color);
         font-family: inherit;
-
-        /* @include mediaPhone('max') {
-            font-size: 16px;
-        } */
     }
 }
 

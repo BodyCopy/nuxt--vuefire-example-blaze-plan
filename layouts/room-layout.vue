@@ -1,5 +1,6 @@
 <template>
-    <TopNav></TopNav>
+    <TopNav layout="room" :pageTitle :roomCode>
+    </TopNav>
     <main v-if="userIsLoaded || user" class="room-layout fixed-layout">
         <!-- <h1>{{ route.meta.title }}</h1> -->
         <slot></slot>
@@ -11,8 +12,12 @@
     </main>
 </template>
 <script setup>
+import { useRoomStore } from '~/stores/room/roomStore';
 import { useUserStore } from '~/stores/userStore';
 const { user, userNickname, userIsLoaded } = useUserStore();
+const roomStore = useRoomStore();
+const pageTitle = computed(() => roomStore.roomData?.roomName || 'Shhhhhhh');
+const roomCode = computed(() => roomStore.roomData?.roomCode || '0000');
 </script>
 <style lang="scss">
 .form-room {

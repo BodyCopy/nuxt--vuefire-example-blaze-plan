@@ -1,11 +1,19 @@
 <template>
-    <main class="create-room">
-        <KeepAlive>
-            <component @custom-template="handleCustomTemplate" :is="components[activeComponent]"
-                @create-room="createRoom"></component>
-        </KeepAlive>
+    <div class="content create-room">
+        <div class="create-room-form  calculator-screen">
+            <KeepAlive>
+                <component @custom-template="handleCustomTemplate" :is="components[activeComponent]"
+                    @create-room="createRoom"></component>
+            </KeepAlive>
+        </div>
+        <div v-if="activeComponent === 'Create room'" class="form-action-bar">
+            <BaseButton btnStyle="filled">Test</BaseButton>
+        </div>
+        <div v-else-if="activeComponent === 'Create template'" class="form-action-bar">
+            <BaseButton btnStyle="filled">Template</BaseButton>
+        </div>
         <!-- <CreateRoomForm></CreateRoomForm> -->
-    </main>
+    </div>
 </template>
 <script setup>
 import bcrypt from 'bcryptjs';
@@ -41,30 +49,30 @@ onMounted(() => {
 })
 
 async function createRoom(data) {
-    const roomCollectionRef = collection(db, 'rooms');
 
     //hash and set password
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
     const { seed, bingoItems, creatorColor, ...roomData } = data;
 
+
     async function generateUniqueRoomCode() {
-        const roomCodesRef = collection(db, 'rooms');
         let roomCode;
         let isUnique = false;
-
+        let roomCollectionRef = collection(db, 'rooms');
         while (!isUnique) {
             roomCode = uuidv4().slice(0, 4); // Extract first 6 characters from UUID
-            const querySnapshot = await getDocs(query(roomCodesRef, where('roomCode', '==', roomCode)));
-            isUnique = querySnapshot.empty; // Ensure uniqueness
+            const docRef = doc(roomCollectionRef, roomCode);
+            const docSnapshot = await getDoc(docRef);
+            isUnique = !docSnapshot.exists(); // Ensure uniqueness
         }
 
         return roomCode;
     }
-
     const roomCode = await generateUniqueRoomCode();
+    const newRoomRef = doc(db, `rooms/${roomCode}`);
 
-    const roomRef = await addDoc(roomCollectionRef,
+    const roomRef = await setDoc(newRoomRef,
         {
             ...roomData,
             roomCode: roomCode,
@@ -76,9 +84,9 @@ async function createRoom(data) {
 
     let cardsRef;
     if (roomData.gameType === 'multi') {
-        cardsRef = doc(roomRef, `cards/${creatorColor}-card`);
+        cardsRef = doc(newRoomRef, `cards/${creatorColor}-card`);
     } else {
-        cardsRef = doc(roomRef, 'cards/card');
+        cardsRef = doc(newRoomRef, 'cards/card');
     }
     //this you will need to reuse if you want to generate cards on the fly
     await setDoc(cardsRef,
@@ -95,7 +103,7 @@ async function createRoom(data) {
         }
     );
 
-    const scoreBoardRef = doc(roomRef, 'scores/scoreBoard');
+    const scoreBoardRef = doc(newRoomRef, 'scores/scoreBoard');
 
     await runTransaction(db, async (transaction) => {
         const scoreBoardDoc = await transaction.get(scoreBoardRef);
@@ -113,7 +121,7 @@ async function createRoom(data) {
 
     console.log('Doc added successfully! :)');
 
-    router.push(`/rooms/${roomRef.id}`);
+    router.push(`/rooms/${roomCode}`);
     //error
     // Uncaught (in promise) TypeError: can't access property "players", roomData.value is undefined
 }
@@ -125,66 +133,10 @@ const components =
 }
 const activeComponent = ref('Create room');
 
-const roomName = reactive({
-    value: '',
-    validated: true,
-    errorText: 'Invalid',
-    pattern: ''
-})
-const password = reactive({
-    value: '',
-    validated: true,
-    errorText: 'Invalid',
-    pattern: ''
-})
-const nickname = reactive({
-    value: '',
-    validated: true,
-    errorText: 'Invalid',
-    pattern: ''
-})
-const game = reactive({
-    value: 'elden ring',
-    validated: true,
-    errorText: 'Invalid',
-    pattern: '',
-    custom: false
-})
-const template = reactive({
-    value: '',
-    validated: true,
-    errorText: 'Invalid',
-    pattern: '',
-    custom: false
-})
-const gameType = reactive({
-    options: { Single: 'single', 'Multi-card': 'multi' },
-    value: 'single',
-    validated: true,
-    errorText: 'Invalid',
-    pattern: '',
-})
-const gameMode = reactive({
-    options: { Standard: 'standard', 'Lock-out': 'lockOut' },
-    value: 'standard',
-    validated: true,
-    errorText: 'Invalid',
-    pattern: '',
-})
-const seed = reactive({
-    value: '',
-    validated: true,
-    errorText: 'Invalid',
-    pattern: ''
-})
-const playerColor = reactive({
-    value: '',
-    validated: true,
-    errorText: 'Invalid',
-    pattern: ''
-})
 
-
-const hideBoardInitially = ref(false);
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.create-room-form {
+    overflow-y: scroll;
+}
+</style>

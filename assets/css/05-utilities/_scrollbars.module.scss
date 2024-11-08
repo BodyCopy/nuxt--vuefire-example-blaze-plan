@@ -1,5 +1,3 @@
-//@import '@/assets/css/05-utilities/scrollbars.module.scss'; usage
-
 @mixin customScrollBar($hover: true) {
   --scrollbar-thumb: var(--grey-70);
   --scrollbar-track: var(--grey-80);

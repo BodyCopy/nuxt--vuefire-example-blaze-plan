@@ -205,6 +205,28 @@
   }
 }
 
+@keyframes wiggle-pickllle {
+  0% {
+    font-variation-settings: "COUT" 282, "JMBL" 100, "STGR" 100;
+  }
+
+  30% {
+    font-variation-settings: "COUT" 282, "JMBL" 300, "STGR" 300;
+  }
+
+  60% {
+    font-variation-settings: "COUT" 282, "JMBL" 124, "STGR" 111;
+  }
+
+  80% {
+    font-variation-settings: "COUT" 282, "JMBL" 238, "STGR" 180;
+  }
+
+  100% {
+    font-variation-settings: "COUT" 282, "JMBL" 175, "STGR" 124;
+  }
+}
+
 @property --angle {
   syntax: '<angle>';
   initial-value: 0deg;

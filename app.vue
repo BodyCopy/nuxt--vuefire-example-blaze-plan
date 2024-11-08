@@ -113,6 +113,7 @@ onBeforeMount(() => {
 html {}
 
 #app {
+  --top-nav-margin-block: 0.25rem;
   --top-nav-height: 2rem;
 }
 

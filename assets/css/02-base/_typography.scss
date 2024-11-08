@@ -1,17 +1,19 @@
+@use "../01-config/mixins.module";
+
 html {
   font-size: 16px;
   --master-font: var(--font-ibm);
   --heading-font: var(--master-font);
 
-  @include mediaDesktop1440("min") {
+  @include mixins.mediaDesktop1440("min") {
     font-size: clamp(16px, calc(16px + (0.1vw)), 18px);
   }
 
-  @include mediaTabletLandscape("max") {
+  @include mixins.mediaTabletLandscape("max") {
     font-size: 15px;
   }
 
-  @include mediaPhone("max") {
+  @include mixins.mediaPhone("max") {
     font-size: 14px;
   }
 }

@@ -32,7 +32,7 @@
                 <label>Items</label>
             </div>
             <BaseButton @click.prevent="createBingoCard" btn-style="outline">Save</BaseButton>
-            <BaseButton @click.prevent="testBingoCard" btn-style="outline">Test</BaseButton>
+            <!-- <BaseButton @click.prevent="testBingoCard" btn-style="outline">Test</BaseButton> -->
         </div>
     </form>
 </template>

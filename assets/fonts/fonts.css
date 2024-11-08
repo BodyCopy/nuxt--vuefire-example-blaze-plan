@@ -1,4 +1,17 @@
 @font-face {
+  font-family: 'OC Pickllle VAR Variable Font';
+  src: url('./OCPickllleVARVF.woff2') format('woff2-variations');
+  font-style: normal;
+  font-display: block;
+}
+/*
+variable axi
+  'COUT'
+  'JMBL'
+  'STGR'
+*/
+
+@font-face {
   font-family: 'IBM plex sans Var';
   src: url('./IBMPlexSansVar-Roman.woff2') format('woff2-variations');
   font-style: normal;
@@ -28,9 +41,8 @@
 }
 
 :root {
+  --font-pickllle: 'OC Pickllle VAR Variable Font';
   --font-gridnik: 'Foundry Gridnik';
   --font-ibm: 'IBM plex sans Var';
   --font-ibm-mono: 'IBM Plex Mono', monospace;
-  --font-OCR-B: ocr-b-std, monospace;
-  --font-OCR-A: ocr-a-std, monospace;
 }

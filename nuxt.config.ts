@@ -2,7 +2,7 @@ export default defineNuxtConfig({
   // Having SSR allows us to use `nuxt generate`, turn it off if you don't care
   ssr: true,
 
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 
   app: {
     head: {
@@ -28,7 +28,15 @@ export default defineNuxtConfig({
     '~/plugins/tooltip.js'
   ],
   css: ['~/assets/main.scss'],
-
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler', // or "modern", "legacy"
+        }
+      }
+    }
+  },
   components: {
     dirs: [
       {
@@ -42,7 +50,7 @@ export default defineNuxtConfig({
     prerender: {
       // these routes are not dependent on any data and can be prerendered
       // it's a good idea to pre render all routes that you can
-      routes: ['/', '/analytics'],
+      // routes: ['/', '/analytics'],
     },
     preset: 'firebase',
 
@@ -103,7 +111,7 @@ export default defineNuxtConfig({
     // Make some pages client only (since we have an SPA)
     // useful for authenticated pages that require the user to be logged in to be
     // displayed
-    '/': { ssr: true },
+    '/': { ssr: false },
     '/admin': { ssr: false },
     '/login': { ssr: false },
     '/analytics': { ssr: true },

@@ -38,7 +38,7 @@ const toggleStyle = computed(() => {
 })
 </script>
 <style scoped lang="scss">
-@import '@/components/base/controls/control-styles.module.scss';
+//view assets/css/02-base/controls for full style sheet
 
 .label.control.fill-content {
     width: 100%;

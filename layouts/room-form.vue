@@ -1,9 +1,9 @@
 <template>
     <TopNav></TopNav>
     <main class="room-form-layout">
-        <header>
+        <!-- <header>
             <h1>{{ title || 'Default Title' }}</h1>
-        </header>
+        </header> -->
         <slot></slot>
     </main>
     <svg xmlns='http://www.w3.org/2000/svg' class="invisible-element" aria-hidden="true">
@@ -20,7 +20,11 @@ useHead({
 });
 </script>
 <style lang="scss">
+@use '~/assets/css/01-config/mixins.module.scss';
+
 .room-form-layout {
+    container: room-form-layout / size;
+    height: calc(100dvh - (var(--top-nav-height) + (var(--top-nav-margin-block) * 2))); //calc with header
     display: grid;
     padding: 0 0.5rem 0.5rem 0.5rem;
 
@@ -32,6 +36,17 @@ useHead({
             margin-inline-end: auto;
             font-size: 1.5rem;
         }
+    }
+
+    &>.content {
+        display: grid;
+        gap: 0.5rem;
+        grid-template-rows: 1fr max-content;
+
+        @include mixins.mediaTabletLandscape('max') {
+            height: 100cqmax;
+        }
+
     }
 }
 </style>

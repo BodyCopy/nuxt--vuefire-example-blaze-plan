@@ -45,8 +45,7 @@ onMounted(() => {
 //need to moduleize the btton styles and reuse it here
 </script>
 <style scoped lang="scss">
-@import '@/components/base/controls/control-styles.module.scss';
-
+//view assets/css/02-base/controls for full style sheet
 .hide {
     display: hidden;
 }

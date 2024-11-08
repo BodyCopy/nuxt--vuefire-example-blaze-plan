@@ -2,7 +2,8 @@
     <NuxtLink to="/">
         <div class="miss-bingo-header">
             <img :src="MissBingoLogo">
-            <SegmentDisplay string="miss.bing0" :freakout="true"></SegmentDisplay>
+            <div><slot>Miss.Bingo</slot></div>
+            <!-- <SegmentDisplay string="miss.bing0" :freakout="true"></SegmentDisplay> -->
         </div>
     </NuxtLink>
 </template>
@@ -15,6 +16,14 @@ import MissBingoLogo from '~/public/MissBingoLogo.svg';
     gap: 0.5rem;
     align-items: center;
     margin-block: auto;
+
+    &>div {
+        font-size: 1.5rem;
+        font-variation-settings: "COUT" 282, "JMBL" 178, "STGR" 200;
+        font-family: var(--font-pickllle);
+        color: hsl(277, 68%, 77%);
+        line-height: 1em;
+    }
 
     &>.segment-display {
         --active-seg-color: hsl(277, 68%, 77%);

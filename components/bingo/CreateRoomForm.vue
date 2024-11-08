@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="createRoom" class="form-room">
-        <fieldset class="retro-form calculator-screen">
+        <fieldset class="retro-form">
             <BaseInput v-model="roomName.value" label="Room name" retro :validated="roomName.validated"
                 :error-text="roomName.errorText" :maxLength="20" :character-count="roomName.value.length"
                 helper-text="Max 20 characters" placeholder="---"></BaseInput>
@@ -30,13 +30,15 @@
             <BaseBoolean v-model="hideBoardInitially"
                 :label="`Hide board${gameType.value === 'multi' ? 's' : ''} initially?`"></BaseBoolean>
             <BaseBoolean v-model="hasTimer.value" label="Include timer?"></BaseBoolean>
+            <BaseInput v-model="teamSizes.value" label="Team size" :retro="true"></BaseInput>
         </fieldset>
         <ArrowSeperator></ArrowSeperator>
         <fieldset class="retro-form calculator-screen">
             <BaseInput v-model="nickname.value" label="Nickname" retro :validated="nickname.validated"
                 :error-text="nickname.errorText" placeholder="---" :maxLength="20" helper-text="Max 20 characters"
                 :character-count="nickname.value.length"></BaseInput>
-            <PlayerColorSelector v-model="playerColor.value"></PlayerColorSelector>
+            <!-- <PlayerColorSelector v-model="playerColor.value"></PlayerColorSelector> -->
+            <DEMOPlayerColorSelectorSingle v-model="playerColor.value"></DEMOPlayerColorSelectorSingle>
         </fieldset>
         <ArrowSeperator></ArrowSeperator>
         <JoinEnterRoomSection :player-color="playerColor.value" :nickname="nickname.value" :ready>
@@ -48,6 +50,7 @@ import bcrypt from 'bcryptjs';
 import { useRoom } from '~/composables/useRoom.js';
 import { useFirestore } from 'vuefire';
 import { addDoc, collection, serverTimestamp, getDoc, doc } from 'firebase/firestore';
+import DEMOPlayerColorSelectorSingle from './DEMOPlayerColorSelectorSingle.vue';
 // Analytics can only be retrieved on the client
 const { getRandomizedCardFromTemplate } = useRoom();
 const db = useFirestore();
@@ -105,6 +108,7 @@ async function createRoom() {
         template: template.value,
         gameType: gameType.value,
         gameMode: 'lockOut', // Include only if not 'multi'
+        teamSizes: teamSizes.value || 1,
         seed: seed, // Include only if not 'multi'
         hideBoardInitially: hideBoardInitially.value,
         hasTimer: hasTimer.value,
@@ -141,7 +145,7 @@ const game = reactive({
     custom: false
 })
 const template = reactive({
-    value: '6ef29a4f-d094-4c5d-82e4-ed5e7f954d5d',
+    value: '2781840b-0814-43a4-9cb2-ec5fd6493859',
     validated: true,
     errorText: 'Invalid',
     pattern: '',
@@ -175,6 +179,12 @@ const gameMode = reactive({
     get helperText() {
         return this.helperTextMap[this.value] || '';
     }
+})
+const teamSizes = reactive({
+    value: 1,
+    validated: true,
+    errorText: 'Invalid',
+    pattern: ''
 })
 
 const seed = reactive({

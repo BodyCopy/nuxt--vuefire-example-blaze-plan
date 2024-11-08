@@ -1,29 +1,25 @@
 <template>
     <div class="bingo-room">
         <div class="bingo-room-section">
-            <header class="room-header">
+            <!-- <header class="room-header">
                 <h1>{{ roomData.roomName }}</h1>
                 <BaseButton btn-modifier="micro" @click="copyLink">
-                    <!-- <template #icon>
-                        <IconLink />
-                    </template> -->
                     Share
                 </BaseButton>
-            </header>
+            </header> -->
             <div class="room-data calculator-screen">
                 <RoomScore :scores="scoreBoard" :bingos="scoreData.bingos"></RoomScore>
-                <RoomTimer v-if="roomData.hasTimer" :startTime="roomData.createdOn" :isPaused="false" />
+                <RoomTimer v-if="roomStore.roomData.hasTimer" :startTime="roomData.createdOn" :isPaused="false" />
             </div>
             <div class="room-view calculator-screen">
-                <Transition :name="transitionName">
+                <Transition name="fade" mode="out-in">
                     <component class="room-view-content" :is="roomViews[activeView]" :bingo-items="bingoItemKeys"
                         :bingos="bingos">
                     </component>
                 </Transition>
             </div>
             <nav class="room-view-nav">
-                <BaseButtonSet v-model="activeView" width="fc"
-                    :options="{ Card: 'bingo-card', Scores: 'detailed-score-board', Chat: 'chat-log' }">
+                <BaseButtonSet v-model="activeView" width="fc" :options="roomViewValues">
                 </BaseButtonSet>
             </nav>
         </div>
@@ -41,6 +37,7 @@ import { useRoom } from "~/composables/useRoom.js";
 import ChatLog from "./roomLog/ChatLog.vue";
 import BingoCard from "../card/BingoCard.vue";
 import BingoPlayers from "../players/BingoPlayers.vue";
+import RoomControlSettings from "./RoomControlSettings.vue";
 import { useRoomStore } from "~/stores/room/roomStore";
 const props = defineProps({ roomData: { type: Object }, scoreData: { type: Object } });
 //    middleware: 'check-room-password'
@@ -57,14 +54,20 @@ function copyLink() {
 const { user } = useUserStore();
 // const user = useCurrentUser();
 const activeView = vueUseStorage('room-view', 'bingo-card');
+const roomViewOptions = { Card: 'bingo-card', Scores: 'detailed-score-board', Chat: 'chat-log' };
+const roomViewValues = computed(() => {
+    if (user.value === roomStore.roomData.creator.uid) {
+        return { ...roomViewOptions, Settings: 'room-settings' };
+    } else {
+        return roomViewOptions;
+    }
+})
 const roomViews = {
     'bingo-card': BingoCard,
     'detailed-score-board': BingoPlayers,
-    'chat-log': ChatLog
+    'chat-log': ChatLog,
+    'room-settings': RoomControlSettings,
 }
-watch(activeView,(nV,oV)=>{
-    
-})
 
 const player = computed(() => {
     console.log('ROOMDATA', props.roomData);
@@ -113,12 +116,12 @@ function extractAndSortTeamScores(teams) {
 //return the card associated with the players color
 const docRef = computed(() => {
     if (props.roomData.gameType === 'multi') {
-        return doc(db, `rooms/${route.params.id}/cards/${player.value.color}-card`);
+        return doc(db, `rooms/${route.params.id}/cards/${roomStore.activePlayer.cardId}`);
     } else {
         return doc(db, `rooms/${route.params.id}/cards/card`);
     }
 })
-const bingoCardData = useDocument(docRef.value);
+const bingoCardData = useDocument(docRef);
 
 
 const gameMode = computed(() => props.roomData.gameMode);
@@ -304,7 +307,7 @@ function useLocalRoom() {
 
 </script>
 <style lang="scss">
-@import '~/assets/css/01-config/mixins.module.scss';
+@use '~/assets/css/01-config/mixins.module.scss';
 
 .bingo-room {
     display: grid;
@@ -316,15 +319,14 @@ function useLocalRoom() {
     &-section {
         display: grid;
         grid-template-areas:
-            'h'
             'd'
             'v'
             'n';
-        grid-template-rows: max-content max-content 1fr max-content;
+        grid-template-rows: max-content 1fr max-content;
         grid-template-columns: 1fr;
     }
 
-    @include mediaTabletLandscape('min') {
+    @include mixins.mediaTabletLandscape('min') {
         &-section {
             display: grid;
             grid-template-areas:
@@ -390,7 +392,7 @@ function useLocalRoom() {
         height: 100cqmin;
         width: 100%;
 
-        @include mediaTabletLandscape('max') {
+        @include mixins.mediaTabletLandscape('max') {
             height: 100cqmax;
         }
     }
@@ -400,5 +402,26 @@ function useLocalRoom() {
     grid-area: n;
     padding: 1rem;
     background-color: black;
+
+    & .active {
+        color: var(--primary-color-base) !important;
+
+        &:before {
+            content: '*'
+        }
+
+        &:after {
+            content: '*'
+        }
+    }
 }
-</style>
+
+// .fade-enter-active,
+// .fade-leave-active {
+//     transition: opacity 0.2s;
+// }
+
+// .fade-enter-from,
+// .fade-leave-to {
+//     opacity: 0;
+// }</style>

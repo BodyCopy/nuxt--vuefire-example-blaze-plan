@@ -1,9 +1,5 @@
 {
   "projects": {
-    "prod": "miss-bingo",
     "default": "miss-bingo"
-  },
-  "targets": {},
-  "etags": {},
-  "dataconnectEmulatorConfig": {}
+  }
 }

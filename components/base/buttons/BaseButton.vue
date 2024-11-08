@@ -42,5 +42,5 @@ const buttonStyle = computed(() => {
 
 </script>
 <style lang="scss">
-@import '@/components/base/buttons/button-styles.module.scss';
+//view styles at assets/css/02-base/buttons
 </style>

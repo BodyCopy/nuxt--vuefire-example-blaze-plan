@@ -6,7 +6,7 @@
         <div class="chat-log-chat-input">
             <BaseInput v-model="chatMessage" @keydown.enter="postMessage" placeholder="-type message-"
                 style="font-size:16px"></BaseInput>
-            <IconSend />
+            <IconSend @click="postMessage"/>
         </div>
     </div>
 </template>

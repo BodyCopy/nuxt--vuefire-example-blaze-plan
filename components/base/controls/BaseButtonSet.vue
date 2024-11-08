@@ -61,8 +61,7 @@ function selected(option) {
 // })
 </script>
 <style lang="scss" scoped>
-@import '~/components/base/buttons/button-styles.module.scss';
-@import './control-styles.module.scss';
+//view assets/css/02-base/controls for full style sheet
 
 .button-wrapper.control {
     display: flex;

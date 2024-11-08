@@ -17,17 +17,13 @@ import BingoCardPlayer from './BingoCardPlayer.vue';
 const roomStore = useRoomStore();
 const props = defineProps({ bingoItems: Array, bingos: Array });
 const bingoItemsArray = computed(() => {
-    if (props.bingoItems) {
-        let output = [];
-        for (let i = 0; i < props.bingoItems.length; i += 5) {
-            output.push(props.bingoItems.slice(i, i + 5));
-        }
-        return output;
-    }
-    else {
-        return null;
-    }
+    return props.bingoItems
+        ? Array.from({ length: 5 }, (_, i) =>
+            props.bingoItems.slice(i * 5, i * 5 + 5)
+        )
+        : null;
 });
+
 const toggleItemCompletion = inject('toggleItemCompletion');
 const focusItem = inject('focusItem');
 async function toggleFocusItem(coordinates, event) {
@@ -44,7 +40,7 @@ async function toggleFocusItem(coordinates, event) {
 }
 </script>
 <style lang="scss">
-@import '~/assets/css/01-config/mixins.module.scss';
+@use '~/assets/css/01-config/mixins.module.scss';
 
 .bingo {
     &-card {
@@ -65,23 +61,23 @@ async function toggleFocusItem(coordinates, event) {
         gap: 1px;
         grid-template-columns: repeat(5, 1fr);
 
-        &:nth-of-type(1) {
+        &:nth-of-type(2) {
             grid-row: 2/3;
         }
 
-        &:nth-of-type(2) {
+        &:nth-of-type(3) {
             grid-row: 3/4;
         }
 
-        &:nth-of-type(3) {
+        &:nth-of-type(4) {
             grid-row: 4/5;
         }
 
-        &:nth-of-type(4) {
+        &:nth-of-type(5) {
             grid-row: 5/6;
         }
 
-        &:nth-of-type(5) {
+        &:nth-of-type(6) {
             grid-row: 6/7;
         }
     }

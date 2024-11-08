@@ -4,7 +4,7 @@
         <ColorSelectorButton :flat="true" :color="activePlayer.color" />
         <h5 class="bingo-card-player-nickname" :title="activePlayer.nickname || 'Anon'">{{
             activePlayer.nickname || 'Anon' }}</h5>
-        <SegmentDisplay :string="playerScoreToString" :displayBoard="true"/>
+        <SegmentDisplay :string="playerScoreToString" :displayBoard="true" />
     </div>
 </template>
 <script setup>
@@ -13,9 +13,11 @@ import { useScoreStore } from '~/stores/room/scoreStore';
 const roomStore = useRoomStore();
 const scoreStore = useScoreStore();
 const playerScoreToString = computed(() => {
-    console.log('SCORE DATA', scoreStore.scoreData.teams[activePlayer.value.color]);
-
-    return scoreStore.scoreData.teams[activePlayer.value.color].score.toString().padStart(2, '0');
+    if (scoreStore.scoreData.teams[activePlayer.value.color]) {
+        return scoreStore.scoreData.teams[activePlayer.value.color].score.toString().padStart(2, '0');
+    } else {
+        return '00';
+    }
 })
 const { activePlayer } = storeToRefs(roomStore);
 //scoreBoard[props.player.color]
@@ -28,19 +30,23 @@ const { activePlayer } = storeToRefs(roomStore);
     height: var(--bingo-card-player-height);
     grid-column: span 5;
     padding-inline: 0.5rem;
-    gap: 0.75rem;
+    gap: 0.25rem;
     --segment-display-height: calc(var(--bingo-card-player-height) - 1rem);
 
     &-nickname {
-        font-family: var(--font-ibm);
-        font-variation-settings: 'wght' 360, 'wdth' 85;
-        letter-spacing: 0.3em;
+        // animation: wiggle-pickllle 3s ease forwards;
         font-size: 1.5rem;
+        // font-variation-settings: "COUT" 282, "JMBL" 175, "STGR" 100;
+        font-family: var(--font-ibm);
+        font-variation-settings: 'wght' 640;
+        letter-spacing: 0.1em;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
         width: 100%;
-        margin-block-end: -0.125em;
+        margin-block-end: -0.25em;
+        padding-inline: 0.5rem;
+        // text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
     }
 
     &>.color-selector-button {

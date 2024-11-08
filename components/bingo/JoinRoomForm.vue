@@ -1,19 +1,18 @@
 <template>
-    <form @submit.prevent="joinRoom">
-        <fieldset class="retro-form calculator-screen">
+    <form @submit.prevent="joinRoom" class="join-room-form">
+        <!-- <fieldset class="retro-form calculator-screen">
             <BaseInput v-model="password.value" placeholder="-secret-" label="Password" retro
                 :validated="password.validated" :error-text="password.errorText"></BaseInput>
-            <!-- todo add the burnpad typeAhead chipInput -->
+        </fieldset>
+        <ArrowSeperator /> -->
+        <fieldset class="retro-form calculator-screen">
             <BaseButtonSet label="Joining as" v-model="playerRole.value" width="fc" :options="playerRole.options"
                 :retro="true">
             </BaseButtonSet>
-        </fieldset>
-        <ArrowSeperator />
-        <fieldset class="retro-form calculator-screen">
-            <BaseInput v-model="nickname.value" label="Nickname" retro :validated="nickname.validated"
+            <BaseInput v-model="nickname.value" label="Your nickname" retro :validated="nickname.validated"
                 :error-text="nickname.errorText" placeholder="---" :maxLength="20" helper-text="Max 20 characters"
                 :character-count="nickname.value.length"></BaseInput>
-            <PlayerColorSelector v-model="playerColor.value"></PlayerColorSelector>
+            <PlayerColorSelector v-model="playerColor.value" :player-amounts="playerAmounts"></PlayerColorSelector>
         </fieldset>
         <ArrowSeperator />
         <!-- <div class="testing">
@@ -23,7 +22,7 @@
             <button v-if="isUserLoaded && !user?.uid" btn-style="outline" @click.prevent="anonSignIn">Anon
                 login</button>
         </div> -->
-        <JoinEnterRoomSection v-if="userExists" :player-color="playerColor.value" :nickname="nickname.value" :ready
+        <JoinEnterRoomSection v-if="ready" :player-color="playerColor.value" :nickname="nickname.value" :ready
             :submitCopy>
         </JoinEnterRoomSection>
     </form>
@@ -32,55 +31,34 @@
 import { signInAnonymously } from 'firebase/auth';
 import { useFirebaseAuth, getCurrentUser, useIsCurrentUserLoaded } from 'vuefire';
 import { useLocalStorage } from '#imports';
+import { useScoreStore } from '~/stores/room/scoreStore';
+import { useRoomStore } from '~/stores/room/roomStore';
+import { useUserStore } from '~/stores/userStore';
 const emits = defineEmits(['join-room']);
 const props = defineProps({ roomData: Object });
+const roomStore = useRoomStore();
+const scoreStore = useScoreStore();
+const userStore = useUserStore();
 //anon auth for testing purposes
-const userExists = getCurrentUser();
-const isUserLoaded = useIsCurrentUserLoaded()
 const submitCopy = computed(() => {
-    return existingPlayer.value ? 'Re-join' : '>> Ready >>';
+    return existingPlayer.value ? 'Re-join room' : '>> Enter room >>';
 })
 const existingPlayer = ref(false);
-const user = useLocalStorage('user.uid') || useCurrentUser();
-const auth = useFirebaseAuth(); // only exists on client side
-async function anonSignIn() {
-    await signInAnonymously(auth);
-    useLocalStorage('user.uid', user.uid)
-    console.log('anon login');
-}
-watch(props.roomData, ((nV, oV) => {
-    if (nV.players[user.uid]) {
-        existingPlayer.value = true;
-        let existingPlayerData = props.roomData.players[user.uid];
-        nickname.value = existingPlayerData.nickname;
-        playerColor.value = existingPlayerData.color;
-        playerRole.value = 'player';
-        console.log('existing player');
 
+const playerAmounts = computed(() => {
+    if (scoreStore?.scoreData) {
+        const teams = scoreStore.scoreData.teams;
+        console.log('TEAMS', teams);
+
+        const output = {};
+        for (const color in teams) {
+            console.log(color);
+            output[color] = teams[color].players.length;
+        };
+        return output;
     } else {
-        console.log('new player');
+        return {};
     }
-}))
-watch(user, (nV, oV) => {
-    if (props.roomData.players[nV.uid]) {
-        existingPlayer.value = true;
-        let existingPlayerData = props.roomData.players[nV.uid];
-        nickname.value = existingPlayerData.nickname;
-        playerColor.value = existingPlayerData.color;
-        playerRole.value = 'player';
-        console.log('existing player');
-
-    } else {
-        console.log('new player');
-
-        return;
-    }
-})
-const buttonDisabled = computed(() => {
-    if (password.validated && nickname.validated && playerColor.validated) {
-        return false;
-    }
-    else { return true };
 })
 
 const password = reactive({
@@ -112,7 +90,7 @@ const playerRole = reactive({
     }
 })
 const ready = computed(() => {
-    return nickname.validated && password.validated && playerColor.validated && playerRole.validated;
+    return nickname.value && playerColor.value;
 })
 function joinRoom() {
     //validate here before emit
@@ -127,4 +105,27 @@ function joinRoom() {
 
     emits('join-room', payload);
 }
+watchEffect(() => {
+    if (userStore?.user && roomStore?.roomData) {
+        console.log('Checking for matches', roomStore.roomData.players);
+
+        if (roomStore.roomData.players.hasOwnProperty(userStore.user.value)) {
+            let existingPlayerData = roomStore.roomData.players[userStore.user.value];
+            nickname.value = existingPlayerData.nickname;
+            playerColor.value = existingPlayerData.color;
+            playerRole.value = 'player';
+            console.log('existing player');
+        }
+    }
+    console.log('roomstore changes');
+})
 </script>
+<style lang="scss">
+.join-room-page{
+    display: grid;
+    gap: 1rem;
+    &>.join-room-form{
+        // margin-block: auto;
+    }
+}
+</style>

@@ -1,11 +1,19 @@
 <template>
-    <div class="join">
+    <div class="join-room-page">
+        <!-- <FakeInputList heading="Room details">
+            <template #list-data>
+                <FakeInput title="Name" :data="roomData?.roomName"></FakeInput>
+                <FakeInput title="Code" :data="roomData?.roomCode"></FakeInput>
+                <FakeInput title="Creator" :data="roomData?.creator.nickname"></FakeInput>
+                <FakeInput title="Max team size" :data="roomData?.teamSizes"></FakeInput>
+            </template>
+        </FakeInputList> -->
         <JoinRoomForm @join-room="joinRoom" :roomData></JoinRoomForm>
     </div>
 </template>
 <script setup>
 import { useRoom } from '~/composables/useRoom';
-import { doc, collection, query, serverTimestamp, setDoc, updateDoc, runTransaction, where } from 'firebase/firestore';
+import { doc, collection, query, serverTimestamp, setDoc, getDoc, updateDoc, runTransaction, where, arrayUnion } from 'firebase/firestore';
 definePageMeta({
     title: `Join room`,
     linkTitle: `join-room`,
@@ -21,7 +29,6 @@ const route = useRoute();
 const router = useRouter();
 const roomId = computed(() => route.params.id);
 const db = useFirestore();
-const roomQuery = query(collection(db, `rooms`), where('roomCode', '==', route.params.id));
 const roomRef = doc(db, `rooms/${route.params.id}`);
 const roomData = useDocument(roomRef);
 
@@ -41,17 +48,29 @@ async function joinRoom(data) {
         if (roomData.value.gameType === 'multi') {
             cardId = `${data.playerColor}-card`
             const newCardRef = doc(roomRef, `cards/${cardId}`);
-            const { newCard, seed } = await getRandomizedCardFromTemplate(roomData.value.template);
-            await setDoc(newCardRef, {
-                bingoItems: newCard,
-                players: {
-                    [user.value.uid]: {
-                        nickname: data.nickname
-                    }
-                },
-                seed: seed,
-                createdOn: serverTimestamp()
-            })
+            //check if card exists
+            const checkIfCardExists = await getDoc(newCardRef);
+            if (!checkIfCardExists.exists()) {
+                const { newCard, seed } = await getRandomizedCardFromTemplate(roomData.value.template);
+                await setDoc(newCardRef, {
+                    bingoItems: newCard,
+                    players: {
+                        [user.value.uid]: {
+                            nickname: data.nickname
+                        }
+                    },
+                    seed: seed,
+                    createdOn: serverTimestamp()
+                })
+            } else {
+                await setDoc(newCardRef, {
+                    players: {
+                        [user.value.uid]: {
+                            nickname: data.nickname
+                        }
+                    },
+                }, { merge: true })
+            }
         }
 
         //add player to the room document
@@ -75,11 +94,15 @@ async function joinRoom(data) {
                     }
                 }, { merge: true }); // Use merge to avoid overwriting other fields
             } else {
-                transaction.set(scoreBoardRef, {
-                    teams: {
-                        [data.playerColor]: { players: [user.value.uid] }
-                    }
-                }, { merge: true }); // Use merge to avoid overwriting other fields
+                // Retrieve the current players array
+                const currentPlayers = scoreBoardDoc.data().teams[data.playerColor].players || [];
+
+                // Check if the player is already in the array
+                if (!currentPlayers.includes(user.value.uid)) {
+                    transaction.update(scoreBoardRef, {
+                        [`teams.${data.playerColor}.players`]: arrayUnion(user.value.uid)
+                    });
+                }
             }
         });
         // await setDoc(scoreRef, {

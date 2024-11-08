@@ -5,12 +5,12 @@
                 <FakeInput v-for="(item, key) in staticData" :title="key" :data="item"></FakeInput>
             </template>
         </FakeInputList>
-        <BaseBoolean @change="updateRoomData('hideBoardInitially', roomData.hideBoardInitially)"
-            v-model="roomData.hideBoardInitially" label="Hide board initially"></BaseBoolean>
-        <BaseBoolean @change="updateRoomData('hasTimer', roomData.hasTimer)" v-model="roomData.hasTimer"
+        <BaseBoolean @change="updateRoomData('hideBoardInitially', roomStore.roomData.hideBoardInitially)"
+            v-model="roomStore.roomData.hideBoardInitially" label="Hide board initially"></BaseBoolean>
+        <BaseBoolean @change="updateRoomData('hasTimer', roomStore.roomData.hasTimer)" v-model="roomStore.roomData.hasTimer"
             label="Show timer">
         </BaseBoolean>
-        <BaseButton v-if="roomData.creator.uid === user">New board</BaseButton>
+        <BaseButton v-if="roomStore.roomData.creator.uid === user">New board</BaseButton>
     </div>
 </template>
 <script setup>
@@ -20,16 +20,17 @@ import { useUserStore } from '~/stores/userStore.js';
 const { user } = useUserStore();
 const roomData = inject('roomData');
 const route = useRoute();
+const roomStore = useRoomStore();
 const { updateRoomData } = useRoomStore();
 const props = defineProps({ payload: Object });
 const staticData = computed(() => {
     let payload = {
-        creator: props.payload?.creator.nickname,
-        roomType: props.payload?.roomType,
-        seed: props.payload?.seed,
-        game: props.payload?.game,
-        gameMode: props.payload?.gameMode,
-        gameType: props.payload?.gameType
+        creator: roomStore.roomData.creator.nickname,
+        roomType: roomStore.roomData.roomType,
+        seed: roomStore.roomData.seed,
+        game: roomStore.roomData.game,
+        gameMode: roomStore.roomData.gameMode,
+        gameType: roomStore.roomData.gameType
     };
     // Use Object.entries to convert the object into key-value pairs
     payload = Object.entries(payload)

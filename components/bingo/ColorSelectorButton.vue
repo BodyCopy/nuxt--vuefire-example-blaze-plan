@@ -1,7 +1,8 @@
 <template>
-    <component :is="flat ? 'div' : 'button'" :disabled="!available"
+    <component :is="flat ? 'div' : 'button'" :disabled="!props.isAvailable"
         :class="['color-selector-button', 'bingo-color', color, selected ? 'selected' : '', flat ? 'flat' : '']">
         <img :src="colorIcon" alt="">
+        <p v-if="playerCount">{{ props.playerCount }}</p>
     </component>
 </template>
 <script setup>
@@ -9,8 +10,9 @@ import { icons } from './colors/icons.js';
 const props = defineProps({
     color: String,
     selected: Boolean,
-    available: { type: Boolean, default: true },
-    flat: { type: Boolean, default: false }
+    isAvailable: { type: Boolean, default: true },
+    flat: { type: Boolean, default: false },
+    playerCount: Number,
 })
 const colorIcon = computed(() => {
     return icons[props.color];
@@ -47,7 +49,8 @@ const colorIcon = computed(() => {
     //     box-shadow: var(--tile-box-shadow-pressed);
     // }
 
-    &[disabled="true"] {
+    &[disabled]:not([disabled="false"]) {
+        cursor: not-allowed;
         filter: opacity(0.4) saturate(0.8);
     }
 

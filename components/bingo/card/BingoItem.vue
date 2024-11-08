@@ -32,7 +32,7 @@ onMounted(() => {
 
 </script>
 <style lang="scss">
-@import '~/assets/css/01-config/mixins.module.scss';
+@use '~/assets/css/01-config/mixins.module.scss';
 
 .bingo-item {
     font-size: clamp(14px, 2.4cqmin, 20px);
@@ -47,7 +47,7 @@ onMounted(() => {
     position: relative;
     text-align: center;
 
-    @include mediaTabletLandscape('max') {}
+    @include mixins.mediaTabletLandscape('max') {}
 
     &:after,
     &:before {
