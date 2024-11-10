@@ -26,7 +26,7 @@
 import { collection, doc, getDoc, addDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useFirestore } from 'vuefire';
 import { useRooms } from '~/composables/roomUtilities';
-import {generateRandomSeed, getRandomItemsWithSeed} from '~/composables/bingoUtilities';
+import {generateRandomSeed, getRandomItemsWithSeed} from '~/utilities/bingoUtilities';
 import RoomFormCreateSnippet from './RoomFormCreateSnippet.vue';
 import { RoomFormJoinSnippet } from '#build/components';
 // import { v4 as uuidv4 } from 'uuid';

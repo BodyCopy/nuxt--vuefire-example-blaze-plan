@@ -9,7 +9,7 @@
 </template>
 <script setup>
 import { ref, reactive } from 'vue';
-import BingoCardCreatorForm from '~/components/bingo/CustomTemplateForm.vue';
+import BingoCardCreatorForm from '~/components/bingo/form/CustomTemplateForm.vue';
 
 definePageMeta({
     title: 'Card Creator',

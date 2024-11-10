@@ -87,7 +87,7 @@ br {
     }
 
     &:after {
-        filter: url(#noiseFilter) invert(1) contrast(1);
+        // filter: url(#noiseFilter) invert(1) contrast(1);
         background-color: var(--S-35);
         content: '';
         position: absolute;

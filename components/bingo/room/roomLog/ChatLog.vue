@@ -12,7 +12,7 @@
 </template>
 <script setup>
 import { push, ref as rtdRef, serverTimestamp } from 'firebase/database';
-import { humanReadableDate } from '~/composables/dateUtilities';
+import { humanReadableDate } from '~/utilities/dateUtilities';
 import ChatLogItem from './ChatLogItem.vue';
 import { useMutationObserver } from '@vueuse/core';
 import { useRoomStore } from '~/stores/room/roomStore';

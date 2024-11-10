@@ -12,9 +12,7 @@
     </div>
 </template>
 <script setup>
-import { useRoomStore } from '~/stores/room/roomStore.js';
 import BingoCardPlayer from './BingoCardPlayer.vue';
-const roomStore = useRoomStore();
 const props = defineProps({ bingoItems: Array, bingos: Array });
 const bingoItemsArray = computed(() => {
     return props.bingoItems
@@ -26,6 +24,7 @@ const bingoItemsArray = computed(() => {
 
 const toggleItemCompletion = inject('toggleItemCompletion');
 const focusItem = inject('focusItem');
+
 async function toggleFocusItem(coordinates, event) {
     console.log('FINISHED ITEM');
     console.log(coordinates);

@@ -40,7 +40,7 @@
 import { collection, doc, getDoc, addDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useFirestore } from 'vuefire';
 import { useRooms } from '~/composables/roomUtilities';
-import { generateRandomSeed, getRandomItemsWithSeed } from '~/composables/bingoUtilities';
+import { generateRandomSeed, getRandomItemsWithSeed } from '~/utilities/bingoUtilities';
 import { v4 as uuidv4 } from 'uuid';
 import { useStorage } from '@vueuse/core';
 const { createRoom } = useRooms();

@@ -99,7 +99,7 @@ onBeforeMount(() => {
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-    <SnackBarController></SnackBarController>
+    <SnackbarController></SnackbarController>
   </div>
   <!-- <footer>
     <a href="https://github.com/posva/nuxt--vuefire-example-blaze-plan">

@@ -2,7 +2,7 @@
     <div class="bingo-player-stat-card">
         <SegmentDisplay :string="playerScore" :displayBoard="true"></SegmentDisplay>
         <PlayerIdHeader :color="player.color" :nickname="player.nickname"></PlayerIdHeader>
-        <PlayerBingoCardPreview v-if="player.nickname !== loggedInPlayer.nickname && gameSettings.gameType === 'multi'"
+        <PlayerBingoCardPreview v-if="player.nickname !== activePlayer.nickname && gameSettings.gameType === 'multi'"
             :playerCardId="player.cardId">
         </PlayerBingoCardPreview>
     </div>
@@ -10,9 +10,8 @@
 <script setup>
 import { useRoomStore } from '~/stores/room/roomStore';
 import SegmentDisplay from '~/components/base/data/SegmentDisplay.vue';
-const loggedInPlayer = inject('loggedInPlayer');
-const roomStore = useRoomStore()
-const { gameSettings } = storeToRefs(roomStore);
+const roomStore = useRoomStore();
+const { gameSettings, activePlayer } = storeToRefs(roomStore);
 const props = defineProps({ player: { type: Object } });
 const playerScore = computed(() => {
     return props.player.score.toString().padStart(2, '0');

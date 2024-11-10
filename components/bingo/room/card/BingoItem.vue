@@ -7,13 +7,11 @@
 </template>
 <script setup>
 import { textFit } from '~/utility/textFit';
-import { useWindowSize } from '#imports';
 const props = defineProps({ item: Object });
 const completedColor = computed(() => {
     return props.item.complete || 'black';
 })
 const user = useCurrentUser()
-const itemText = ref(null);
 const itemCell = ref(null);
 const playerFocused = computed(() => {
     if (user.value && props.item?.focusedBy) {

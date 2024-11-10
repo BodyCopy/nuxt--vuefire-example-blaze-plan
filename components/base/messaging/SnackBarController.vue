@@ -8,8 +8,13 @@
     </Teleport>
 </template>
 <script setup>
-import { snackbarQue } from '~/stores/snackbar.js';
+import { useSnackbar } from '~/composables/useSnackbar';
 const props = defineProps(['snackbars']);
+const { snackbarQue } = useSnackbar();
+const test = [
+    { type: 'success', message: 'hello testing' },
+    { type: 'success', message: 'hello testing' }
+]
 
 </script>
 <style>

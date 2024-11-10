@@ -9,13 +9,12 @@
 import { useRoomStore } from '~/stores/room/roomStore.js';
 import { useScoreStore } from '~/stores/room/scoreStore.js';
 const { roomData } = useRoomStore();
-const { scoreData, sortedScoreData } = useScoreStore();
+const { sortedScoreData } = useScoreStore();
 const props = defineProps({ payload: { type: Object } });
 //payload.players
 //payload.score
 const sortedPlayers = computed(() => {
     // Combine players with their scores
-
     return Object.values(roomData.players).map(player => ({
         ...player,
         score: sortedScoreData[player.color] || 0 // default to 0 if no score

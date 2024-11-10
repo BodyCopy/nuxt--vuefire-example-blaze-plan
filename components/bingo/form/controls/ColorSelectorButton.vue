@@ -6,7 +6,7 @@
     </component>
 </template>
 <script setup>
-import { icons } from './colors/icons.js';
+import { icons } from '../../colors/icons.js';
 const props = defineProps({
     color: String,
     selected: Boolean,

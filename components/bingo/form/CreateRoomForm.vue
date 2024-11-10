@@ -1,5 +1,10 @@
 <template>
     <form @submit.prevent="createRoom" class="form-room">
+        <CalculatorScreen tag="form">
+            <template #content>
+                <h1>Hello</h1>
+            </template>
+        </CalculatorScreen>
         <fieldset class="retro-form">
             <BaseInput v-model="roomName.value" label="Room name" retro :validated="roomName.validated"
                 :error-text="roomName.errorText" :maxLength="20" :character-count="roomName.value.length"
@@ -47,12 +52,11 @@
 </template>
 <script lang="js" setup>
 import bcrypt from 'bcryptjs';
-import { useRoom } from '~/composables/useRoom.js';
+import { useCreateRoom } from '~/composables/useCreateRoom.js';
 import { useFirestore } from 'vuefire';
 import { addDoc, collection, serverTimestamp, getDoc, doc } from 'firebase/firestore';
-import DEMOPlayerColorSelectorSingle from './DEMOPlayerColorSelectorSingle.vue';
 // Analytics can only be retrieved on the client
-const { getRandomizedCardFromTemplate } = useRoom();
+const { getBingoCardItemsFromTemplate, randomizeBingoCardFromTemplate } = useCreateRoom();
 const db = useFirestore();
 
 function checkUser() {
@@ -83,10 +87,8 @@ async function createRoom() {
 
     //grab a specified card template
     //todo we can sideload this after the value is updated
-    console.log('TEMPLATE VAL', template.value);
-
-    const { newCard, seed } = await getRandomizedCardFromTemplate(template.value);
-
+    const bingoItemsFromTemplate = await getBingoCardItemsFromTemplate(template.value);
+    const { newCard, seed } = randomizeBingoCardFromTemplate(bingoItemsFromTemplate);
 
     const payload = {
         creatorColor: playerColor.value,

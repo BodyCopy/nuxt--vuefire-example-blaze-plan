@@ -12,6 +12,7 @@ export const useRoomStore = defineStore('room', () => {
     //State
     const roomDocRef = computed(() => doc(db, `rooms/${route.params.id}`));
     const roomData = useDocument(roomDocRef);
+
     const gameSettings = computed(() => {
         if (!roomData.value) return {};
         return {
@@ -50,5 +51,5 @@ export const useRoomStore = defineStore('room', () => {
         }
     }
 
-    return { roomData, gameSettings, updateRoomData, activePlayer };
+    return { roomData, roomDocRef, gameSettings, updateRoomData, activePlayer };
 })

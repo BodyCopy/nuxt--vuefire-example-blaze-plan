@@ -7,7 +7,7 @@
     </li>
 </template>
 <script setup>
-import { humanReadableDate } from '~/composables/dateUtilities';
+import { humanReadableDate } from '~/utilities/dateUtilities';
 const router = useRouter();
 const props = defineProps({ template: Object });
 const menuItems = [

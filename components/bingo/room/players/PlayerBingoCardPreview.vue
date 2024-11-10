@@ -6,6 +6,7 @@
 </template>
 <script setup>
 import { doc, collection } from 'firebase/firestore';
+import { sortBingoItems } from '~/utilities/bingoUtilities';
 const db = useFirestore();
 const route = useRoute();
 const props = defineProps({ playerCardId: String });
@@ -13,15 +14,7 @@ const playerCardRef = doc(db, `rooms/${route.params.id}/cards/${props.playerCard
 const playerBingoItems = useDocument(playerCardRef);
 const bingoItemKeys = computed(() => {
     if (playerBingoItems.value?.bingoItems) {
-        const orderedItems = Object.keys(playerBingoItems.value.bingoItems)
-            .sort((a, b) => {
-                // Extract the number from the key and compare numerically
-                const numA = parseInt(a.replace('item', ''), 10);
-                const numB = parseInt(b.replace('item', ''), 10);
-                return numB - numA;
-            })
-            .map(key => playerBingoItems.value.bingoItems[key]); // Convert sorted keys back to array of objects
-        return orderedItems;
+        return sortBingoItems(playerBingoItems.value.bingoItems);
     } else {
         return [];
     }

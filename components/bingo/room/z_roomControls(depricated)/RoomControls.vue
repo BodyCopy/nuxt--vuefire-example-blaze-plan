@@ -9,7 +9,7 @@
 </template>
 <script setup>
 import RoomControlPlayer from './RoomControlPlayer.vue';
-import RoomControlSettings from './RoomControlSettings.vue';
+import RoomControlSettings from '../settings/RoomControlSettings.vue';
 import RoomControlPlayers from '../players/BingoPlayers.vue';
 import RoomControlLog from './roomLog/RoomControlLog.vue';
 const props = defineProps({ roomData: Object, scoreBoard: Object, scoreData: Object, bingoCardData: Object, player: Object });

@@ -7,17 +7,42 @@
         </FakeInputList>
         <BaseBoolean @change="updateRoomData('hideBoardInitially', roomStore.roomData.hideBoardInitially)"
             v-model="roomStore.roomData.hideBoardInitially" label="Hide board initially"></BaseBoolean>
-        <BaseBoolean @change="updateRoomData('hasTimer', roomStore.roomData.hasTimer)" v-model="roomStore.roomData.hasTimer"
-            label="Show timer">
+        <BaseBoolean @change="updateRoomData('hasTimer', roomStore.roomData.hasTimer)"
+            v-model="roomStore.roomData.hasTimer" label="Show timer">
         </BaseBoolean>
         <BaseButton v-if="roomStore.roomData.creator.uid === user">New board</BaseButton>
+        <BaseButton v-if="roomStore.roomData.creator.uid === user" @click="regenerateCards">Regenerate boards
+        </BaseButton>
+        <BaseButton v-if="roomStore.roomData.creator.uid === user" @click="resetCards">Reset boards</BaseButton>
     </div>
 </template>
 <script setup>
 import BaseBoolean from '~/components/base/controls/BaseBoolean.vue';
+import { useCreateRoom } from '~/composables/useCreateRoom';
+import { useScoreBoard } from '~/composables/useScoreBoard.js';
 import { useRoomStore } from '~/stores/room/roomStore.js';
 import { useUserStore } from '~/stores/userStore.js';
+import { useSnackbar } from '~/composables/useSnackbar';
+const { createSnackbar } = useSnackbar();
 const { user } = useUserStore();
+const { newBingoCards, resetBingoCards } = useCreateRoom();
+const { resetAllScores } = useScoreBoard();
+async function regenerateCards() {
+    try {
+        await newBingoCards(route.params.id, roomStore.roomData.template);
+        createSnackbar({ type: 'success', message: 'New cards generated!' });
+    } catch (err) {
+        console.log(err);
+    }
+}
+async function resetCards() {
+    try {
+        await resetBingoCards(route.params.id);
+        createSnackbar({ type: 'success', message: 'Reset successful!' });
+    } catch (err) {
+        console.log(err);
+    }
+}
 const roomData = inject('roomData');
 const route = useRoute();
 const roomStore = useRoomStore();

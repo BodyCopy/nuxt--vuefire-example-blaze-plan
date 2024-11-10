@@ -1,12 +1,11 @@
 <template>
-    <BingoRoom v-if="roomStore.roomData && scoreData" :roomData="roomStore.roomData" :scoreData="scoreData"></BingoRoom>
+    <BingoRoom v-if="roomStore.roomData && scoreData" :roomData="roomStore.roomData" :scoreData="scoreData" :activePlayer="roomStore.activePlayer"></BingoRoom>
     <LoaderScreen v-else></LoaderScreen>
 </template>
 <script setup>
 import { doc, collection, setDoc, getDoc, updateDoc, serverTimestamp, FieldValue, increment, addDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { useFirestore, useDocument } from "vuefire";
 import IconExternalLink from "~/components/icons/IconExternalLink.vue";
-import { createSnackbar } from '~/stores/snackbar.js';
 import { useRoomStore } from '~/stores/room/roomStore.js';
 import { useScoreStore } from "~/stores/room/scoreStore";
 definePageMeta({

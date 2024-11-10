@@ -11,6 +11,7 @@
 import { useRoomStore } from '~/stores/room/roomStore';
 import { useScoreStore } from '~/stores/room/scoreStore';
 const roomStore = useRoomStore();
+const { activePlayer } = storeToRefs(roomStore);
 const scoreStore = useScoreStore();
 const playerScoreToString = computed(() => {
     if (scoreStore.scoreData.teams[activePlayer.value.color]) {
@@ -19,7 +20,6 @@ const playerScoreToString = computed(() => {
         return '00';
     }
 })
-const { activePlayer } = storeToRefs(roomStore);
 //scoreBoard[props.player.color]
 </script>
 <style lang="scss">
